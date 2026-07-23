@@ -27,7 +27,6 @@
         html {
             scroll-behavior: smooth
         }
-
         body {
             background: var(--bg);
             color: var(--tx);
@@ -35,13 +34,11 @@
             min-height: 100vh;
             overflow-x: hidden
         }
-
         input,
         button,
         textarea {
             font-family: inherit
         }
-
         input,
         textarea {
             background: none;
@@ -49,22 +46,18 @@
             color: var(--tx);
             width: 100%
         }
-
         input::placeholder,
         textarea::placeholder {
             color: rgba(245, 243, 240, .28)
         }
-
         input:focus,
         textarea:focus {
             outline: none
         }
-
         button {
             cursor: pointer;
             border: none
         }
-
         .hidden {
             display: none !important
         }
@@ -1014,28 +1007,28 @@
                 width: 100%
             }
 
-            /* Navbar compacta para móvil */
+            /* Navbar compacta y con wrap para evitar desborde */
             nav.top {
-                padding: .6rem .5rem
+                padding: .5rem .5rem
             }
             .np {
                 gap: .35rem;
-                padding: .35rem .35rem .35rem .6rem;
+                padding: .4rem .5rem;
                 width: 100%;
-                justify-content: space-between;
-                flex-wrap: nowrap
+                flex-wrap: wrap;
+                justify-content: center;
             }
             .nb {
                 font-size: .75rem;
-                gap: .3rem
+                gap: .3rem;
+                margin-right: auto;
             }
             .nb svg {
                 width: 18px;
                 height: 18px
             }
             #navVer {
-                font-size: .55rem;
-                padding: .1rem .35rem
+                display: none; /* Oculto en móvil para ganar espacio */
             }
             #btnEntrar {
                 font-size: .7rem;
@@ -1092,8 +1085,8 @@
 
         @media(max-width:400px) {
             .np {
-                gap: .2rem;
-                padding: .3rem .3rem .3rem .5rem
+                gap: .25rem;
+                padding: .35rem .4rem;
             }
             .nb {
                 font-size: .7rem
@@ -1101,9 +1094,6 @@
             .nb svg {
                 width: 16px;
                 height: 16px
-            }
-            #navVer {
-                display: none
             }
             #btnEntrar {
                 font-size: .65rem;
@@ -1434,9 +1424,8 @@
         const ADMIN_EMAIL = "jorgeyadielp@gmail.com";
         const SITE_URL    = location.origin + location.pathname.replace(/[^/]*$/, "");
 
-        // Intervalos de actualización automática (en milisegundos)
-        const CACHE_TTL   = 30 * 1000;      // 30 segundos de caché
-        const REFRESH_INT = 45 * 1000;      // 45 segundos entre actualizaciones automáticas
+        const CACHE_TTL   = 30 * 1000;
+        const REFRESH_INT = 45 * 1000;
 
         let auth=null, fsdb=null, allUsers=[];
         let mfFiles=[], mfFolders=[];
@@ -1486,7 +1475,6 @@
                 ls.set("mf_cache", { files: mfFiles, folders: mfFolders, ts: Date.now() });
                 renderFiles();
 
-                const lastVer = (mfFiles.find(f => /zeta/i.test(f.filename)) || {}).filename || "—";
                 if($("mfSt")) $("mfSt").textContent = `✓ ${mfFiles.length} archivos · ${new Date().toLocaleTimeString("es-ES")}`;
                 scheduleNextRefresh(REFRESH_INT);
             }catch(e){
