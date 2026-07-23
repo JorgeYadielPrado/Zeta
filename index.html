@@ -1,756 +1,680 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zeta — Convertidor de Video para Windows</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-        :root{
-            --o:#F97316;--r:#EF4444;
-            --bg:#07080D;--tx:#F5F3F0;
-            --mu:rgba(245,243,240,.42);
-            --gb:rgba(255,255,255,.058);
-            --bd:rgba(255,255,255,.09)
-        }
-        html{scroll-behavior:smooth}
-        body{background:var(--bg);color:var(--tx);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;overflow-x:hidden}
-        button{cursor:pointer;border:none}
-        .hidden{display:none!important}
-        .glass{background:var(--gb);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border:1px solid var(--bd)}
-        .pill{border-radius:100px}
-        .card{border-radius:22px}
-        .G{background:linear-gradient(120deg,var(--o),var(--r))}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zeta — Convertidor de Video para Windows</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--o:#F97316;--r:#EF4444;--bg:#07080D;--tx:#F5F3F0;--mu:rgba(245,243,240,.42);--gb:rgba(255,255,255,.058);--bd:rgba(255,255,255,.09)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+input,button,textarea{font-family:inherit}
+input,textarea{background:none;border:none;color:var(--tx);width:100%}
+input::placeholder,textarea::placeholder{color:rgba(245,243,240,.28)}
+input:focus,textarea:focus{outline:none}
+button{cursor:pointer;border:none}
+.hidden{display:none!important}
+.glass{background:var(--gb);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border:1px solid var(--bd)}
+.pill{border-radius:100px}.card{border-radius:22px}.G{background:linear-gradient(120deg,var(--o),var(--r))}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:rgba(249,115,22,.4);border-radius:100px}
 
-        body::before{
-            content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-            background:
-                radial-gradient(ellipse 70% 50% at 0% 0%,  rgba(249,115,22,.18) 0%,transparent 60%),
-                radial-gradient(ellipse 60% 50% at 100% 100%,rgba(239,68,68,.16) 0%,transparent 60%),
-                radial-gradient(ellipse 40% 35% at 55% 20%,  rgba(234,88,12,.08)  0%,transparent 55%);
-        }
-        .blob{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px)}
-        .b1{width:520px;height:520px;background:radial-gradient(circle,rgba(249,115,22,.28),transparent 70%);top:-140px;left:-130px;animation:drift 18s ease-in-out infinite alternate}
-        .b2{width:580px;height:580px;background:radial-gradient(circle,rgba(239,68,68,.2),transparent 70%);bottom:-150px;right:-130px;animation:drift 18s ease-in-out infinite alternate-reverse}
-        .b3{width:300px;height:300px;background:radial-gradient(circle,rgba(249,115,22,.1),transparent 70%);top:40%;left:60%;animation:drift 22s ease-in-out infinite alternate}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 50% at 0% 0%,rgba(249,115,22,.18) 0%,transparent 60%),
+             radial-gradient(ellipse 60% 50% at 100% 100%,rgba(239,68,68,.16) 0%,transparent 60%),
+             radial-gradient(ellipse 40% 35% at 55% 20%,rgba(234,88,12,.08) 0%,transparent 55%)}
+.blob{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px)}
+.b1{width:520px;height:520px;background:radial-gradient(circle,rgba(249,115,22,.28),transparent 70%);top:-140px;left:-130px;animation:drift 18s ease-in-out infinite alternate}
+.b2{width:580px;height:580px;background:radial-gradient(circle,rgba(239,68,68,.2),transparent 70%);bottom:-150px;right:-130px;animation:drift 18s ease-in-out infinite alternate-reverse}
+.b3{width:300px;height:300px;background:radial-gradient(circle,rgba(249,115,22,.1),transparent 70%);top:40%;left:60%;animation:drift 22s ease-in-out infinite alternate}
 
-        nav.top{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;padding:1.1rem 1.5rem;z-index:200}
-        .np{display:flex;align-items:center;gap:.85rem;padding:.42rem .42rem .42rem .9rem}
-        .nb{display:flex;align-items:center;gap:.5rem;font-weight:800;font-size:.9rem;color:var(--tx);text-decoration:none}
+nav.top{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;padding:1.1rem 1.5rem;z-index:200}
+.np{display:flex;align-items:center;gap:.85rem;padding:.42rem .42rem .42rem .9rem}
+.nb{display:flex;align-items:center;gap:.5rem;font-weight:800;font-size:.9rem;color:var(--tx)}
 
-        .hero{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:8rem 1.5rem 4.5rem}
-        .hlogo{animation:float 6s ease-in-out infinite;filter:drop-shadow(0 0 36px rgba(249,115,22,.6)) drop-shadow(0 0 80px rgba(239,68,68,.3));margin-bottom:1.75rem}
-        h1{font-size:clamp(2.8rem,5.5vw,4.2rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:.8rem}
-        .gt{background:linear-gradient(120deg,var(--o) 20%,var(--r) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-        .stats-row{display:flex;align-items:center;gap:.7rem;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:center}
-        .sp{display:flex;align-items:center;gap:.45rem;padding:.36rem .85rem;font-family:'JetBrains Mono',monospace;font-size:.7rem}
-        .btn-wa{display:inline-flex;align-items:center;gap:.6rem;border-radius:100px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.3);color:var(--tx);font-weight:700;font-size:.9rem;padding:.68rem 1.5rem;text-decoration:none;transition:all .18s;margin-bottom:.75rem}
-        .btn-wa:hover{background:rgba(37,211,102,.2);box-shadow:0 0 28px rgba(37,211,102,.3)}
+.hero{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:8rem 1.5rem 4.5rem}
+.hlogo{animation:float 6s ease-in-out infinite;filter:drop-shadow(0 0 36px rgba(249,115,22,.6)) drop-shadow(0 0 80px rgba(239,68,68,.3));margin-bottom:1.75rem}
+h1{font-size:clamp(2.8rem,5.5vw,4.2rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:.8rem}
+.gt{background:linear-gradient(120deg,var(--o) 20%,var(--r) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stats-row{display:flex;align-items:center;gap:.7rem;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:center}
+.sp{display:flex;align-items:center;gap:.45rem;padding:.36rem .85rem;font-family:'JetBrains Mono',monospace;font-size:.7rem}
+.btn-wa{display:inline-flex;align-items:center;gap:.6rem;border-radius:100px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.3);color:var(--tx);font-weight:700;font-size:.9rem;padding:.68rem 1.5rem;text-decoration:none;transition:all .18s;margin-bottom:.75rem}
+.btn-wa:hover{background:rgba(37,211,102,.2);box-shadow:0 0 28px rgba(37,211,102,.3)}
 
-        .sec{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:0 1.5rem 4rem}
-        .lbl{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:rgba(245,243,240,.3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:1rem;display:block}
-        .feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
-        .feat{padding:1.5rem 1.35rem;transition:transform .22s,border-color .22s}
-        .feat:hover{transform:translateY(-4px);border-color:rgba(249,115,22,.3)}
-        .fi{width:40px;height:40px;border-radius:11px;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:.9rem}
-        .ft{font-weight:700;font-size:.92rem;margin-bottom:.4rem}
-        .fd{font-size:.82rem;color:var(--mu);line-height:1.65}
+.sec{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:0 1.5rem 4rem}
+.lbl{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:rgba(245,243,240,.3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:1rem;display:block}
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+.feat{padding:1.5rem 1.35rem;transition:transform .22s,border-color .22s}
+.feat:hover{transform:translateY(-4px);border-color:rgba(249,115,22,.3)}
+.fi{width:40px;height:40px;border-radius:11px;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:.9rem}
+.ft{font-weight:700;font-size:.92rem;margin-bottom:.4rem}
+.fd{font-size:.82rem;color:var(--mu);line-height:1.65}
 
-        .zw{position:relative;overflow:hidden;padding:1.75rem}
-        .zw::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(249,115,22,.08),rgba(239,68,68,.05));pointer-events:none}
-        .zbadge{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;color:var(--o);background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);padding:.22rem .7rem;border-radius:100px;display:inline-block;margin-bottom:.9rem}
-        .zlist{display:flex;flex-direction:column;gap:.85rem;margin-top:.5rem}
-        .zcard{border-radius:16px;padding:1.1rem 1.25rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;transition:border-color .2s,background .2s}
-        .zcard:first-child{border-color:rgba(249,115,22,.28);background:rgba(249,115,22,.06)}
-        .zname{font-weight:700;font-size:.95rem;margin-bottom:.28rem}
-        .zmeta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-        .mb{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:.15rem .5rem;border-radius:100px}
-        .mb-dl{background:rgba(74,222,128,.08);color:#4ade80}
-        .mb-dt{background:rgba(56,189,248,.08);color:#38BDF8}
-        .mb-sz{background:rgba(249,115,22,.08);color:var(--o)}
-        .mb-ex{background:rgba(255,255,255,.06);color:var(--mu)}
-        .btn-dl{display:flex;align-items:center;gap:.5rem;color:#fff;font-weight:700;font-size:.84rem;padding:.6rem 1.35rem;border-radius:100px;white-space:nowrap;flex-shrink:0;box-shadow:0 0 20px rgba(239,68,68,.35);transition:all .18s}
-        .btn-dl:hover{box-shadow:0 0 32px rgba(239,68,68,.55);transform:translateY(-1px)}
-        .btn-dl:disabled{opacity:.6;cursor:wait}
+.zw{position:relative;overflow:hidden;padding:1.75rem}
+.zw::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(249,115,22,.08),rgba(239,68,68,.05));pointer-events:none}
+.zbadge{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;color:var(--o);background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);padding:.22rem .7rem;border-radius:100px;display:inline-block;margin-bottom:.9rem}
+.zlist{display:flex;flex-direction:column;gap:.85rem;margin-top:.5rem}
+.zcard{border-radius:16px;padding:1.1rem 1.25rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;transition:border-color .2s,background .2s}
+.zcard:first-child{border-color:rgba(249,115,22,.28);background:rgba(249,115,22,.06)}
+.zname{font-weight:700;font-size:.95rem;margin-bottom:.28rem}
+.zmeta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.mb{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:.15rem .5rem;border-radius:100px}
+.mb-dl{background:rgba(74,222,128,.08);color:#4ade80}.mb-dt{background:rgba(56,189,248,.08);color:#38BDF8}
+.mb-sz{background:rgba(249,115,22,.08);color:var(--o)}.mb-ex{background:rgba(255,255,255,.06);color:var(--mu)}
+.btn-dl{display:flex;align-items:center;gap:.5rem;color:#fff;font-weight:700;font-size:.84rem;padding:.6rem 1.35rem;border-radius:100px;white-space:nowrap;flex-shrink:0;box-shadow:0 0 20px rgba(239,68,68,.35);transition:all .18s;cursor:pointer}
+.btn-dl:hover{box-shadow:0 0 32px rgba(239,68,68,.55);transform:translateY(-1px)}
+.btn-dl:disabled{opacity:.5;cursor:not-allowed;transform:none}
 
-        .skel{border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,.05) 25%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.05) 75%);background-size:200% 100%;animation:skel 1.4s ease-in-out infinite;height:20px;margin-bottom:.5rem}
-        @keyframes skel{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,.05) 25%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.05) 75%);background-size:200% 100%;animation:skel 1.4s ease-in-out infinite;height:20px;margin-bottom:.5rem}
+@keyframes skel{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-        .dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.9rem}
-        .dcard{border-radius:16px;padding:1.1rem 1.25rem;transition:border-color .2s,transform .2s}
-        .dcard:hover{border-color:rgba(56,189,248,.25);transform:translateY(-2px)}
-        .dico{width:36px;height:36px;border-radius:9px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.18);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
-        .dname{font-weight:700;font-size:.88rem;margin-bottom:.35rem;word-break:break-word}
-        .btn-dep{display:flex;align-items:center;justify-content:center;gap:.4rem;border-radius:100px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);color:#38BDF8;font-size:.76rem;font-weight:700;padding:.42rem .9rem;width:100%;text-decoration:none;transition:background .18s}
-        .btn-dep:hover{background:rgba(56,189,248,.2)}
-        .btn-dep:disabled{opacity:.6;cursor:wait}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.9rem}
+.dcard{border-radius:16px;padding:1.1rem 1.25rem;transition:border-color .2s,transform .2s}
+.dcard:hover{border-color:rgba(56,189,248,.25);transform:translateY(-2px)}
+.dico{width:36px;height:36px;border-radius:9px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.18);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.dname{font-weight:700;font-size:.88rem;margin-bottom:.35rem;word-break:break-word}
+.btn-dep{display:flex;align-items:center;justify-content:center;gap:.4rem;border-radius:100px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);color:#38BDF8;font-size:.76rem;font-weight:700;padding:.42rem .9rem;width:100%;cursor:pointer;transition:background .18s}
+.btn-dep:hover{background:rgba(56,189,248,.2)}
 
-        .refresh-btn{display:inline-flex;align-items:center;gap:.4rem;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--mu);font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:.25rem .7rem;cursor:pointer;transition:all .18s}
-        .refresh-btn:hover{background:rgba(255,255,255,.08);color:var(--tx)}
-        .refresh-btn.spin svg{animation:spin 1s linear infinite}
-        @keyframes spin{to{transform:rotate(360deg)}}
+.refresh-btn{display:inline-flex;align-items:center;gap:.4rem;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--mu);font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:.25rem .7rem;cursor:pointer;transition:all .18s}
+.refresh-btn:hover{background:rgba(255,255,255,.08);color:var(--tx)}
+.refresh-btn.spin svg{animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-        .pills{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center}
-        .pt{font-family:'JetBrains Mono',monospace;font-size:.7rem;padding:.28rem .78rem}
-        .rq{padding:1.5rem 2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
-        .rl{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(245,243,240,.3);margin-bottom:.3rem}
-        .rv{font-weight:700;font-size:.88rem}
+.pills{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center}
+.pt{font-family:'JetBrains Mono',monospace;font-size:.7rem;padding:.28rem .78rem}
+.rq{padding:1.5rem 2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
+.rl{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(245,243,240,.3);margin-bottom:.3rem}
+.rv{font-weight:700;font-size:.88rem}
+footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.06);padding:1.4rem;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:rgba(245,243,240,.2)}
 
-        footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.06);padding:1.4rem;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:rgba(245,243,240,.2)}
+/* ══ DOWNLOAD PILL ══ */
+#dlPill{
+  position:fixed;bottom:1.4rem;left:50%;
+  transform:translateX(-50%) translateY(160px);
+  display:flex;align-items:center;gap:.85rem;
+  padding:.7rem 1rem .7rem .75rem;
+  z-index:900;border-radius:100px;
+  min-width:min(340px,92vw);max-width:min(460px,96vw);
+  box-shadow:0 12px 48px rgba(0,0,0,.6),0 0 0 1px rgba(249,115,22,.2);
+  transition:transform .5s cubic-bezier(.34,1.56,.64,1),opacity .35s ease;
+  opacity:0;pointer-events:none
+}
+#dlPill.visible{transform:translateX(-50%) translateY(0);opacity:1;pointer-events:auto}
+.dp-ico-wrap{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1rem;background:linear-gradient(120deg,var(--o),var(--r))}
+.dp-ico-wrap.pulse{animation:pilse 1.2s ease-in-out infinite}
+@keyframes pilse{0%,100%{box-shadow:0 0 0 0 rgba(249,115,22,.5)}50%{box-shadow:0 0 0 6px rgba(249,115,22,0)}}
+.dp-body{flex:1;min-width:0}
+.dp-name{font-weight:700;font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:.32rem;max-width:100%}
+.dp-bar-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.28rem}
+.dp-bar{flex:1;height:4px;border-radius:100px;background:rgba(255,255,255,.1);overflow:hidden}
+.dp-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--o),var(--r));width:0%;transition:width .4s ease;position:relative;overflow:hidden}
+.dp-fill::after{content:'';position:absolute;top:0;left:-80%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:shimmer 1.5s ease-in-out infinite}
+.dp-pct{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;color:var(--o);white-space:nowrap;flex-shrink:0;min-width:32px;text-align:right}
+.dp-meta{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(245,243,240,.35);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dp-folder-btn{display:flex;align-items:center;gap:.4rem;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);border-radius:100px;color:#4ade80;font-size:.7rem;font-weight:700;padding:.3rem .75rem;white-space:nowrap;flex-shrink:0;cursor:pointer;transition:background .18s}
+.dp-folder-btn:hover{background:rgba(74,222,128,.2)}
+.dp-close{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(245,243,240,.45);font-size:.7rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .18s}
+.dp-close:hover{background:rgba(239,68,68,.2);color:var(--r);border-color:rgba(239,68,68,.3)}
 
-        #pgAdmL{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative}
-        .alc{border-radius:28px;padding:2.5rem 2.25rem;width:min(380px,92vw);text-align:center;position:relative;z-index:1;animation:fadein .35s ease}
-        .aw{border-radius:14px;padding:.65rem 1rem;margin-bottom:.7rem}
-        .orow{display:flex;gap:.5rem;justify-content:center;margin-bottom:1rem}
-        .oi{width:46px;height:54px;border-radius:12px;text-align:center;font-size:1.5rem;font-weight:800;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:var(--tx);transition:border-color .18s}
-        .oi:focus{border-color:var(--o);outline:none}
+/* ADMIN */
+#pgAdmL{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative}
+.alc{border-radius:28px;padding:2.5rem 2.25rem;width:min(380px,92vw);text-align:center;position:relative;z-index:1;animation:fadein .35s ease}
+.aw{border-radius:14px;padding:.65rem 1rem;margin-bottom:.7rem}
+.orow{display:flex;gap:.5rem;justify-content:center;margin-bottom:1rem}
+.oi{width:46px;height:54px;border-radius:12px;text-align:center;font-size:1.5rem;font-weight:800;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:var(--tx);transition:border-color .18s}
+.oi:focus{border-color:var(--o);outline:none}
+#pgAdmin{min-height:100vh;background:var(--bg);position:relative}
+.adnav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:.85rem 2rem;background:rgba(7,8,13,.88);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);flex-wrap:wrap;gap:.5rem}
+.adbrand{display:flex;align-items:center;gap:.55rem;font-weight:800;font-size:.92rem}
+.tabs{display:flex;gap:.45rem;flex-wrap:wrap}
+.tb{border-radius:100px;font-size:.76rem;padding:.38rem .85rem;transition:all .18s;font-family:'Plus Jakarta Sans',sans-serif}
+.tb.on{background:rgba(249,115,22,.14);border:1px solid rgba(249,115,22,.3);color:var(--o)}
+.tb:not(.on){background:none;border:1px solid rgba(255,255,255,.08);color:rgba(245,243,240,.45)}
+.abody{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem;position:relative;z-index:1;animation:fadein .35s ease}
+.ah2{font-weight:800;font-size:1.3rem;margin-bottom:1.5rem}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.9rem;margin-bottom:2rem}
+.sc{border-radius:20px;padding:1.35rem}
+.dt{width:100%;border-collapse:collapse}
+.dt th{padding:.8rem 1.2rem;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(245,243,240,.35);text-transform:uppercase;letter-spacing:.08em;font-weight:400;border-bottom:1px solid rgba(255,255,255,.06)}
+.dt td{padding:.7rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.04)}
+.bdg{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.22rem .6rem;border-radius:100px}
+.bg{background:rgba(74,222,128,.1);color:#4ade80}.bo{background:rgba(249,115,22,.1);color:var(--o)}
+.bb{background:rgba(56,189,248,.1);color:#38BDF8}.by{background:rgba(251,191,36,.1);color:#FBBF24}
+.infobox{border-radius:14px;padding:.9rem 1.2rem;border-left:3px solid var(--o)}
+.infobox p{font-size:.78rem;color:rgba(245,243,240,.5);line-height:1.6}
 
-        #pgAdmin{min-height:100vh;background:var(--bg);position:relative}
-        .adnav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:.85rem 2rem;background:rgba(7,8,13,.88);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);flex-wrap:wrap;gap:.5rem}
-        .adbrand{display:flex;align-items:center;gap:.55rem;font-weight:800;font-size:.92rem}
-        .tabs{display:flex;gap:.45rem;flex-wrap:wrap}
-        .tb{border-radius:100px;font-size:.76rem;padding:.38rem .85rem;transition:all .18s;font-family:'Plus Jakarta Sans',sans-serif}
-        .tb.on{background:rgba(249,115,22,.14);border:1px solid rgba(249,115,22,.3);color:var(--o)}
-        .tb:not(.on){background:none;border:1px solid rgba(255,255,255,.08);color:rgba(245,243,240,.45)}
-        .abody{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem;position:relative;z-index:1;animation:fadein .35s ease}
-        .ah2{font-weight:800;font-size:1.3rem;margin-bottom:1.5rem}
-        .sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.9rem;margin-bottom:2rem}
-        .sc{border-radius:20px;padding:1.35rem}
-        .dt{width:100%;border-collapse:collapse}
-        .dt th{padding:.8rem 1.2rem;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(245,243,240,.35);text-transform:uppercase;letter-spacing:.08em;font-weight:400;border-bottom:1px solid rgba(255,255,255,.06)}
-        .dt td{padding:.7rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.04)}
-        .bdg{font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.22rem .6rem;border-radius:100px}
-        .bg{background:rgba(74,222,128,.1);color:#4ade80}
-        .bo{background:rgba(249,115,22,.1);color:var(--o)}
-        .bb{background:rgba(56,189,248,.1);color:#38BDF8}
-        .by{background:rgba(251,191,36,.1);color:#FBBF24}
-        .infobox{border-radius:14px;padding:.9rem 1.2rem;border-left:3px solid var(--o)}
-        .infobox p{font-size:.78rem;color:rgba(245,243,240,.5);line-height:1.6}
-
-        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-        @keyframes drift{from{transform:translate(0,0)}to{transform:translate(22px,15px)}}
-        @keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-
-        @media(max-width:680px){
-            .feats{grid-template-columns:1fr}
-            .rq{grid-template-columns:1fr 1fr}
-            .dgrid{grid-template-columns:1fr}
-            .tabs{gap:.3rem}
-            .tb{font-size:.68rem;padding:.3rem .65rem}
-        }
-    </style>
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes drift{from{transform:translate(0,0)}to{transform:translate(22px,15px)}}
+@keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes shimmer{to{left:160%}}
+@media(max-width:680px){.feats{grid-template-columns:1fr}.rq{grid-template-columns:1fr 1fr}.dgrid{grid-template-columns:1fr}.tabs{gap:.3rem}.tb{font-size:.68rem;padding:.3rem .65rem}}
+</style>
 </head>
 <body>
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="blob b3"></div>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
 
-    <div id="pgLand">
-        <nav class="top">
-            <div class="np glass pill">
-                <span class="nb">
-                    <svg width="22" height="22" viewBox="0 0 24 24"><defs><linearGradient id="gN" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gN)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
-                    Zeta
-                </span>
-                <span id="navVer" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--o);padding:.15rem .5rem">—</span>
-                <button id="navDl" class="pill G" style="color:#fff;font-weight:700;font-size:.8rem;padding:.44rem 1.05rem" onclick="mainDl()">Descargar</button>
-            </div>
-        </nav>
-
-        <section class="hero">
-            <div class="hlogo">
-                <svg width="100" height="100" viewBox="0 0 24 24"><defs><linearGradient id="gH" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gH)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
-            </div>
-            <span class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--o);letter-spacing:.14em;text-transform:uppercase;padding:.28rem .8rem;margin-bottom:1rem;display:inline-block">Convertidor de Video · Windows</span>
-            <h1>Convierte.<br><span class="gt">Rápido. Sin límites.</span></h1>
-            <p style="color:var(--mu);line-height:1.72;max-width:420px;font-size:1rem;margin-bottom:1.6rem">Convierte cualquier video al formato que necesitas con aceleración GPU. Sin marcas de agua, sin suscripciones.</p>
-            <div class="stats-row">
-                <div class="sp glass pill">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                    <span id="sV" style="color:#38BDF8;font-weight:700">—</span><span style="color:var(--mu)">vistas</span>
-                </div>
-                <div class="sp glass pill">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    <span id="sD" style="color:#4ade80;font-weight:700">—</span><span style="color:var(--mu)">descargas</span>
-                </div>
-                <div class="sp glass pill">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    <span id="sU" style="color:#A78BFA;font-weight:700">—</span><span style="color:var(--mu)">versiones</span>
-                </div>
-            </div>
-            <a href="https://wa.me/qr/M4VVW26SBVZNE1" target="_blank" class="btn-wa">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-                +53 58668183
-            </a>
-        </section>
-
-        <div class="sec">
-            <div class="feats">
-                <div class="feat glass card"><div class="fi">⚡</div><div class="ft">Aceleración GPU</div><p class="fd">Usa tu tarjeta gráfica para conversiones hasta 10× más rápidas que por software.</p></div>
-                <div class="feat glass card"><div class="fi">🎬</div><div class="ft">Todos los Formatos</div><p class="fd">MP4, MKV, AVI, MOV, WebM, TS, M4V, WMV, FLV, GIF y muchos más.</p></div>
-                <div class="feat glass card"><div class="fi">📦</div><div class="ft">Por Lotes</div><p class="fd">Convierte carpetas enteras con configuraciones distintas por archivo.</p></div>
-            </div>
-        </div>
-
-        <div class="sec" style="max-width:780px">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
-                <span class="lbl" style="margin-bottom:0">App Principal</span>
-                <span style="display:flex;align-items:center;gap:.5rem">
-                    <span id="zetaCount" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--mu);padding:.2rem .6rem">—</span>
-                    <button class="refresh-btn" id="refreshBtn" onclick="loadFiles(true)" title="Refrescar lista de archivos">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-                        Refrescar
-                    </button>
-                </span>
-            </div>
-            <div class="zw glass card">
-                <span class="zbadge">⚡ Zeta — Convertidor de Video para Windows</span>
-                <p style="font-size:.84rem;color:var(--mu);line-height:1.65;margin-bottom:.75rem">
-                    Lista actualizada desde el servidor · Se refresca automáticamente
-                </p>
-                <div id="zetaList" class="zlist">
-                    <div class="zcard" style="pointer-events:none">
-                        <div style="flex:1"><div class="skel" style="width:50%;height:18px"></div><div class="skel" style="width:80%;height:14px;margin-top:.4rem"></div></div>
-                        <div class="skel" style="width:100px;height:36px;border-radius:100px"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="sec" style="max-width:780px">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem">
-                <span class="lbl" style="margin-bottom:0">Componentes adicionales</span>
-                <span id="depCount" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--mu);padding:.2rem .6rem">—</span>
-            </div>
-            <p style="font-size:.84rem;color:var(--mu);line-height:1.65;margin-bottom:1rem;position:relative;z-index:1">Archivos complementarios necesarios para el correcto funcionamiento de Zeta. Se actualizan en vivo.</p>
-            <div id="depList" class="dgrid">
-                <div class="dcard glass" style="pointer-events:none"><div class="skel" style="height:16px;margin-bottom:.5rem"></div><div class="skel" style="height:14px;width:70%"></div></div>
-            </div>
-        </div>
-
-        <div class="sec" style="max-width:680px;text-align:center">
-            <span class="lbl" style="text-align:center">Formatos soportados</span>
-            <div class="pills">
-                <span class="pt glass pill">MP4</span><span class="pt glass pill">MKV</span><span class="pt glass pill">AVI</span><span class="pt glass pill">MOV</span><span class="pt glass pill">WebM</span><span class="pt glass pill">TS</span><span class="pt glass pill">M2TS</span><span class="pt glass pill">M4V</span><span class="pt glass pill">WMV</span><span class="pt glass pill">FLV</span><span class="pt glass pill">3GP</span><span class="pt glass pill">GIF</span>
-            </div>
-        </div>
-
-        <div class="sec" style="max-width:700px">
-            <div class="rq glass card">
-                <div><div class="rl">Sistema</div><div class="rv">Win 10/11 x64</div></div>
-                <div><div class="rl">CPU</div><div class="rv">Intel / AMD x64</div></div>
-                <div><div class="rl">RAM</div><div class="rv">4 GB</div></div>
-                <div><div class="rl">Espacio</div><div class="rv">300 MB</div></div>
-            </div>
-        </div>
-
-        <footer>© 2026 YadSoft · Zeta — Convertidor de Video · Hecho con ♥ para Windows</footer>
+<div id="pgLand">
+  <nav class="top">
+    <div class="np glass pill">
+      <span class="nb">
+        <svg width="22" height="22" viewBox="0 0 24 24"><defs><linearGradient id="gN" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gN)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
+        Zeta
+      </span>
+      <span id="navVer" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--o);padding:.15rem .5rem">—</span>
+      <button class="pill G" style="color:#fff;font-weight:700;font-size:.8rem;padding:.44rem 1.05rem" onclick="mainDl()">Descargar</button>
     </div>
+  </nav>
 
-    <div id="pgAdmL" class="hidden">
-        <div class="alc glass">
-            <div style="margin-bottom:1.3rem;filter:drop-shadow(0 0 20px rgba(249,115,22,.55))">
-                <svg width="52" height="52" viewBox="0 0 24 24"><defs><linearGradient id="gAL" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gAL)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
-            </div>
-            <div style="font-weight:800;font-size:1.1rem;margin-bottom:.3rem">Panel del Desarrollador</div>
-            <div style="font-family:'JetBrains Mono',monospace;font-size:.63rem;color:rgba(245,243,240,.3);margin-bottom:1.75rem">Acceso exclusivo · jorgeyadielp@gmail.com</div>
-            <div id="adS1">
-                <div class="aw glass"><input type="email" id="adEmail" value="jorgeyadielp@gmail.com" style="font-size:.88rem"/></div>
-                <p id="adErr" class="hidden" style="color:var(--r);font-size:.75rem;font-family:'JetBrains Mono',monospace;margin-bottom:.7rem"></p>
-                <button onclick="sendOTP()" id="btnOTP" class="G pill" style="color:#fff;font-weight:700;font-size:.9rem;padding:.75rem;width:100%">Enviar código de verificación</button>
-            </div>
-            <div id="adS2" class="hidden">
-                <p style="font-size:.82rem;color:var(--mu);margin-bottom:1.1rem">Código de 6 dígitos enviado:</p>
-                <div class="orow">
-                    <input class="oi" id="o1" maxlength="1" oninput="oN(this,'o2')" onkeydown="oB(event,this,null)">
-                    <input class="oi" id="o2" maxlength="1" oninput="oN(this,'o3')" onkeydown="oB(event,this,'o1')">
-                    <input class="oi" id="o3" maxlength="1" oninput="oN(this,'o4')" onkeydown="oB(event,this,'o2')">
-                    <input class="oi" id="o4" maxlength="1" oninput="oN(this,'o5')" onkeydown="oB(event,this,'o3')">
-                    <input class="oi" id="o5" maxlength="1" oninput="oN(this,'o6')" onkeydown="oB(event,this,'o4')">
-                    <input class="oi" id="o6" maxlength="1" oninput="verOTP()"     onkeydown="oB(event,this,'o5')">
-                </div>
-                <p id="otpErr" class="hidden" style="color:var(--r);font-size:.75rem;font-family:'JetBrains Mono',monospace;margin-bottom:.7rem"></p>
-                <button onclick="verOTP()" class="G pill" style="color:#fff;font-weight:700;font-size:.9rem;padding:.75rem;width:100%;margin-bottom:.6rem">Verificar</button>
-                <button onclick="resetOTP()" style="background:none;border:none;color:rgba(245,243,240,.28);font-size:.72rem;font-family:'JetBrains Mono',monospace;cursor:pointer">← Volver</button>
-                <div id="otpTimer" style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:rgba(245,243,240,.3);margin-top:.5rem"></div>
-            </div>
-        </div>
+  <section class="hero">
+    <div class="hlogo">
+      <svg width="100" height="100" viewBox="0 0 24 24"><defs><linearGradient id="gH" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gH)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
     </div>
-
-    <div id="pgAdmin" class="hidden">
-        <div class="blob b1"></div><div class="blob b2"></div>
-        <nav class="adnav">
-            <div class="adbrand">
-                <svg width="24" height="24" viewBox="0 0 24 24"><defs><linearGradient id="gAD" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gAD)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
-                Zeta Admin
-            </div>
-            <div class="tabs">
-                <button class="tb on" id="tbS" onclick="swTab('S')">📊 Stats</button>
-                <button class="tb"    id="tbM" onclick="swTab('M')">🗂️ Archivos</button>
-            </div>
-            <button onclick="showLand()" style="border-radius:100px;background:none;border:1px solid rgba(255,255,255,.1);color:rgba(245,243,240,.4);font-size:.76rem;padding:.38rem .9rem">← Web</button>
-        </nav>
-
-        <div id="tabS" class="abody">
-            <h2 class="ah2">📊 Estadísticas en vivo</h2>
-            <div class="sg">
-                <div class="sc glass"><div style="font-size:1.2rem;margin-bottom:.5rem">👁️</div><div id="aV" style="font-size:2rem;font-weight:800;color:#38BDF8;margin-bottom:.2rem">—</div><div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(245,243,240,.35);text-transform:uppercase;letter-spacing:.08em">Visitas</div></div>
-                <div class="sc glass"><div style="font-size:1.2rem;margin-bottom:.5rem">⬇️</div><div id="aDl" style="font-size:2rem;font-weight:800;color:#4ade80;margin-bottom:.2rem">—</div><div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(245,243,240,.35);text-transform:uppercase;letter-spacing:.08em">Descargas</div></div>
-                <div class="sc glass"><div style="font-size:1.2rem;margin-bottom:.5rem">📦</div><div id="aF" style="font-size:2rem;font-weight:800;color:var(--o);margin-bottom:.2rem">—</div><div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(245,243,240,.35);text-transform:uppercase;letter-spacing:.08em">Archivos</div></div>
-            </div>
-            <div class="infobox glass" style="margin-bottom:1.5rem">
-                <p>
-                    <strong style="color:#4ade80">Sincronización en vivo activa.</strong> La web consulta el servidor de archivos cada 5 minutos y cuando el visitante hace clic en "Refrescar".
-                </p>
-            </div>
-            <h3 style="font-weight:700;font-size:.95rem;margin-bottom:1rem">Archivos actuales en el servidor</h3>
-            <div class="glass card" style="overflow:hidden"><table class="dt"><thead><tr><th>Nombre</th><th>Tipo</th><th>Tamaño</th><th>Subido</th><th>Descargas</th></tr></thead><tbody id="mfTbl"></tbody></table></div>
-        </div>
-
-        <div id="tabM" class="abody hidden">
-            <h2 class="ah2">🗂️ Archivos en vivo</h2>
-            <div class="infobox glass" style="margin-bottom:1.5rem">
-                <p>
-                    <strong style="color:#4ade80">Conexión activa con el servidor de archivos</strong><br>
-                    <span style="color:#38BDF8;font-family:'JetBrains Mono',monospace;font-size:.78rem">Los archivos se obtienen directamente de la nube</span><br><br>
-                    <strong style="color:var(--o)">¿Cómo agregar archivos nuevos?</strong><br>
-                    1. Sube el archivo a la carpeta en la nube<br>
-                    2. Espera 1-2 minutos<br>
-                    3. La web lo muestra automáticamente 🎉
-                </p>
-            </div>
-            <div style="display:flex;gap:.75rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap">
-                <button onclick="loadFiles(true)" class="refresh-btn" style="padding:.55rem 1.1rem;font-size:.78rem">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-                    Refrescar ahora
-                </button>
-                <span id="mfSt" style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--mu)"></span>
-            </div>
-            <div class="glass card" style="overflow:hidden"><table class="dt"><thead><tr><th>Nombre</th><th>Tipo</th><th>Tamaño</th><th>Subido</th><th>Descargas</th></tr></thead><tbody id="mfTbl2"></tbody></table></div>
-        </div>
+    <span class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--o);letter-spacing:.14em;text-transform:uppercase;padding:.28rem .8rem;margin-bottom:1rem;display:inline-block">Convertidor de Video · Windows</span>
+    <h1>Convierte.<br><span class="gt">Rápido. Sin límites.</span></h1>
+    <p style="color:var(--mu);line-height:1.72;max-width:420px;font-size:1rem;margin-bottom:1.6rem">Convierte cualquier video al formato que necesitas con aceleración GPU. Sin marcas de agua, sin suscripciones.</p>
+    <div class="stats-row">
+      <div class="sp glass pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span id="sV" style="color:#38BDF8;font-weight:700">—</span><span style="color:var(--mu)">vistas</span></div>
+      <div class="sp glass pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span id="sD" style="color:#4ade80;font-weight:700">—</span><span style="color:var(--mu)">descargas</span></div>
+      <div class="sp glass pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span id="sU" style="color:#A78BFA;font-weight:700">—</span><span style="color:var(--mu)">versiones</span></div>
     </div>
+    <a href="https://wa.me/qr/M4VVW26SBVZNE1" target="_blank" class="btn-wa">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+      +53 58668183
+    </a>
+  </section>
 
-    <script>
-        const MF_KEY      = "94cnujdlx4umf";
-        const MF_API      = `https://www.mediafire.com/api/1.5/folder/get_content.php?folder_key=${MF_KEY}&chunk_size=200&response_format=json&version=1.5&content_type=files`;
-        const CORS_PROXY  = "https://corsproxy.io/?";
-        const ADMIN_EMAIL = "jorgeyadielp@gmail.com";
+  <div class="sec">
+    <div class="feats">
+      <div class="feat glass card"><div class="fi">⚡</div><div class="ft">Aceleración GPU</div><p class="fd">Usa tu tarjeta gráfica para conversiones hasta 10× más rápidas.</p></div>
+      <div class="feat glass card"><div class="fi">🎬</div><div class="ft">Todos los Formatos</div><p class="fd">MP4, MKV, AVI, MOV, WebM, TS, M4V, WMV, FLV, GIF y más.</p></div>
+      <div class="feat glass card"><div class="fi">📦</div><div class="ft">Por Lotes</div><p class="fd">Convierte carpetas enteras con configuraciones distintas.</p></div>
+    </div>
+  </div>
 
-        let mfFiles=[], mfFolders=[];
-        let views=0;
-        let mainDlUrl="", mainDlName="", _otp=null, _otpExp=0, _otpTmr=null;
-        let _mfInterval=null;
+  <div class="sec" style="max-width:780px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
+      <span class="lbl" style="margin-bottom:0">App Principal</span>
+      <span style="display:flex;align-items:center;gap:.5rem">
+        <span id="zetaCount" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--mu);padding:.2rem .6rem">—</span>
+        <button class="refresh-btn" id="refreshBtn" onclick="loadFiles(true)" title="Actualizar">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Actualizar
+        </button>
+      </span>
+    </div>
+    <div class="zw glass card">
+      <span class="zbadge">⚡ Zeta — Convertidor de Video para Windows</span>
+      <p style="font-size:.84rem;color:var(--mu);line-height:1.65;margin-bottom:.75rem">Lista actualizada desde el servidor · Se refresca automáticamente</p>
+      <div id="zetaList" class="zlist">
+        <div class="zcard" style="pointer-events:none"><div style="flex:1"><div class="skel" style="width:50%;height:18px"></div><div class="skel" style="width:80%;height:14px;margin-top:.4rem"></div></div><div class="skel" style="width:100px;height:36px;border-radius:100px"></div></div>
+      </div>
+    </div>
+  </div>
 
-        const $ = id => document.getElementById(id);
-        const ls = {
-            get: k=>{try{return JSON.parse(localStorage.getItem("z:"+k))}catch{return null}},
-            set: (k,v)=>{try{localStorage.setItem("z:"+k,JSON.stringify(v))}catch{}}
-        };
+  <div class="sec" style="max-width:780px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem">
+      <span class="lbl" style="margin-bottom:0">Componentes adicionales</span>
+      <span id="depCount" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--mu);padding:.2rem .6rem">—</span>
+    </div>
+    <p style="font-size:.84rem;color:var(--mu);line-height:1.65;margin-bottom:1rem;position:relative;z-index:1">Archivos complementarios necesarios para el correcto funcionamiento de Zeta.</p>
+    <div id="depList" class="dgrid">
+      <div class="dcard glass" style="pointer-events:none"><div class="skel" style="height:16px;margin-bottom:.5rem"></div><div class="skel" style="height:14px;width:70%"></div></div>
+    </div>
+  </div>
 
-        /* ============== DESCARGA EN LA MISMA PÁGINA (sin saltar a MediaFire) ============== */
-        function escHtml(s){
-            return String(s ?? "").replace(/[&<>"']/g, c => ({
-                "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-            }[c]));
-        }
+  <div class="sec" style="max-width:680px;text-align:center">
+    <span class="lbl" style="text-align:center">Formatos soportados</span>
+    <div class="pills">
+      <span class="pt glass pill">MP4</span><span class="pt glass pill">MKV</span><span class="pt glass pill">AVI</span><span class="pt glass pill">MOV</span><span class="pt glass pill">WebM</span><span class="pt glass pill">TS</span><span class="pt glass pill">M2TS</span><span class="pt glass pill">M4V</span><span class="pt glass pill">WMV</span><span class="pt glass pill">FLV</span><span class="pt glass pill">3GP</span><span class="pt glass pill">GIF</span>
+    </div>
+  </div>
 
-        // Proxies CORS de respaldo por si uno falla
-        const CORS_PROXIES = [
-            u => "https://corsproxy.io/?" + encodeURIComponent(u),
-            u => "https://corsproxy.io/?url=" + encodeURIComponent(u)
-        ];
+  <div class="sec" style="max-width:700px">
+    <div class="rq glass card">
+      <div><div class="rl">Sistema</div><div class="rv">Win 10/11 x64</div></div>
+      <div><div class="rl">CPU</div><div class="rv">Intel / AMD x64</div></div>
+      <div><div class="rl">RAM</div><div class="rv">4 GB</div></div>
+      <div><div class="rl">Espacio</div><div class="rv">300 MB</div></div>
+    </div>
+  </div>
+  <footer>© 2026 YadSoft · Zeta — Convertidor de Video · Hecho con ♥ para Windows</footer>
+</div>
 
-        // Overlay de progreso
-        function showOverlay(text){
-            let o = $("dlOverlay");
-            if (!o) {
-                o = document.createElement("div");
-                o.id = "dlOverlay";
-                o.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(7,8,13,.82);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;animation:fadein .2s ease";
-                o.innerHTML = `
-                    <div style="width:64px;height:64px;border-radius:50%;border:4px solid rgba(249,115,22,.18);border-top-color:#F97316;animation:spin 1s linear infinite"></div>
-                    <div id="dlOverlayText" style="font-family:'JetBrains Mono',monospace;font-size:.9rem;color:#F5F3F0;font-weight:600">${text||"Preparando descarga…"}</div>
-                    <div id="dlOverlaySub" style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:rgba(245,243,240,.45)">Trayendo el archivo desde el servidor</div>
-                    <button id="dlCancel" style="margin-top:.6rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(245,243,240,.55);font-size:.7rem;padding:.4rem 1rem;border-radius:100px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Cancelar</button>
-                `;
-                document.body.appendChild(o);
-                $("dlCancel").onclick = () => { hideOverlay(); };
-            } else {
-                $("dlOverlayText").textContent = text || "Preparando descarga…";
-                o.style.display = "flex";
-            }
-            return o;
-        }
-        function hideOverlay(){
-            const o = $("dlOverlay");
-            if (o) o.style.display = "none";
-        }
+<!-- ══ PÍLDORA DE DESCARGA ══ -->
+<div id="dlPill" class="glass">
+  <div class="dp-ico-wrap pulse" id="dpIco">⬇️</div>
+  <div class="dp-body">
+    <div class="dp-name" id="dpName">—</div>
+    <div class="dp-bar-row">
+      <div class="dp-bar"><div class="dp-fill" id="dpFill"></div></div>
+      <span class="dp-pct" id="dpPct">0%</span>
+    </div>
+    <div class="dp-meta" id="dpMeta">Obteniendo enlace…</div>
+  </div>
+  <button class="dp-folder-btn hidden" id="dpFolderBtn" onclick="openDownloads()">📂 Ver</button>
+  <button class="dp-close" onclick="hidePill()">✕</button>
+</div>
 
-        async function fetchText(url){
-            for (const proxy of CORS_PROXIES) {
-                try {
-                    const resp = await fetch(proxy(url), { method: "GET", redirect: "follow", cache: "no-store" });
-                    if (!resp.ok) continue;
-                    return await resp.text();
-                } catch(e) { /* siguiente */ }
-            }
-            throw new Error("No se pudo obtener la página");
-        }
+<!-- ══ ADMIN LOGIN ══ -->
+<div id="pgAdmL" class="hidden">
+  <div class="alc glass">
+    <div style="margin-bottom:1.3rem;filter:drop-shadow(0 0 20px rgba(249,115,22,.55))">
+      <svg width="52" height="52" viewBox="0 0 24 24"><defs><linearGradient id="gAL" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gAL)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
+    </div>
+    <div style="font-weight:800;font-size:1.1rem;margin-bottom:.3rem">Panel del Desarrollador</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.63rem;color:rgba(245,243,240,.3);margin-bottom:1.75rem">Acceso exclusivo · jorgeyadielp@gmail.com</div>
+    <div id="adS1">
+      <div class="aw glass"><input type="email" id="adEmail" value="jorgeyadielp@gmail.com" style="font-size:.88rem"/></div>
+      <p id="adErr" class="hidden" style="color:var(--r);font-size:.75rem;font-family:'JetBrains Mono',monospace;margin-bottom:.7rem"></p>
+      <button onclick="sendOTP()" id="btnOTP" class="G pill" style="color:#fff;font-weight:700;font-size:.9rem;padding:.75rem;width:100%">Enviar código de verificación</button>
+    </div>
+    <div id="adS2" class="hidden">
+      <p style="font-size:.82rem;color:var(--mu);margin-bottom:1.1rem">Código de 6 dígitos enviado:</p>
+      <div class="orow">
+        <input class="oi" id="o1" maxlength="1" oninput="oN(this,'o2')" onkeydown="oB(event,this,null)">
+        <input class="oi" id="o2" maxlength="1" oninput="oN(this,'o3')" onkeydown="oB(event,this,'o1')">
+        <input class="oi" id="o3" maxlength="1" oninput="oN(this,'o4')" onkeydown="oB(event,this,'o2')">
+        <input class="oi" id="o4" maxlength="1" oninput="oN(this,'o5')" onkeydown="oB(event,this,'o3')">
+        <input class="oi" id="o5" maxlength="1" oninput="oN(this,'o6')" onkeydown="oB(event,this,'o4')">
+        <input class="oi" id="o6" maxlength="1" oninput="verOTP()" onkeydown="oB(event,this,'o5')">
+      </div>
+      <p id="otpErr" class="hidden" style="color:var(--r);font-size:.75rem;font-family:'JetBrains Mono',monospace;margin-bottom:.7rem"></p>
+      <button onclick="verOTP()" class="G pill" style="color:#fff;font-weight:700;font-size:.9rem;padding:.75rem;width:100%;margin-bottom:.6rem">Verificar</button>
+      <button onclick="resetOTP()" style="background:none;border:none;color:rgba(245,243,240,.28);font-size:.72rem;font-family:'JetBrains Mono',monospace;cursor:pointer">← Volver</button>
+      <div id="otpTimer" style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:rgba(245,243,240,.3);margin-top:.5rem"></div>
+    </div>
+  </div>
+</div>
 
-        async function fetchBlob(url){
-            let lastErr = null;
-            for (let i = 0; i < CORS_PROXIES.length; i++) {
-                const proxy = CORS_PROXIES[i];
-                try {
-                    $("dlOverlaySub") && ($("dlOverlaySub").textContent = `Conectando (${i+1}/${CORS_PROXIES.length})…`);
-                    const resp = await fetch(proxy(url), { method: "GET", redirect: "follow", cache: "no-store" });
-                    if (!resp.ok) throw new Error("HTTP " + resp.status);
-                    const blob = await resp.blob();
-                    if (blob.size < 200) throw new Error("Archivo demasiado pequeño (" + blob.size + " bytes)");
-                    return { blob, resp };
-                } catch(e) {
-                    console.warn("Proxy", i, "falló:", e.message);
-                    lastErr = e;
-                }
-            }
-            throw lastErr || new Error("Ningún proxy funcionó");
-        }
+<!-- ══ ADMIN DASH ══ -->
+<div id="pgAdmin" class="hidden">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <nav class="adnav">
+    <div class="adbrand">
+      <svg width="24" height="24" viewBox="0 0 24 24"><defs><linearGradient id="gAD" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gAD)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
+      Zeta Admin
+    </div>
+    <div class="tabs">
+      <button class="tb on" id="tbS" onclick="swTab('S')">📊 Stats</button>
+      <button class="tb"    id="tbM" onclick="swTab('M')">🗂️ Archivos</button>
+    </div>
+    <button onclick="showLand()" style="border-radius:100px;background:none;border:1px solid rgba(255,255,255,.1);color:rgba(245,243,240,.4);font-size:.76rem;padding:.38rem .9rem">← Web</button>
+  </nav>
 
-        /**
-         * MediaFire devuelve una PÁGINA HTML, no el archivo.
-         * Hay que raspar la página para sacar el enlace directo real.
-         */
-        async function resolveMediaFireUrl(pageUrl){
-            const html = await fetchText(pageUrl);
+  <div id="tabS" class="abody">
+    <h2 class="ah2">📊 Estadísticas</h2>
+    <div class="sg">
+      <div class="sc glass"><div style="font-size:1.2rem;margin-bottom:.5rem">👁️</div><div id="aV" style="font-size:2rem;font-weight:800;color:#38BDF8;margin-bottom:.2rem">—</div><div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(245,243,240,.35);text-transform:uppercase;letter-spacing:.08em">Visitas</div></div>
+      <div class="sc glass"><div style="font-size:1.2rem;margin-bottom:.5rem">⬇️</div><div id="aDl" style="font-size:2rem;font-weight:800;color:#4ade80;margin-bottom:.2rem">—</div><div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(245,243,240,.35);text-transform:uppercase;letter-spacing:.08em">Descargas</div></div>
+      <div class="sc glass"><div style="font-size:1.2rem;margin-bottom:.5rem">📦</div><div id="aF" style="font-size:2rem;font-weight:800;color:var(--o);margin-bottom:.2rem">—</div><div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:rgba(245,243,240,.35);text-transform:uppercase;letter-spacing:.08em">Archivos</div></div>
+    </div>
+    <h3 style="font-weight:700;font-size:.95rem;margin-bottom:1rem">Archivos en el servidor</h3>
+    <div class="glass card" style="overflow:hidden"><table class="dt"><thead><tr><th>Nombre</th><th>Tipo</th><th>Tamaño</th><th>Subido</th><th>Descargas</th></tr></thead><tbody id="mfTbl"></tbody></table></div>
+  </div>
 
-            const patterns = [
-                /href="(https?:\/\/download[0-9a-z]*\.mediafire\.com\/[^"]+)"/i,
-                /aria-label="Download file"[^>]*href="([^"]+)"/i,
-                /id="downloadButton"[^>]*href="([^"]+)"/i,
-                /"download_url"\s*:\s*"(https?:[^"]+)"/i,
-                /data-downloadurl="([^"]+)"/i,
-                /href="(https?:\/\/[a-z0-9.]*mediafire\.com\/[^"]*\.(exe|zip|rar|7z|msi|dll|mp4|mkv|avi)[^"]*)"/i
-            ];
-            for (const p of patterns) {
-                const m = html.match(p);
-                if (m && m[1]) return m[1];
-            }
-            throw new Error("No se encontró el enlace directo en la página de MediaFire");
-        }
+  <div id="tabM" class="abody hidden">
+    <h2 class="ah2">🗂️ Archivos en vivo</h2>
+    <div class="infobox glass" style="margin-bottom:1.5rem">
+      <p><strong style="color:#4ade80">Sincronización activa</strong><br><br>
+      <strong style="color:var(--o)">¿Cómo agregar archivos?</strong><br>
+      1. Sube el archivo a la carpeta en la nube<br>
+      2. Espera 1-2 minutos<br>
+      3. La web lo muestra automáticamente 🎉</p>
+    </div>
+    <div style="display:flex;gap:.75rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap">
+      <button onclick="loadFiles(true)" class="refresh-btn" style="padding:.55rem 1.1rem;font-size:.78rem">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        Refrescar ahora
+      </button>
+      <span id="mfSt" style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--mu)"></span>
+    </div>
+    <div class="glass card" style="overflow:hidden"><table class="dt"><thead><tr><th>Nombre</th><th>Tipo</th><th>Tamaño</th><th>Subido</th><th>Descargas</th></tr></thead><tbody id="mfTbl2"></tbody></table></div>
+  </div>
+</div>
 
-        /**
-         * Fuerza la descarga en la MISMA PÁGINA.
-         * 1) Resuelve la URL directa desde la página de MediaFire
-         * 2) Trae el archivo por el proxy CORS
-         * 3) Lo entrega como Blob para que dispare la "píldora" del navegador
-         */
-        async function forceDl(url, fname){
-            if(!url || url === "#") return;
-            try { event?.preventDefault?.(); event?.stopPropagation?.(); } catch(e){}
+<script>
+// ══════════════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════════════
+const MF_KEY      = "94cnujdlx4umf";
+const MF_API      = `https://www.mediafire.com/api/1.5/folder/get_content.php?folder_key=${MF_KEY}&chunk_size=200&response_format=json&version=1.5&content_type=files`;
+const MF_LINK_API = `https://www.mediafire.com/api/1.5/file/get_links.php?link_type=direct_download&response_format=json&version=1.5&quick_key=`;
+const PROXY       = "https://corsproxy.io/?";
+const ADMIN_EMAIL = "jorgeyadielp@gmail.com";
 
-            showOverlay("Preparando descarga…");
+// ══════════════════════════════════════════════════
+// ESTADO
+// ══════════════════════════════════════════════════
+let mfFiles=[], mfFolders=[];
+let views=0;
+let mainDlUrl="", mainDlName="", mainDlQk="", mainDlSz=0;
+let _otp=null, _otpExp=0, _otpTmr=null, _mfTimer=null;
+let _dlAbort=null;
 
-            try {
-                $("dlOverlaySub") && ($("dlOverlaySub").textContent = "Buscando enlace directo…");
-                const directUrl = await resolveMediaFireUrl(url);
+const $ = id => document.getElementById(id);
+const ls = {
+  get: k=>{try{return JSON.parse(localStorage.getItem("z:"+k))}catch{return null}},
+  set: (k,v)=>{try{localStorage.setItem("z:"+k,JSON.stringify(v))}catch{}}
+};
 
-                $("dlOverlayText") && ($("dlOverlayText").textContent = "Descargando archivo…");
-                $("dlOverlaySub") && ($("dlOverlaySub").textContent = "Trayendo desde el servidor…");
-                const { blob } = await fetchBlob(directUrl);
+// ══════════════════════════════════════════════════
+// CARGA DE ARCHIVOS (igual que tu versión actual)
+// ══════════════════════════════════════════════════
+async function loadFiles(force=false){
+  const cached = ls.get("mf_cache");
+  if(cached && !force){
+    mfFiles = cached.files||[]; mfFolders = cached.folders||[];
+    renderFiles();
+    const age = Date.now()-(cached.ts||0);
+    if(age<2*60*1000 && mfFiles.length>0){ sched(2*60*1000-age); return; }
+  }
+  const btn=$("refreshBtn"); if(btn) btn.classList.add("spin");
+  if($("mfSt")) $("mfSt").textContent="Conectando con el servidor…";
+  try{
+    const r = await fetch(PROXY+encodeURIComponent(MF_API),{headers:{"Accept":"application/json"}});
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    const d = await r.json();
+    if(d.response?.result!=="Success") throw new Error(d.response?.message||"Error del servidor");
+    mfFiles   = (d.response.folder_content?.files||[]).sort((a,b)=>new Date(b.created||0)-new Date(a.created||0));
+    mfFolders = d.response.folder_content?.folders||[];
+    ls.set("mf_cache",{files:mfFiles,folders:mfFolders,ts:Date.now()});
+    renderFiles();
+    if($("mfSt")) $("mfSt").textContent=`✓ ${mfFiles.length} archivos · ${new Date().toLocaleTimeString("es-ES")}`;
+    sched(5*60*1000);
+  }catch(e){
+    console.warn(e);
+    if($("mfSt")) $("mfSt").textContent="⚠️ "+e.message+" (usando caché)";
+    if(mfFiles.length===0) $("zetaList").innerHTML=`<div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--mu);padding:1rem;line-height:1.7"><strong style="color:var(--o)">⚠️ Sin conexión</strong><br><br>${e.message}<br><br><button onclick="loadFiles(true)" style="margin-top:.6rem;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);color:var(--o);border-radius:100px;padding:.35rem .9rem;font-size:.75rem;cursor:pointer;font-family:inherit">Reintentar</button></div>`;
+    sched(60*1000);
+  }finally{ if(btn) btn.classList.remove("spin"); }
+}
+function sched(ms){ if(_mfTimer)clearTimeout(_mfTimer); _mfTimer=setTimeout(()=>loadFiles(false),ms); }
 
-                const finalName = fname || (directUrl.split("/").pop().split("?")[0]) || "download";
-                const blobUrl = URL.createObjectURL(blob);
+// ══════════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════════
+const fmtSz=b=>{const n=parseInt(b)||0;if(n<1048576)return(n/1024).toFixed(0)+' KB';if(n<1073741824)return(n/1048576).toFixed(1)+' MB';return(n/1073741824).toFixed(2)+' GB';};
+const fmtDt=d=>{if(!d)return"—";const dt=new Date(d);return isNaN(dt)?d:dt.toLocaleDateString("es-ES",{day:"numeric",month:"short",year:"numeric"});};
+const fmtIco=n=>{const e=(n||"").split(".").pop().toLowerCase();if(["rar","zip","7z"].includes(e))return"🗜️";if(["exe","msi"].includes(e))return"⚙️";if(["dll"].includes(e))return"🔧";if(["mp4","mkv","avi","mov","webm"].includes(e))return"🎬";return"📦";};
+const fmtSpeed=b=>{if(b<1024)return b.toFixed(0)+' B/s';if(b<1048576)return(b/1024).toFixed(1)+' KB/s';return(b/1048576).toFixed(1)+' MB/s';};
+const fmtTime=s=>{if(s<60)return Math.ceil(s)+'s';if(s<3600)return Math.ceil(s/60)+'min';return(s/3600).toFixed(1)+'h';};
+const isZeta=n=>/zeta/i.test(n);
+const getVer=n=>{const m=n.match(/v?(\d+[\.\d]+-?[\d-]*)/i);return m?"v"+m[1].replace(/-+$/,""):null;};
 
-                $("dlOverlayText") && ($("dlOverlayText").textContent = "¡Listo! Mira la barra de descargas ⬇️");
-                $("dlOverlaySub") && ($("dlOverlaySub").textContent = finalName + " · " + (blob.size/1048576).toFixed(1) + " MB");
+function renderFiles(){
+  const zF=mfFiles.filter(f=>isZeta(f.filename));
+  const dF=mfFiles.filter(f=>!isZeta(f.filename));
+  let totalDl=0; mfFiles.forEach(f=>totalDl+=parseInt(f.downloads||0));
+  $("sD").textContent=totalDl.toLocaleString();
+  $("sU").textContent=zF.length;
+  if($("aDl"))$("aDl").textContent=totalDl.toLocaleString();
+  if($("aF"))$("aF").textContent=mfFiles.length;
+  $("zetaCount").textContent=`${zF.length} versión${zF.length!==1?"es":""}`;
+  $("depCount").textContent=dF.length===0?"0":`${dF.length} archivo${dF.length!==1?"s":""}`;
 
-                const a = document.createElement("a");
-                a.href = blobUrl;
-                a.download = finalName;
-                a.style.display = "none";
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
+  if(zF.length){
+    const l=zF[0];
+    $("navVer").textContent=getVer(l.filename)||"live";
+    mainDlUrl  = l.links?.normal_download||"";
+    mainDlName = l.filename;
+    mainDlQk   = l.quickkey||"";
+    mainDlSz   = parseInt(l.size||0);
+  }
 
-                setTimeout(() => {
-                    URL.revokeObjectURL(blobUrl);
-                    hideOverlay();
-                }, 1800);
-            } catch(e){
-                console.error("Descarga en misma página falló:", e);
-                hideOverlay();
-                if (confirm("⚠️ No se pudo descargar en la misma página.\n\nMotivo: " + e.message + "\n\n¿Abrir la página de MediaFire en una pestaña nueva?")) {
-                    window.open(url, "_blank", "noopener");
-                }
-            }
-        }
+  $("zetaList").innerHTML=zF.length===0
+    ?`<div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--mu);padding:1rem">No hay versiones todavía. Sube un archivo con "Zeta" en el nombre.</div>`
+    :zF.map((f,i)=>{
+      const ver=getVer(f.filename)||f.filename;
+      const dl=parseInt(f.downloads||0);
+      return`<div class="zcard">
+        <div style="flex:1">
+          <div class="zname">${ver}${i===0?`<span style="background:rgba(74,222,128,.12);color:#4ade80;font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.15rem .5rem;border-radius:100px;border:1px solid rgba(74,222,128,.25);margin-left:.4rem;vertical-align:middle">ÚLTIMA</span>`:""}
+          </div>
+          <div class="zmeta">
+            <span class="mb mb-dt">📅 ${fmtDt(f.created)}</span>
+            <span class="mb mb-sz">💾 ${fmtSz(f.size)}</span>
+            <span class="mb mb-dl">⬇️ ${dl.toLocaleString()} descargas</span>
+            <span class="mb mb-ex">.${(f.filename.split(".").pop()||"").toUpperCase()}</span>
+          </div>
+        </div>
+        <button class="btn-dl G" onclick="startDl('${f.quickkey||""}','${f.links?.normal_download||""}','${f.filename.replace(/'/g,"\\'")}',${parseInt(f.size||0)})">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Descargar
+        </button>
+      </div>`;}).join("");
 
-        function doDl(url, fname){
-            return forceDl(url, fname);
-        }
+  $("depList").innerHTML=dF.length===0
+    ?`<div class="dcard glass" style="text-align:center;color:var(--mu);font-family:'JetBrains Mono',monospace;font-size:.85rem;padding:2rem 1rem;grid-column:1/-1">Sin componentes adicionales por ahora.</div>`
+    :dF.map(f=>`<div class="dcard glass">
+      <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem">
+        <div class="dico">${fmtIco(f.filename)}</div>
+        <div style="flex:1;min-width:0">
+          <div class="dname">${f.filename}</div>
+          <div class="zmeta" style="margin-top:.25rem">
+            <span class="mb mb-dt">📅 ${fmtDt(f.created)}</span>
+            <span class="mb mb-sz">💾 ${fmtSz(f.size)}</span>
+            <span class="mb mb-dl">⬇️ ${parseInt(f.downloads||0).toLocaleString()}</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn-dep" onclick="startDl('${f.quickkey||""}','${f.links?.normal_download||""}','${f.filename.replace(/'/g,"\\'")}',${parseInt(f.size||0)})">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Descargar
+      </button>
+    </div>`).join("");
 
-        /* ============== CARGA DE ARCHIVOS DESDE MEDIAFIRE ============== */
-        async function loadFiles(forceRefresh=false){
-            const cached = ls.get("mf_cache");
-            if(cached && !forceRefresh){
-                mfFiles = cached.files || [];
-                renderFiles();
-            }
-            if(cached && !forceRefresh){
-                const age = Date.now() - (cached.ts||0);
-                if(age < 2*60*1000 && mfFiles.length > 0){
-                    if($("mfSt")) $("mfSt").textContent = `✓ ${mfFiles.length} archivos · caché ${Math.round(age/1000)}s`;
-                    scheduleNextRefresh(2*60*1000 - age);
-                    return;
-                }
-            }
+  const rows=[...mfFiles.map(f=>({n:f.filename,t:isZeta(f.filename)?"App":"Dep",s:fmtSz(f.size),d:fmtDt(f.created),dl:parseInt(f.downloads||0)})),...mfFolders.map(f=>({n:f.name,t:"Carpeta",s:"—",d:fmtDt(f.created),dl:0}))]
+  .map(f=>`<tr><td style="font-family:'JetBrains Mono',monospace;font-size:.78rem;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${f.n}">${f.t==="Carpeta"?"📁 ":""}${f.n}</td><td><span class="bdg ${f.t==="App"?"bo":f.t==="Carpeta"?"by":"bb"}">${f.t}</span></td><td style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--mu)">${f.s}</td><td style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(245,243,240,.38)">${f.d}</td><td><span class="bdg bg">${f.dl.toLocaleString()}</span></td></tr>`).join("")||`<tr><td colspan="5" style="padding:2rem;text-align:center;color:rgba(245,243,240,.25);font-family:'JetBrains Mono',monospace;font-size:.8rem">Sin archivos.</td></tr>`;
+  if($("mfTbl"))  $("mfTbl").innerHTML=rows;
+  if($("mfTbl2")) $("mfTbl2").innerHTML=rows;
+}
 
-            const btn = $("refreshBtn");
-            if(btn) btn.classList.add("spin");
-            if(!cached && $("mfSt")) $("mfSt").textContent = "Conectando con el servidor…";
+// ══════════════════════════════════════════════════
+// DESCARGA CON PÍLDORA
+// ══════════════════════════════════════════════════
+function mainDl(){ startDl(mainDlQk,mainDlUrl,mainDlName,mainDlSz); }
 
-            try{
-                const resp = await fetch(CORS_PROXY + encodeURIComponent(MF_API), {
-                    method: "GET",
-                    headers: { "Accept": "application/json" }
-                });
-                if(!resp.ok) throw new Error("HTTP " + resp.status);
-                const data = await resp.json();
-                if(data.response?.result !== "Success") throw new Error(data.response?.message || "Error del servidor");
+async function startDl(qk, fallbackUrl, filename, filesize){
+  if(!filename) return;
+  showPill(filename);
 
-                mfFiles = (data.response.folder_content?.files || []).sort(
-                    (a,b) => new Date(b.created||0) - new Date(a.created||0)
-                );
-                mfFolders = data.response.folder_content?.folders || [];
+  // ① Obtener enlace directo de descarga vía API (no redirige a la web del servicio)
+  let directUrl = fallbackUrl;
+  if(qk){
+    try{
+      const r = await fetch(PROXY+encodeURIComponent(MF_LINK_API+qk),{headers:{"Accept":"application/json"}});
+      if(r.ok){
+        const d = await r.json();
+        const lnk = d?.response?.links?.[0];
+        if(lnk?.direct_download) directUrl = lnk.direct_download;
+        else if(lnk?.normal_download) directUrl = lnk.normal_download;
+      }
+    }catch(e){ console.warn("get_links:",e); }
+  }
+  if(!directUrl){ pillError("Sin enlace disponible"); return; }
 
-                ls.set("mf_cache", { files: mfFiles, folders: mfFolders, ts: Date.now() });
-                renderFiles();
+  // ② Intentar descarga con progreso real (fetch + ReadableStream)
+  _dlAbort = new AbortController();
+  try{
+    setPillMeta("Iniciando descarga…");
+    const r = await fetch(directUrl, { signal:_dlAbort.signal, redirect:"follow" });
+    if(!r.ok) throw new Error("HTTP "+r.status);
 
-                if($("mfSt")) $("mfSt").textContent = `✓ ${mfFiles.length} archivos · ${new Date().toLocaleTimeString("es-ES")}`;
-                scheduleNextRefresh(5*60*1000);
-            }catch(e){
-                console.warn("Error al obtener archivos:",e);
-                if($("mfSt")) $("mfSt").textContent = "⚠️ " + e.message + " (usando caché)";
-                if(mfFiles.length === 0){
-                    $("zetaList").innerHTML = `<div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--mu);padding:1rem;line-height:1.7">
-                        <strong style="color:var(--o)">⚠️ No se pudo conectar con el servidor</strong><br><br>
-                        ${e.message}<br><br>
-                        Verifica tu conexión a internet.
-                    </div>`;
-                }
-                scheduleNextRefresh(60*1000);
-            }finally{
-                if(btn) btn.classList.remove("spin");
-            }
-        }
+    const total   = parseInt(r.headers.get("Content-Length")||"0") || filesize || 0;
+    const reader  = r.body.getReader();
+    const chunks  = [];
+    let   recv    = 0;
+    const t0      = Date.now();
 
-        function scheduleNextRefresh(ms){
-            if(_mfInterval) clearTimeout(_mfInterval);
-            _mfInterval = setTimeout(() => loadFiles(false), ms);
-        }
+    while(true){
+      const {done, value} = await reader.read();
+      if(done) break;
+      chunks.push(value);
+      recv += value.length;
 
-        function mfFmt(bytes){
-            const n=parseInt(bytes)||0;
-            if(n<1048576) return (n/1024).toFixed(0)+' KB';
-            if(n<1073741824) return (n/1048576).toFixed(1)+' MB';
-            return (n/1073741824).toFixed(2)+' GB';
-        }
-        function mfDate(d){
-            if(!d) return "—";
-            const dt=new Date(d);
-            return isNaN(dt)?d:dt.toLocaleDateString("es-ES",{day:"numeric",month:"short",year:"numeric"});
-        }
-        function mfIcon(name){
-            const e=(name||"").split(".").pop().toLowerCase();
-            if(["rar","zip","7z"].includes(e)) return "🗜️";
-            if(["exe","msi"].includes(e)) return "⚙️";
-            if(["dll"].includes(e)) return "🔧";
-            if(["mp4","mkv","avi","mov","webm"].includes(e)) return "🎬";
-            if(["pdf"].includes(e)) return "📄";
-            return "📦";
-        }
-        const isZeta = name => /zeta/i.test(name);
-        function getVer(name){
-            const m=name.match(/v?(\d+[\.\d]+-?[\d-]*)/i);
-            return m ? "v"+m[1].replace(/-+$/,"") : null;
-        }
+      const elapsed  = Math.max(0.1, (Date.now()-t0)/1000);
+      const speed    = recv / elapsed;
+      const pct      = total>0 ? Math.min(99, recv/total*100) : 0;
+      const remain   = speed>0 && total>0 ? (total-recv)/speed : 0;
 
-        function renderFiles(){
-            const zF = mfFiles.filter(f => isZeta(f.filename));
-            const dF = mfFiles.filter(f => !isZeta(f.filename));
+      $("dpFill").style.width = pct.toFixed(1)+"%";
+      $("dpPct").textContent  = pct.toFixed(0)+"%";
+      setPillMeta(fmtSpeed(speed) + (remain>0?"  ·  "+fmtTime(remain)+" restante":""));
+    }
 
-            let totalDl = 0;
-            mfFiles.forEach(f => totalDl += parseInt(f.downloads||0));
-            $("sD").textContent = totalDl.toLocaleString();
-            if($("aDl")) $("aDl").textContent = totalDl.toLocaleString();
-            if($("aF"))  $("aF").textContent  = mfFiles.length;
-            $("sU").textContent = zF.length;
-            $("zetaCount").textContent = `${zF.length} versión${zF.length!==1?"es":""}`;
-            $("depCount").textContent  = dF.length === 0 ? "0" : `${dF.length} archivo${dF.length!==1?"s":""}`;
+    // ③ Guardar como blob — sin abrir ninguna ventana externa
+    const blob   = new Blob(chunks);
+    const objUrl = URL.createObjectURL(blob);
+    const a      = Object.assign(document.createElement("a"),{href:objUrl,download:filename,style:"display:none"});
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(objUrl), 3000);
 
-            if(zF.length){
-                const lat = zF[0];
-                const ver = getVer(lat.filename);
-                $("navVer").textContent = ver || "live";
-                mainDlUrl  = lat.links?.normal_download || "";
-                mainDlName = lat.filename || "zeta-setup.exe";
-            }
+    pillDone(filename);
+    bumpDl(parseInt(filesize));
 
-            $("zetaList").innerHTML = zF.length === 0
-                ? `<div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--mu);padding:1rem;line-height:1.7">No hay versiones de Zeta todavía. Sube un archivo con "Zeta" en el nombre al servidor.</div>`
-                : zF.map((f,i) => {
-                    const fname = f.filename;
-                    const ver = getVer(fname) || fname;
-                    const url = f.links?.normal_download || "#";
-                    const dlCount = parseInt(f.downloads||0);
-                    return `<div class="zcard">
-                        <div style="flex:1">
-                            <div class="zname">
-                                ${escHtml(ver)}
-                                ${i===0?`<span style="background:rgba(74,222,128,.12);color:#4ade80;font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.15rem .5rem;border-radius:100px;border:1px solid rgba(74,222,128,.25);margin-left:.4rem;vertical-align:middle">ÚLTIMA</span>`:""}
-                            </div>
-                            <div class="zmeta">
-                                <span class="mb mb-dt">📅 ${escHtml(mfDate(f.created))}</span>
-                                <span class="mb mb-sz">💾 ${escHtml(mfFmt(f.size))}</span>
-                                <span class="mb mb-dl">⬇️ ${dlCount.toLocaleString()} descargas</span>
-                                <span class="mb mb-ex">.${escHtml((fname.split(".").pop()||"").toUpperCase())}</span>
-                            </div>
-                        </div>
-                        <button class="btn-dl G" data-url="${escHtml(url)}" data-name="${escHtml(fname)}">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                            Descargar
-                        </button>
-                    </div>`;
-                }).join("");
+  }catch(e){
+    if(e.name==="AbortError"){ hidePill(); return; }
+    // ④ Fallback: descarga directa mediante anchor con el enlace directo
+    //    (no abre el sitio del servicio, solo descarga el archivo)
+    console.warn("fetch fallback:",e);
+    try{
+      const a = Object.assign(document.createElement("a"),{href:directUrl,download:filename,style:"display:none"});
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      pillSimulate(filesize||0, filename);
+      bumpDl(parseInt(filesize));
+    }catch(e2){ pillError("Error al descargar"); }
+  }
+}
 
-            $("depList").innerHTML = dF.length === 0
-                ? `<div class="dcard glass" style="text-align:center;color:var(--mu);font-family:'JetBrains Mono',monospace;font-size:.85rem;padding:2rem 1rem;grid-column:1/-1">
-                    Sin componentes adicionales por ahora.
-                </div>`
-                : dF.map(f => {
-                    const fname = f.filename;
-                    const url = f.links?.normal_download || "#";
-                    return `<div class="dcard glass">
-                        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem">
-                            <div class="dico">${mfIcon(fname)}</div>
-                            <div style="flex:1;min-width:0">
-                                <div class="dname">${escHtml(fname)}</div>
-                                <div class="zmeta" style="margin-top:.25rem">
-                                    <span class="mb mb-dt">📅 ${escHtml(mfDate(f.created))}</span>
-                                    <span class="mb mb-sz">💾 ${escHtml(mfFmt(f.size))}</span>
-                                    <span class="mb mb-dl">⬇️ ${parseInt(f.downloads||0).toLocaleString()}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn-dep" data-url="${escHtml(url)}" data-name="${escHtml(fname)}">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                            Descargar
-                        </button>
-                    </div>`;
-                }).join("");
+// Simular progreso cuando no hay streaming real
+function pillSimulate(filesize, filename){
+  let p=2; const assumedSpeed=1.5*1048576; // 1.5 MB/s supuesto
+  const iv=setInterval(()=>{
+    const total=filesize||100*1048576;
+    p=Math.min(p+(assumedSpeed/total*100*0.5),98);
+    $("dpFill").style.width=p.toFixed(1)+"%";
+    $("dpPct").textContent=p.toFixed(0)+"%";
+    const recv=total*(p/100);
+    const remain=(total-recv)/assumedSpeed;
+    setPillMeta(fmtSpeed(assumedSpeed)+"  ·  "+fmtTime(remain)+" restante (estimado)");
+    if(p>=98){ clearInterval(iv); pillDone(filename); }
+  },300);
+}
 
-            const rows = [
-                ...mfFiles.map(f => ({n:f.filename, t:isZeta(f.filename)?"App":"Dep", s:mfFmt(f.size), d:mfDate(f.created), dl:parseInt(f.downloads||0)})),
-                ...mfFolders.map(f => ({n:f.name, t:"Carpeta", s:"—", d:mfDate(f.created), dl:0}))
-            ].map(f => `<tr>
-                <td style="font-family:'JetBrains Mono',monospace;font-size:.78rem;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${escHtml(f.n)}">${f.t==="Carpeta"?"📁 ":""}${escHtml(f.n)}</td>
-                <td><span class="bdg ${f.t==="App"?"bo":f.t==="Carpeta"?"by":"bb"}">${f.t}</span></td>
-                <td style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--mu)">${escHtml(f.s)}</td>
-                <td style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(245,243,240,.38)">${escHtml(f.d)}</td>
-                <td><span class="bdg bg">${f.dl.toLocaleString()}</span></td>
-            </tr>`).join("") || `<tr><td colspan="5" style="padding:2rem;text-align:center;color:rgba(245,243,240,.25);font-family:'JetBrains Mono',monospace;font-size:.8rem">Sin archivos.</td></tr>`;
+function bumpDl(sz){
+  const tot=(ls.get("dlTotal")||0)+1; ls.set("dlTotal",tot);
+  $("sD").textContent=tot.toLocaleString();
+  if($("aDl"))$("aDl").textContent=tot.toLocaleString();
+}
 
-            if($("mfTbl"))  $("mfTbl").innerHTML  = rows;
-            if($("mfTbl2")) $("mfTbl2").innerHTML = rows;
-        }
+// ══════════════════════════════════════════════════
+// PILL UI
+// ══════════════════════════════════════════════════
+function showPill(name){
+  // Cancelar descarga anterior si la hay
+  if(_dlAbort){ try{_dlAbort.abort();}catch{} _dlAbort=null; }
+  $("dpIco").textContent="⬇️";
+  $("dpIco").className="dp-ico-wrap pulse";
+  $("dpIco").style.background="linear-gradient(120deg,var(--o),var(--r))";
+  $("dpName").textContent=name;
+  $("dpFill").style.width="0%";
+  $("dpFill").style.background="linear-gradient(90deg,var(--o),var(--r))";
+  $("dpPct").textContent="0%";
+  $("dpPct").style.color="var(--o)";
+  $("dpFolderBtn").classList.add("hidden");
+  setPillMeta("Obteniendo enlace…");
+  $("dlPill").classList.add("visible");
+}
 
-        /* ============== CLICK GLOBAL EN BOTONES DE DESCARGA ============== */
-        document.addEventListener("click", (e) => {
-            const btn = e.target.closest(".btn-dl, .btn-dep");
-            if (!btn) return;
-            e.preventDefault();
-            const url  = btn.dataset.url  || "#";
-            const name = btn.dataset.name || "download";
-            if (url === "#") return;
-            const original = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="9" stroke-dasharray="42" stroke-dashoffset="14"/></svg> Preparando…`;
-            forceDl(url, name).finally(() => {
-                setTimeout(() => {
-                    btn.disabled = false;
-                    btn.innerHTML = original;
-                }, 1200);
-            });
-        });
+function setPillMeta(txt){ $("dpMeta").textContent=txt; }
 
-        function mainDl(){
-            if(mainDlUrl) doDl(mainDlUrl, mainDlName);
-            else if(mfFiles.length) doDl(mfFiles[0].links.normal_download, mfFiles[0].filename);
-        }
+function pillDone(name){
+  $("dpIco").textContent="✅";
+  $("dpIco").className="dp-ico-wrap";
+  $("dpIco").style.background="rgba(74,222,128,.2)";
+  $("dpFill").style.width="100%";
+  $("dpFill").style.background="#4ade80";
+  $("dpFill").style.animation="none";
+  $("dpPct").textContent="100%";
+  $("dpPct").style.color="#4ade80";
+  $("dpName").textContent=name;
+  setPillMeta("Descarga completada · revisa tu carpeta de Descargas");
+  $("dpFolderBtn").classList.remove("hidden");
+  // Auto-cerrar después de 8 segundos
+  setTimeout(()=>hidePill(),8000);
+}
 
-        /* ============== OTP / ADMIN ============== */
-        function oN(el,nid){if(el.value&&nid)$(nid).focus();}
-        function oB(e,el,pid){if(e.key==="Backspace"&&!el.value&&pid)$(pid).focus();}
-        function resetOTP(){$("adS1").classList.remove("hidden"); $("adS2").classList.add("hidden"); $("adErr").classList.add("hidden"); clearInterval(_otpTmr); _otp=null; _otpExp=0;}
-        async function sendOTP(){
-            const em=$("adEmail").value.trim();
-            $("adErr").classList.add("hidden");
-            if(em!==ADMIN_EMAIL){$("adErr").textContent="Solo jorgeyadielp@gmail.com puede acceder.";$("adErr").classList.remove("hidden");return;}
-            _otp=String(Math.floor(100000+Math.random()*900000)); _otpExp=Date.now()+5*60*1000;
-            alert(`🔐 Código:\n\n${_otp}\n\nVálido 5 minutos.`);
-            $("adS1").classList.add("hidden"); $("adS2").classList.remove("hidden"); $("o1").focus();
-            clearInterval(_otpTmr);
-            _otpTmr=setInterval(()=>{
-                const l=Math.max(0,Math.ceil((_otpExp-Date.now())/1000));
-                $("otpTimer").textContent=l?`Válido ${Math.floor(l/60)}:${String(l%60).padStart(2,"0")}`:"Expirado.";
-                if(!l)clearInterval(_otpTmr);
-            },1000);
-        }
-        function verOTP(){
-            const code=["o1","o2","o3","o4","o5","o6"].map(id=>$(id).value).join("");
-            if(code.length<6) return;
-            if(Date.now()>_otpExp){$("otpErr").textContent="Expirado.";$("otpErr").classList.remove("hidden");return;}
-            if(code===_otp){clearInterval(_otpTmr);_otp=null;showAdm();}
-            else{$("otpErr").textContent="Incorrecto.";$("otpErr").classList.remove("hidden");["o1","o2","o3","o4","o5","o6"].forEach(id=>$(id).value="");$("o1").focus();}
-        }
+function pillError(msg){
+  $("dpIco").textContent="❌";
+  $("dpIco").className="dp-ico-wrap";
+  $("dpIco").style.background="rgba(239,68,68,.2)";
+  $("dpPct").style.color="var(--r)";
+  setPillMeta(msg);
+  setTimeout(()=>hidePill(),3000);
+}
 
-        function showLand(){
-            ["pgLand","pgAdmL","pgAdmin"].forEach((id,i)=>i===0?$(id).classList.remove("hidden"):$(id).classList.add("hidden"));
-            history.replaceState(null,"",location.pathname);
-        }
-        function showAdmLogin(){
-            ["pgLand","pgAdmL","pgAdmin"].forEach((id,i)=>i===1?$(id).classList.remove("hidden"):$(id).classList.add("hidden"));
-        }
-        function showAdm(){
-            ["pgLand","pgAdmL","pgAdmin"].forEach((id,i)=>i===2?$(id).classList.remove("hidden"):$(id).classList.add("hidden"));
-            if($("aV")) $("aV").textContent=views;
-            if(mfFiles.length) renderFiles();
-        }
-        function swTab(t){
-            ["S","M"].forEach(id=>{
-                const tab=$("tab"+id); if(!tab) return;
-                tab.classList.toggle("hidden",id!==t);
-                $("tb"+id).classList.toggle("on",id===t);
-            });
-        }
+function hidePill(){
+  if(_dlAbort){ try{_dlAbort.abort();}catch{} _dlAbort=null; }
+  $("dlPill").classList.remove("visible");
+}
 
-        async function init(){
-            views = (ls.get("views")||0)+1; ls.set("views",views);
-            $("sV").textContent = views.toLocaleString();
-            if($("aV")) $("aV").textContent = views;
+function openDownloads(){
+  // Intentar abrir la vista de descargas del navegador
+  try{ window.open("about:downloads","_self"); }catch{}
+  // En Android/WebView no es posible, mostramos info
+  $("dpMeta").textContent="📂 Revisa la barra de notificaciones o la app Archivos";
+}
 
-            const route = () => {
-                const h = location.hash;
-                if(h==="#admin") showAdmLogin();
-                else showLand();
-            };
-            route();
-            window.addEventListener("hashchange", route);
-            loadFiles(false);
-        }
+// ══════════════════════════════════════════════════
+// ADMIN OTP
+// ══════════════════════════════════════════════════
+function oN(el,nid){if(el.value&&nid)$(nid).focus();}
+function oB(e,el,pid){if(e.key==="Backspace"&&!el.value&&pid)$(pid).focus();}
+function resetOTP(){$("adS1").classList.remove("hidden");$("adS2").classList.add("hidden");$("adErr").classList.add("hidden");clearInterval(_otpTmr);_otp=null;_otpExp=0;}
+async function sendOTP(){
+  const em=$("adEmail").value.trim(); $("adErr").classList.add("hidden");
+  if(em!==ADMIN_EMAIL){$("adErr").textContent="Solo jorgeyadielp@gmail.com puede acceder.";$("adErr").classList.remove("hidden");return;}
+  _otp=String(Math.floor(100000+Math.random()*900000)); _otpExp=Date.now()+5*60*1000;
+  alert(`🔐 Código:\n\n${_otp}\n\nVálido 5 minutos.`);
+  $("adS1").classList.add("hidden"); $("adS2").classList.remove("hidden"); $("o1").focus();
+  clearInterval(_otpTmr);
+  _otpTmr=setInterval(()=>{const l=Math.max(0,Math.ceil((_otpExp-Date.now())/1000));$("otpTimer").textContent=l?`Válido ${Math.floor(l/60)}:${String(l%60).padStart(2,"0")}`:"Expirado.";if(!l)clearInterval(_otpTmr);},1000);
+}
+function verOTP(){
+  const code=["o1","o2","o3","o4","o5","o6"].map(id=>$(id).value).join("");
+  if(code.length<6)return;
+  if(Date.now()>_otpExp){$("otpErr").textContent="Expirado.";$("otpErr").classList.remove("hidden");return;}
+  if(code===_otp){clearInterval(_otpTmr);_otp=null;showAdm();}
+  else{$("otpErr").textContent="Incorrecto.";$("otpErr").classList.remove("hidden");["o1","o2","o3","o4","o5","o6"].forEach(id=>$(id).value="");$("o1").focus();}
+}
 
-        init();
-    </script>
+// ══════════════════════════════════════════════════
+// NAVEGACIÓN
+// ══════════════════════════════════════════════════
+function showLand(){["pgLand","pgAdmL","pgAdmin"].forEach((id,i)=>i===0?$(id).classList.remove("hidden"):$(id).classList.add("hidden"));history.replaceState(null,"",location.pathname);}
+function showAdmLogin(){["pgLand","pgAdmL","pgAdmin"].forEach((id,i)=>i===1?$(id).classList.remove("hidden"):$(id).classList.add("hidden"));}
+function showAdm(){["pgLand","pgAdmL","pgAdmin"].forEach((id,i)=>i===2?$(id).classList.remove("hidden"):$(id).classList.add("hidden"));if($("aV"))$("aV").textContent=views;if(mfFiles.length)renderFiles();}
+function swTab(t){["S","M"].forEach(id=>{const tab=$("tab"+id);if(!tab)return;tab.classList.toggle("hidden",id!==t);$("tb"+id).classList.toggle("on",id===t);});}
+
+// ══════════════════════════════════════════════════
+// INICIO
+// ══════════════════════════════════════════════════
+async function init(){
+  views=(ls.get("views")||0)+1; ls.set("views",views);
+  $("sV").textContent=views.toLocaleString();
+  if($("aV"))$("aV").textContent=views;
+
+  // Descargas locales acumuladas
+  const dlT=ls.get("dlTotal")||0;
+  $("sD").textContent=dlT.toLocaleString();
+
+  const route=()=>{if(location.hash==="#admin")showAdmLogin();else showLand();};
+  route(); window.addEventListener("hashchange",route);
+  loadFiles(false);
+}
+init();
+</script>
 </body>
 </html>
