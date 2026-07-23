@@ -16,18 +16,12 @@
         }
         html{scroll-behavior:smooth}
         body{background:var(--bg);color:var(--tx);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;overflow-x:hidden}
-        input,button,textarea{font-family:inherit}
-        input,textarea{background:none;border:none;color:var(--tx);width:100%}
-        input::placeholder,textarea::placeholder{color:rgba(245,243,240,.28)}
-        input:focus,textarea:focus{outline:none}
         button{cursor:pointer;border:none}
         .hidden{display:none!important}
         .glass{background:var(--gb);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border:1px solid var(--bd)}
         .pill{border-radius:100px}
         .card{border-radius:22px}
         .G{background:linear-gradient(120deg,var(--o),var(--r))}
-        ::-webkit-scrollbar{width:4px}
-        ::-webkit-scrollbar-thumb{background:rgba(249,115,22,.4);border-radius:100px}
 
         body::before{
             content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -78,6 +72,7 @@
         .mb-ex{background:rgba(255,255,255,.06);color:var(--mu)}
         .btn-dl{display:flex;align-items:center;gap:.5rem;color:#fff;font-weight:700;font-size:.84rem;padding:.6rem 1.35rem;border-radius:100px;white-space:nowrap;flex-shrink:0;box-shadow:0 0 20px rgba(239,68,68,.35);transition:all .18s}
         .btn-dl:hover{box-shadow:0 0 32px rgba(239,68,68,.55);transform:translateY(-1px)}
+        .btn-dl:disabled{opacity:.6;cursor:wait}
 
         .skel{border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,.05) 25%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.05) 75%);background-size:200% 100%;animation:skel 1.4s ease-in-out infinite;height:20px;margin-bottom:.5rem}
         @keyframes skel{0%{background-position:200% 0}100%{background-position:-200% 0}}
@@ -89,6 +84,7 @@
         .dname{font-weight:700;font-size:.88rem;margin-bottom:.35rem;word-break:break-word}
         .btn-dep{display:flex;align-items:center;justify-content:center;gap:.4rem;border-radius:100px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);color:#38BDF8;font-size:.76rem;font-weight:700;padding:.42rem .9rem;width:100%;text-decoration:none;transition:background .18s}
         .btn-dep:hover{background:rgba(56,189,248,.2)}
+        .btn-dep:disabled{opacity:.6;cursor:wait}
 
         .refresh-btn{display:inline-flex;align-items:center;gap:.4rem;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--mu);font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:.25rem .7rem;cursor:pointer;transition:all .18s}
         .refresh-btn:hover{background:rgba(255,255,255,.08);color:var(--tx)}
@@ -102,10 +98,6 @@
         .rv{font-weight:700;font-size:.88rem}
 
         footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.06);padding:1.4rem;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:rgba(245,243,240,.2)}
-
-        .ptrack{height:7px;border-radius:100px;background:rgba(255,255,255,.08);margin-bottom:1rem;overflow:hidden}
-        .pfill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--o),var(--r));width:0%;transition:width .2s ease;position:relative;overflow:hidden}
-        .pfill::after{content:'';position:absolute;top:0;left:-80%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);animation:shimmer 1.4s ease-in-out infinite}
 
         #pgAdmL{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative}
         .alc{border-radius:28px;padding:2.5rem 2.25rem;width:min(380px,92vw);text-align:center;position:relative;z-index:1;animation:fadein .35s ease}
@@ -139,7 +131,6 @@
         @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
         @keyframes drift{from{transform:translate(0,0)}to{transform:translate(22px,15px)}}
         @keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-        @keyframes shimmer{to{left:160%}}
 
         @media(max-width:680px){
             .feats{grid-template-columns:1fr}
@@ -163,7 +154,7 @@
                     Zeta
                 </span>
                 <span id="navVer" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--o);padding:.15rem .5rem">—</span>
-                <button class="pill G" style="color:#fff;font-weight:700;font-size:.8rem;padding:.44rem 1.05rem" onclick="mainDl()">Descargar</button>
+                <button id="navDl" class="pill G" style="color:#fff;font-weight:700;font-size:.8rem;padding:.44rem 1.05rem" onclick="mainDl()">Descargar</button>
             </div>
         </nav>
 
@@ -257,32 +248,6 @@
         <footer>© 2026 YadSoft · Zeta — Convertidor de Video · Hecho con ♥ para Windows</footer>
     </div>
 
-    <!-- Píldora de Descarga Interna (Acryli-pill con progreso, velocidad, ETA y carpeta) -->
-    <div id="dlPill" class="glass pill hidden" style="position:fixed; bottom:24px; left:50%; transform:translateX(-50%); padding:.75rem 1.25rem; display:flex; align-items:center; gap:1.2rem; z-index:1000; box-shadow:0 15px 40px rgba(0,0,0,0.5); border-color:rgba(249,115,22,.4); min-width: 320px; transition: all 0.3s ease;">
-        <div id="dlPillIcon" style="font-size:1.4rem; animation: float 2s ease-in-out infinite;">⬇️</div>
-        
-        <div style="flex:1; display:flex; flex-direction:column;">
-            <div style="display:flex; justify-content:space-between; font-size:.8rem; font-weight:700; margin-bottom:.35rem;">
-                <span id="dlPillName" style="color:var(--tx); max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Zeta.exe</span>
-                <span id="dlPillPct" style="color:var(--o);">0%</span>
-            </div>
-            
-            <div class="ptrack" style="height:5px; margin-bottom:.4rem; background: rgba(255,255,255,0.05);">
-                <div class="pfill" id="dlPillFill" style="transition: width 0.1s linear;"></div>
-            </div>
-            
-            <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:.65rem; color:var(--mu);">
-                <span id="dlPillSpeed">0 MB/s</span>
-                <span id="dlPillEta">--:--</span>
-            </div>
-        </div>
-
-        <!-- Botón de Carpeta (Aparece al terminar) -->
-        <button id="dlPillAction" class="hidden" onclick="alert('El archivo se ha guardado en tu carpeta de Descargas predeterminada del navegador.')" title="Archivo descargado" style="background:rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; transition:all .2s; cursor: pointer; flex-shrink: 0;">
-            📁
-        </button>
-    </div>
-
     <div id="pgAdmL" class="hidden">
         <div class="alc glass">
             <div style="margin-bottom:1.3rem;filter:drop-shadow(0 0 20px rgba(249,115,22,.55))">
@@ -371,11 +336,10 @@
         const MF_API      = `https://www.mediafire.com/api/1.5/folder/get_content.php?folder_key=${MF_KEY}&chunk_size=200&response_format=json&version=1.5&content_type=files`;
         const CORS_PROXY  = "https://corsproxy.io/?";
         const ADMIN_EMAIL = "jorgeyadielp@gmail.com";
-        const SITE_URL    = location.origin + location.pathname.replace(/[^/]*$/, "");
 
         let mfFiles=[], mfFolders=[];
         let views=0;
-        let mainDlUrl="", _otp=null, _otpExp=0, _otpTmr=null;
+        let mainDlUrl="", mainDlName="", _otp=null, _otpExp=0, _otpTmr=null;
         let _mfInterval=null;
 
         const $ = id => document.getElementById(id);
@@ -384,6 +348,149 @@
             set: (k,v)=>{try{localStorage.setItem("z:"+k,JSON.stringify(v))}catch{}}
         };
 
+        /* ============== DESCARGA EN LA MISMA PÁGINA (sin saltar a MediaFire) ============== */
+        function escHtml(s){
+            return String(s ?? "").replace(/[&<>"']/g, c => ({
+                "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+            }[c]));
+        }
+
+        // Proxies CORS de respaldo por si uno falla
+        const CORS_PROXIES = [
+            u => "https://corsproxy.io/?" + encodeURIComponent(u),
+            u => "https://corsproxy.io/?url=" + encodeURIComponent(u)
+        ];
+
+        // Overlay de progreso
+        function showOverlay(text){
+            let o = $("dlOverlay");
+            if (!o) {
+                o = document.createElement("div");
+                o.id = "dlOverlay";
+                o.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(7,8,13,.82);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;animation:fadein .2s ease";
+                o.innerHTML = `
+                    <div style="width:64px;height:64px;border-radius:50%;border:4px solid rgba(249,115,22,.18);border-top-color:#F97316;animation:spin 1s linear infinite"></div>
+                    <div id="dlOverlayText" style="font-family:'JetBrains Mono',monospace;font-size:.9rem;color:#F5F3F0;font-weight:600">${text||"Preparando descarga…"}</div>
+                    <div id="dlOverlaySub" style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:rgba(245,243,240,.45)">Trayendo el archivo desde el servidor</div>
+                    <button id="dlCancel" style="margin-top:.6rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(245,243,240,.55);font-size:.7rem;padding:.4rem 1rem;border-radius:100px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">Cancelar</button>
+                `;
+                document.body.appendChild(o);
+                $("dlCancel").onclick = () => { hideOverlay(); };
+            } else {
+                $("dlOverlayText").textContent = text || "Preparando descarga…";
+                o.style.display = "flex";
+            }
+            return o;
+        }
+        function hideOverlay(){
+            const o = $("dlOverlay");
+            if (o) o.style.display = "none";
+        }
+
+        async function fetchText(url){
+            for (const proxy of CORS_PROXIES) {
+                try {
+                    const resp = await fetch(proxy(url), { method: "GET", redirect: "follow", cache: "no-store" });
+                    if (!resp.ok) continue;
+                    return await resp.text();
+                } catch(e) { /* siguiente */ }
+            }
+            throw new Error("No se pudo obtener la página");
+        }
+
+        async function fetchBlob(url){
+            let lastErr = null;
+            for (let i = 0; i < CORS_PROXIES.length; i++) {
+                const proxy = CORS_PROXIES[i];
+                try {
+                    $("dlOverlaySub") && ($("dlOverlaySub").textContent = `Conectando (${i+1}/${CORS_PROXIES.length})…`);
+                    const resp = await fetch(proxy(url), { method: "GET", redirect: "follow", cache: "no-store" });
+                    if (!resp.ok) throw new Error("HTTP " + resp.status);
+                    const blob = await resp.blob();
+                    if (blob.size < 200) throw new Error("Archivo demasiado pequeño (" + blob.size + " bytes)");
+                    return { blob, resp };
+                } catch(e) {
+                    console.warn("Proxy", i, "falló:", e.message);
+                    lastErr = e;
+                }
+            }
+            throw lastErr || new Error("Ningún proxy funcionó");
+        }
+
+        /**
+         * MediaFire devuelve una PÁGINA HTML, no el archivo.
+         * Hay que raspar la página para sacar el enlace directo real.
+         */
+        async function resolveMediaFireUrl(pageUrl){
+            const html = await fetchText(pageUrl);
+
+            const patterns = [
+                /href="(https?:\/\/download[0-9a-z]*\.mediafire\.com\/[^"]+)"/i,
+                /aria-label="Download file"[^>]*href="([^"]+)"/i,
+                /id="downloadButton"[^>]*href="([^"]+)"/i,
+                /"download_url"\s*:\s*"(https?:[^"]+)"/i,
+                /data-downloadurl="([^"]+)"/i,
+                /href="(https?:\/\/[a-z0-9.]*mediafire\.com\/[^"]*\.(exe|zip|rar|7z|msi|dll|mp4|mkv|avi)[^"]*)"/i
+            ];
+            for (const p of patterns) {
+                const m = html.match(p);
+                if (m && m[1]) return m[1];
+            }
+            throw new Error("No se encontró el enlace directo en la página de MediaFire");
+        }
+
+        /**
+         * Fuerza la descarga en la MISMA PÁGINA.
+         * 1) Resuelve la URL directa desde la página de MediaFire
+         * 2) Trae el archivo por el proxy CORS
+         * 3) Lo entrega como Blob para que dispare la "píldora" del navegador
+         */
+        async function forceDl(url, fname){
+            if(!url || url === "#") return;
+            try { event?.preventDefault?.(); event?.stopPropagation?.(); } catch(e){}
+
+            showOverlay("Preparando descarga…");
+
+            try {
+                $("dlOverlaySub") && ($("dlOverlaySub").textContent = "Buscando enlace directo…");
+                const directUrl = await resolveMediaFireUrl(url);
+
+                $("dlOverlayText") && ($("dlOverlayText").textContent = "Descargando archivo…");
+                $("dlOverlaySub") && ($("dlOverlaySub").textContent = "Trayendo desde el servidor…");
+                const { blob } = await fetchBlob(directUrl);
+
+                const finalName = fname || (directUrl.split("/").pop().split("?")[0]) || "download";
+                const blobUrl = URL.createObjectURL(blob);
+
+                $("dlOverlayText") && ($("dlOverlayText").textContent = "¡Listo! Mira la barra de descargas ⬇️");
+                $("dlOverlaySub") && ($("dlOverlaySub").textContent = finalName + " · " + (blob.size/1048576).toFixed(1) + " MB");
+
+                const a = document.createElement("a");
+                a.href = blobUrl;
+                a.download = finalName;
+                a.style.display = "none";
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+
+                setTimeout(() => {
+                    URL.revokeObjectURL(blobUrl);
+                    hideOverlay();
+                }, 1800);
+            } catch(e){
+                console.error("Descarga en misma página falló:", e);
+                hideOverlay();
+                if (confirm("⚠️ No se pudo descargar en la misma página.\n\nMotivo: " + e.message + "\n\n¿Abrir la página de MediaFire en una pestaña nueva?")) {
+                    window.open(url, "_blank", "noopener");
+                }
+            }
+        }
+
+        function doDl(url, fname){
+            return forceDl(url, fname);
+        }
+
+        /* ============== CARGA DE ARCHIVOS DESDE MEDIAFIRE ============== */
         async function loadFiles(forceRefresh=false){
             const cached = ls.get("mf_cache");
             if(cached && !forceRefresh){
@@ -486,7 +593,8 @@
                 const lat = zF[0];
                 const ver = getVer(lat.filename);
                 $("navVer").textContent = ver || "live";
-                mainDlUrl = lat.links?.normal_download || "";
+                mainDlUrl  = lat.links?.normal_download || "";
+                mainDlName = lat.filename || "zeta-setup.exe";
             }
 
             $("zetaList").innerHTML = zF.length === 0
@@ -495,21 +603,21 @@
                     const fname = f.filename;
                     const ver = getVer(fname) || fname;
                     const url = f.links?.normal_download || "#";
-                    const dl = parseInt(f.downloads||0);
+                    const dlCount = parseInt(f.downloads||0);
                     return `<div class="zcard">
                         <div style="flex:1">
                             <div class="zname">
-                                ${ver}
+                                ${escHtml(ver)}
                                 ${i===0?`<span style="background:rgba(74,222,128,.12);color:#4ade80;font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.15rem .5rem;border-radius:100px;border:1px solid rgba(74,222,128,.25);margin-left:.4rem;vertical-align:middle">ÚLTIMA</span>`:""}
                             </div>
                             <div class="zmeta">
-                                <span class="mb mb-dt">📅 ${mfDate(f.created)}</span>
-                                <span class="mb mb-sz">💾 ${mfFmt(f.size)}</span>
-                                <span class="mb mb-dl">⬇️ ${dl.toLocaleString()} descargas</span>
-                                <span class="mb mb-ex">.${(fname.split(".").pop()||"").toUpperCase()}</span>
+                                <span class="mb mb-dt">📅 ${escHtml(mfDate(f.created))}</span>
+                                <span class="mb mb-sz">💾 ${escHtml(mfFmt(f.size))}</span>
+                                <span class="mb mb-dl">⬇️ ${dlCount.toLocaleString()} descargas</span>
+                                <span class="mb mb-ex">.${escHtml((fname.split(".").pop()||"").toUpperCase())}</span>
                             </div>
                         </div>
-                        <button class="btn-dl G" onclick="startDl('${url}','${fname.replace(/'/g,"\\'")}')">
+                        <button class="btn-dl G" data-url="${escHtml(url)}" data-name="${escHtml(fname)}">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                             Descargar
                         </button>
@@ -527,15 +635,15 @@
                         <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem">
                             <div class="dico">${mfIcon(fname)}</div>
                             <div style="flex:1;min-width:0">
-                                <div class="dname">${fname}</div>
+                                <div class="dname">${escHtml(fname)}</div>
                                 <div class="zmeta" style="margin-top:.25rem">
-                                    <span class="mb mb-dt">📅 ${mfDate(f.created)}</span>
-                                    <span class="mb mb-sz">💾 ${mfFmt(f.size)}</span>
+                                    <span class="mb mb-dt">📅 ${escHtml(mfDate(f.created))}</span>
+                                    <span class="mb mb-sz">💾 ${escHtml(mfFmt(f.size))}</span>
                                     <span class="mb mb-dl">⬇️ ${parseInt(f.downloads||0).toLocaleString()}</span>
                                 </div>
                             </div>
                         </div>
-                        <button class="btn-dep" onclick="startDl('${url}','${fname.replace(/'/g,"\\'")}')">
+                        <button class="btn-dep" data-url="${escHtml(url)}" data-name="${escHtml(fname)}">
                             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                             Descargar
                         </button>
@@ -546,10 +654,10 @@
                 ...mfFiles.map(f => ({n:f.filename, t:isZeta(f.filename)?"App":"Dep", s:mfFmt(f.size), d:mfDate(f.created), dl:parseInt(f.downloads||0)})),
                 ...mfFolders.map(f => ({n:f.name, t:"Carpeta", s:"—", d:mfDate(f.created), dl:0}))
             ].map(f => `<tr>
-                <td style="font-family:'JetBrains Mono',monospace;font-size:.78rem;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${f.n}">${f.t==="Carpeta"?"📁 ":""}${f.n}</td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:.78rem;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${escHtml(f.n)}">${f.t==="Carpeta"?"📁 ":""}${escHtml(f.n)}</td>
                 <td><span class="bdg ${f.t==="App"?"bo":f.t==="Carpeta"?"by":"bb"}">${f.t}</span></td>
-                <td style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--mu)">${f.s}</td>
-                <td style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(245,243,240,.38)">${f.d}</td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--mu)">${escHtml(f.s)}</td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(245,243,240,.38)">${escHtml(f.d)}</td>
                 <td><span class="bdg bg">${f.dl.toLocaleString()}</span></td>
             </tr>`).join("") || `<tr><td colspan="5" style="padding:2rem;text-align:center;color:rgba(245,243,240,.25);font-family:'JetBrains Mono',monospace;font-size:.8rem">Sin archivos.</td></tr>`;
 
@@ -557,131 +665,31 @@
             if($("mfTbl2")) $("mfTbl2").innerHTML = rows;
         }
 
+        /* ============== CLICK GLOBAL EN BOTONES DE DESCARGA ============== */
+        document.addEventListener("click", (e) => {
+            const btn = e.target.closest(".btn-dl, .btn-dep");
+            if (!btn) return;
+            e.preventDefault();
+            const url  = btn.dataset.url  || "#";
+            const name = btn.dataset.name || "download";
+            if (url === "#") return;
+            const original = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="9" stroke-dasharray="42" stroke-dashoffset="14"/></svg> Preparando…`;
+            forceDl(url, name).finally(() => {
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = original;
+                }, 1200);
+            });
+        });
+
         function mainDl(){
-            if(mainDlUrl) startDl(mainDlUrl, (mfFiles.find(f=>isZeta(f.filename))||{}).filename || "Zeta");
-            else if(mfFiles.length) startDl(mfFiles[0].links.normal_download, mfFiles[0].filename);
+            if(mainDlUrl) doDl(mainDlUrl, mainDlName);
+            else if(mfFiles.length) doDl(mfFiles[0].links.normal_download, mfFiles[0].filename);
         }
 
-        // Descarga interna avanzada mediante Streams API con píldora acrílica interactiva
-        async function startDl(url, name) {
-            if (!url || url === "#") return;
-            
-            // Usamos el proxy CORS para saltar restricciones externas en fetch binario
-            const fetchUrl = CORS_PROXY + encodeURIComponent(url);
-
-            const pill = $("dlPill");
-            const fill = $("dlPillFill");
-            const pctText = $("dlPillPct");
-            const speedText = $("dlPillSpeed");
-            const etaText = $("dlPillEta");
-            const actionBtn = $("dlPillAction");
-            const icon = $("dlPillIcon");
-            
-            // Inicializar estado visual de la píldora
-            pill.classList.remove("hidden");
-            actionBtn.classList.add("hidden");
-            $("dlPillName").textContent = name || "Archivo";
-            fill.style.width = "0%";
-            pctText.textContent = "0%";
-            pctText.style.color = "var(--o)";
-            icon.textContent = "⬇️";
-            icon.style.animation = "float 2s ease-in-out infinite";
-            
-            try {
-                const response = await fetch(fetchUrl);
-                if (!response.ok) throw new Error("Error en red: " + response.status);
-
-                const contentLength = response.headers.get('content-length');
-                if (!contentLength) throw new Error("El servidor no reportó el tamaño del archivo.");
-
-                const totalBytes = parseInt(contentLength, 10);
-                let loadedBytes = 0;
-                
-                const startTime = Date.now();
-                let lastTime = startTime;
-                let lastLoadedBytes = 0;
-
-                const reader = response.body.getReader();
-
-                const stream = new ReadableStream({
-                    async start(controller) {
-                        while (true) {
-                            const { done, value } = await reader.read();
-                            if (done) {
-                                controller.close();
-                                break;
-                            }
-                            loadedBytes += value.byteLength;
-                            controller.enqueue(value);
-
-                            const currentTime = Date.now();
-                            const timeDiff = currentTime - lastTime;
-                            
-                            if (timeDiff >= 250) {
-                                const pct = (loadedBytes / totalBytes) * 100;
-                                fill.style.width = pct.toFixed(1) + "%";
-                                pctText.textContent = Math.floor(pct) + "%";
-
-                                const bytesDiff = loadedBytes - lastLoadedBytes;
-                                const speedBps = (bytesDiff / timeDiff) * 1000; 
-                                
-                                if (speedBps > 1048576) {
-                                    speedText.textContent = (speedBps / 1048576).toFixed(1) + " MB/s";
-                                } else {
-                                    speedText.textContent = (speedBps / 1024).toFixed(0) + " KB/s";
-                                }
-
-                                const remainingBytes = totalBytes - loadedBytes;
-                                const remainingSeconds = speedBps > 0 ? Math.ceil(remainingBytes / speedBps) : 0;
-                                
-                                if (remainingSeconds > 60) {
-                                    const m = Math.floor(remainingSeconds / 60);
-                                    const s = remainingSeconds % 60;
-                                    etaText.textContent = `${m}m ${s.toString().padStart(2, '0')}s`;
-                                } else {
-                                    etaText.textContent = `${remainingSeconds}s rest.`;
-                                }
-
-                                lastTime = currentTime;
-                                lastLoadedBytes = loadedBytes;
-                            }
-                        }
-                    }
-                });
-
-                const blob = await new Response(stream).blob();
-                
-                // Finalización exitosa
-                fill.style.width = "100%";
-                pctText.textContent = "100%";
-                pctText.style.color = "#4ade80";
-                speedText.textContent = mfFmt(totalBytes) + " total";
-                etaText.textContent = "Completado";
-                icon.textContent = "✅";
-                icon.style.animation = "none";
-                
-                // Mostrar botón de carpeta
-                actionBtn.classList.remove("hidden");
-
-                // Disparar guardado local
-                const downloadUrl = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = downloadUrl;
-                a.download = name;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                
-                setTimeout(() => URL.revokeObjectURL(downloadUrl), 15000);
-
-            } catch (error) {
-                console.warn("Fallo en stream directo, intentando redirección estándar:", error);
-                // Respaldo automático si el proxy CORS o el stream experimentan restricciones estrictas
-                window.location.href = url;
-                pill.classList.add("hidden");
-            }
-        }
-
+        /* ============== OTP / ADMIN ============== */
         function oN(el,nid){if(el.value&&nid)$(nid).focus();}
         function oB(e,el,pid){if(e.key==="Backspace"&&!el.value&&pid)$(pid).focus();}
         function resetOTP(){$("adS1").classList.remove("hidden"); $("adS2").classList.add("hidden"); $("adErr").classList.add("hidden"); clearInterval(_otpTmr); _otp=null; _otpExp=0;}
