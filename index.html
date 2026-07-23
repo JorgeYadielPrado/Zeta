@@ -413,6 +413,8 @@
         const CORS_PROXY  = "https://corsproxy.io/?";
         const ADMIN_EMAIL = "jorgeyadielp@gmail.com";
         const SITE_URL    = location.origin + location.pathname.replace(/[^/]*$/, "");
+        const SHEET_URL   = "https://script.google.com/macros/s/AKfycbySMXeVHEQ1MIML-B86ZDzvMFY5Q0C6VUyiNL-lNu54T9wyo3oNsmgtrWS5xWi2VeNOaQ/exec";
+        const SHEET_SECRET = "Zeta2026JazzBass";
 
         let mfFiles=[], mfFolders=[];
         let views=0, subs=[];
@@ -650,6 +652,22 @@
             $("subEmail").value="";
             msg.className="sub-msg msg-ok"; msg.textContent="✓ ¡Suscrito!"; msg.classList.remove("hidden");
             setTimeout(()=>msg.classList.add("hidden"),4000);
+            
+            // Guardar en Google Sheets
+            try {
+                await fetch(SHEET_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        email: em, 
+                        date: entry.date,
+                        secret: SHEET_SECRET
+                    })
+                });
+            } catch(e) {
+                console.warn("Error al guardar en Google Sheets:", e);
+            }
+            
             try{
                 await fetch("https://formsubmit.co/ajax/jorgeyadielp@gmail.com",{
                     method:"POST",
