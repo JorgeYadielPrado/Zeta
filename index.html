@@ -15,32 +15,43 @@
             --bd:rgba(255,255,255,.09)
         }
         html{scroll-behavior:smooth}
-        body{background:var(--bg);color:var(--tx);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;overflow-x:hidden}
-        button{cursor:pointer;border:none}
+        body{background:var(--bg);color:var(--tx);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;overflow-x:hidden;position:relative}
+        button{cursor:pointer;border:none;font-family:inherit}
         .hidden{display:none!important}
-        .glass{background:var(--gb);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border:1px solid var(--bd)}
+        .glass{background:var(--gb);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);border:1px solid var(--bd)}
         .pill{border-radius:100px}
         .card{border-radius:22px}
         .G{background:linear-gradient(120deg,var(--o),var(--r))}
 
-        body::before{
-            content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-            background:
-                radial-gradient(ellipse 70% 50% at 0% 0%,  rgba(249,115,22,.18) 0%,transparent 60%),
-                radial-gradient(ellipse 60% 50% at 100% 100%,rgba(239,68,68,.16) 0%,transparent 60%),
-                radial-gradient(ellipse 40% 35% at 55% 20%,  rgba(234,88,12,.08)  0%,transparent 55%);
+        /* === FONDO FIJO: LOGO Z + RAYOS === */
+        .bg-stage{
+            position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+            will-change:transform;transform:translateZ(0);contain:strict;
         }
-        .blob{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px)}
-        .b1{width:520px;height:520px;background:radial-gradient(circle,rgba(249,115,22,.28),transparent 70%);top:-140px;left:-130px;animation:drift 18s ease-in-out infinite alternate}
-        .b2{width:580px;height:580px;background:radial-gradient(circle,rgba(239,68,68,.2),transparent 70%);bottom:-150px;right:-130px;animation:drift 18s ease-in-out infinite alternate-reverse}
-        .b3{width:300px;height:300px;background:radial-gradient(circle,rgba(249,115,22,.1),transparent 70%);top:40%;left:60%;animation:drift 22s ease-in-out infinite alternate}
+        .bg-rays{
+            position:absolute;inset:-25%;width:150%;height:150%;
+            transform:translateZ(0);will-change:transform,opacity;
+        }
+        .bg-glow{
+            position:absolute;left:50%;top:50%;width:1400px;height:1400px;
+            transform:translate(-50%,-50%) translateZ(0);
+            background:radial-gradient(circle,rgba(249,115,22,.45) 0%,rgba(239,68,68,.22) 22%,transparent 60%);
+            filter:blur(30px);pointer-events:none;
+        }
+        .ray-spin-slow{transform-origin:960px 540px;animation:rayspin 90s linear infinite;will-change:transform}
+        .ray-spin-fast{transform-origin:960px 540px;animation:rayspin-r 55s linear infinite;opacity:.55;will-change:transform}
+        .center-logo{transform-origin:960px 540px;animation:float 6s ease-in-out infinite;
+            filter:drop-shadow(0 0 60px rgba(249,115,22,.7)) drop-shadow(0 0 140px rgba(239,68,68,.4));}
+        @keyframes rayspin{to{transform:rotate(360deg)}}
+        @keyframes rayspin-r{to{transform:rotate(-360deg)}}
+        @keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-14px) scale(1.03)}}
 
         nav.top{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;padding:1.1rem 1.5rem;z-index:200}
         .np{display:flex;align-items:center;gap:.85rem;padding:.42rem .42rem .42rem .9rem}
         .nb{display:flex;align-items:center;gap:.5rem;font-weight:800;font-size:.9rem;color:var(--tx);text-decoration:none}
 
         .hero{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:8rem 1.5rem 4.5rem}
-        .hlogo{animation:float 6s ease-in-out infinite;filter:drop-shadow(0 0 36px rgba(249,115,22,.6)) drop-shadow(0 0 80px rgba(239,68,68,.3));margin-bottom:1.75rem}
+        .hlogo{animation:float 6s ease-in-out infinite;filter:drop-shadow(0 0 36px rgba(249,115,22,.6)) drop-shadow(0 0 80px rgba(239,68,68,.3));margin-bottom:1.75rem;position:relative;z-index:2}
         h1{font-size:clamp(2.8rem,5.5vw,4.2rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:.8rem}
         .gt{background:linear-gradient(120deg,var(--o) 20%,var(--r) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
         .stats-row{display:flex;align-items:center;gap:.7rem;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:center}
@@ -48,7 +59,7 @@
         .btn-wa{display:inline-flex;align-items:center;gap:.6rem;border-radius:100px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.3);color:var(--tx);font-weight:700;font-size:.9rem;padding:.68rem 1.5rem;text-decoration:none;transition:all .18s;margin-bottom:.75rem}
         .btn-wa:hover{background:rgba(37,211,102,.2);box-shadow:0 0 28px rgba(37,211,102,.3)}
 
-        .sec{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:0 1.5rem 4rem}
+        .sec{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:0 1.5rem 4rem;content-visibility:auto;contain-intrinsic-size:1px 700px}
         .lbl{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:rgba(245,243,240,.3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:1rem;display:block}
         .feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
         .feat{padding:1.5rem 1.35rem;transition:transform .22s,border-color .22s}
@@ -63,8 +74,10 @@
         .zlist{display:flex;flex-direction:column;gap:.85rem;margin-top:.5rem}
         .zcard{border-radius:16px;padding:1.1rem 1.25rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;transition:border-color .2s,background .2s}
         .zcard:first-child{border-color:rgba(249,115,22,.28);background:rgba(249,115,22,.06)}
-        .zname{font-weight:700;font-size:.95rem;margin-bottom:.28rem}
-        .zmeta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+        .zname{font-weight:800;font-size:1rem;margin-bottom:.3rem;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;line-height:1.2}
+        .zver{font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.18rem .55rem;border-radius:100px;background:rgba(249,115,22,.14);color:var(--o);border:1px solid rgba(249,115,22,.3);font-weight:700;letter-spacing:.02em}
+        .zlatest{background:rgba(74,222,128,.12);color:#4ade80;font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.18rem .55rem;border-radius:100px;border:1px solid rgba(74,222,128,.28);font-weight:600}
+        .zmeta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-top:.45rem}
         .mb{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:.15rem .5rem;border-radius:100px}
         .mb-dl{background:rgba(74,222,128,.08);color:#4ade80}
         .mb-dt{background:rgba(56,189,248,.08);color:#38BDF8}
@@ -97,14 +110,15 @@
 
         footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.06);padding:1.4rem;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:rgba(245,243,240,.2)}
 
-        #pgAdmL{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative}
+        #pgAdmL{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;z-index:5}
         .alc{border-radius:28px;padding:2.5rem 2.25rem;width:min(380px,92vw);text-align:center;position:relative;z-index:1;animation:fadein .35s ease}
         .aw{border-radius:14px;padding:.65rem 1rem;margin-bottom:.7rem}
+        .aw input{background:none;border:none;outline:none;color:var(--tx);width:100%;font-size:.88rem;font-family:inherit}
         .orow{display:flex;gap:.5rem;justify-content:center;margin-bottom:1rem}
-        .oi{width:46px;height:54px;border-radius:12px;text-align:center;font-size:1.5rem;font-weight:800;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:var(--tx);transition:border-color .18s}
+        .oi{width:46px;height:54px;border-radius:12px;text-align:center;font-size:1.5rem;font-weight:800;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:var(--tx);transition:border-color .18s;font-family:inherit}
         .oi:focus{border-color:var(--o);outline:none}
 
-        #pgAdmin{min-height:100vh;background:var(--bg);position:relative}
+        #pgAdmin{min-height:100vh;background:transparent;position:relative;z-index:5}
         .adnav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:.85rem 2rem;background:rgba(7,8,13,.88);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);flex-wrap:wrap;gap:.5rem}
         .adbrand{display:flex;align-items:center;gap:.55rem;font-weight:800;font-size:.92rem}
         .tabs{display:flex;gap:.45rem;flex-wrap:wrap}
@@ -126,8 +140,6 @@
         .infobox{border-radius:14px;padding:.9rem 1.2rem;border-left:3px solid var(--o)}
         .infobox p{font-size:.78rem;color:rgba(245,243,240,.5);line-height:1.6}
 
-        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-        @keyframes drift{from{transform:translate(0,0)}to{transform:translate(22px,15px)}}
         @keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
         @media(max-width:680px){
@@ -140,9 +152,31 @@
     </style>
 </head>
 <body>
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="blob b3"></div>
+    <div class="bg-stage" aria-hidden="true">
+        <div class="bg-glow"></div>
+        <svg class="bg-rays" id="bgRays" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <linearGradient id="rayGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#F97316" stop-opacity=".55"/>
+                    <stop offset="60%" stop-color="#F97316" stop-opacity=".12"/>
+                    <stop offset="100%" stop-color="#F97316" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="rayGrad2" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#EF4444" stop-opacity=".4"/>
+                    <stop offset="100%" stop-color="#EF4444" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="logoFill" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#F97316"/>
+                    <stop offset="100%" stop-color="#EF4444"/>
+                </linearGradient>
+                <radialGradient id="logoGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#F97316" stop-opacity=".7"/>
+                    <stop offset="50%" stop-color="#EF4444" stop-opacity=".25"/>
+                    <stop offset="100%" stop-color="#F97316" stop-opacity="0"/>
+                </radialGradient>
+            </defs>
+        </svg>
+    </div>
 
     <div id="pgLand">
         <nav class="top">
@@ -277,7 +311,6 @@
     </div>
 
     <div id="pgAdmin" class="hidden">
-        <div class="blob b1"></div><div class="blob b2"></div>
         <nav class="adnav">
             <div class="adbrand">
                 <svg width="24" height="24" viewBox="0 0 24 24"><defs><linearGradient id="gAD" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gAD)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
@@ -345,6 +378,76 @@
             get: k=>{try{return JSON.parse(localStorage.getItem("z:"+k))}catch{return null}},
             set: (k,v)=>{try{localStorage.setItem("z:"+k,JSON.stringify(v))}catch{}}
         };
+
+        /* ===== FONDO: generar rayos y logo central ===== */
+        (function buildBg(){
+            const svg = document.getElementById('bgRays');
+            if(!svg) return;
+            const NS = 'http://www.w3.org/2000/svg';
+            const cx = 960, cy = 540;
+
+            const makeRay = (g, count, step, startAngle, len, sw, op) => {
+                for(let i=0; i<count; i++){
+                    const a = startAngle + i*step;
+                    const line = document.createElementNS(NS,'line');
+                    line.setAttribute('x1','0');
+                    line.setAttribute('y1','-22');
+                    line.setAttribute('x2','0');
+                    line.setAttribute('y2', String(-len));
+                    line.setAttribute('stroke', i%2===0 ? 'url(#rayGrad)' : 'url(#rayGrad2)');
+                    line.setAttribute('stroke-width', String(sw + (i%3)*0.4));
+                    line.setAttribute('stroke-linecap','round');
+                    line.setAttribute('opacity', String(op + (i%4)*0.08));
+                    line.setAttribute('transform', `rotate(${a})`);
+                    g.appendChild(line);
+                }
+            };
+
+            const slow = document.createElementNS(NS,'g');
+            slow.setAttribute('class','ray-spin-slow');
+            slow.setAttribute('transform',`translate(${cx} ${cy})`);
+            makeRay(slow, 48, 7.5, 0, 2200, 1.4, 0.35);
+            svg.appendChild(slow);
+
+            const fast = document.createElementNS(NS,'g');
+            fast.setAttribute('class','ray-spin-fast');
+            fast.setAttribute('transform',`translate(${cx} ${cy})`);
+            makeRay(fast, 24, 15, 3.75, 1700, 1.0, 0.25);
+            svg.appendChild(fast);
+
+            // Partículas/puntos en el perímetro
+            const dots = document.createElementNS(NS,'g');
+            dots.setAttribute('opacity','.55');
+            for(let i=0; i<18; i++){
+                const a = (i/18)*Math.PI*2;
+                const r = 480 + (i%3)*40;
+                const c = document.createElementNS(NS,'circle');
+                c.setAttribute('cx', String(cx + Math.cos(a)*r));
+                c.setAttribute('cy', String(cy + Math.sin(a)*r));
+                c.setAttribute('r', String(1.4 + (i%3)*0.5));
+                c.setAttribute('fill', i%2===0 ? '#F97316' : '#EF4444');
+                dots.appendChild(c);
+            }
+            svg.appendChild(dots);
+
+            // Halo central
+            const halo = document.createElementNS(NS,'circle');
+            halo.setAttribute('cx', String(cx));
+            halo.setAttribute('cy', String(cy));
+            halo.setAttribute('r','340');
+            halo.setAttribute('fill','url(#logoGlow)');
+            svg.appendChild(halo);
+
+            // Logo Z central gigante
+            const logo = document.createElementNS(NS,'g');
+            logo.setAttribute('class','center-logo');
+            logo.innerHTML = `
+                <g transform="translate(${cx} ${cy}) scale(13) translate(-12 -12)">
+                    <path fill="url(#logoFill)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/>
+                    <path fill="white" fill-opacity=".92" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/>
+                </g>`;
+            svg.appendChild(logo);
+        })();
 
         async function loadFiles(forceRefresh=false){
             const cached = ls.get("mf_cache");
@@ -426,9 +529,23 @@
             return "📦";
         }
         const isZeta = name => /zeta/i.test(name);
-        function getVer(name){
-            const m=name.match(/v?(\d+[\.\d]+-?[\d-]*)/i);
-            return m ? "v"+m[1].replace(/-+$/,"") : null;
+
+        /* === Parser: separa nombre base y versión del filename === */
+        function parseZetaName(name){
+            const dotIdx = name.lastIndexOf('.');
+            const ext = dotIdx > 0 ? name.slice(dotIdx + 1) : '';
+            const base = dotIdx > 0 ? name.slice(0, dotIdx) : name;
+            const verMatch = base.match(/[vV]?(\d+(?:[._-]\d+)+(?:[-_][\w]+)*)/);
+            if (verMatch) {
+                const version = 'v' + verMatch[1].replace(/_/g, '.');
+                const cleaned = base.replace(verMatch[0], '').replace(/[-_\s]+$/, '').trim();
+                return {
+                    baseName: cleaned || 'Zetaconvert',
+                    version,
+                    ext: ext.toUpperCase()
+                };
+            }
+            return { baseName: base, version: null, ext: ext.toUpperCase() };
         }
 
         function renderFiles(){
@@ -446,8 +563,8 @@
 
             if(zF.length){
                 const lat = zF[0];
-                const ver = getVer(lat.filename);
-                $("navVer").textContent = ver || "live";
+                const { version } = parseZetaName(lat.filename);
+                $("navVer").textContent = version || "live";
                 mainDlUrl = lat.links?.normal_download || "";
             }
 
@@ -455,20 +572,21 @@
                 ? `<div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--mu);padding:1rem;line-height:1.7">No hay versiones de Zeta todavía. Sube un archivo con "Zeta" en el nombre al servidor.</div>`
                 : zF.map((f,i) => {
                     const fname = f.filename;
-                    const ver = getVer(fname) || fname;
+                    const { baseName, version, ext } = parseZetaName(fname);
                     const url = f.links?.normal_download || "#";
                     const dl = parseInt(f.downloads||0);
                     return `<div class="zcard">
-                        <div style="flex:1">
+                        <div style="flex:1;min-width:200px">
                             <div class="zname">
-                                ${ver}
-                                ${i===0?`<span style="background:rgba(74,222,128,.12);color:#4ade80;font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.15rem .5rem;border-radius:100px;border:1px solid rgba(74,222,128,.25);margin-left:.4rem;vertical-align:middle">ÚLTIMA</span>`:""}
+                                <span>${baseName}</span>
+                                ${version ? `<span class="zver">${version}</span>` : ''}
+                                ${i===0?`<span class="zlatest">ÚLTIMA</span>`:""}
                             </div>
                             <div class="zmeta">
                                 <span class="mb mb-dt">📅 ${mfDate(f.created)}</span>
                                 <span class="mb mb-sz">💾 ${mfFmt(f.size)}</span>
                                 <span class="mb mb-dl">⬇️ ${dl.toLocaleString()} descargas</span>
-                                <span class="mb mb-ex">.${(fname.split(".").pop()||"").toUpperCase()}</span>
+                                <span class="mb mb-ex">.${ext}</span>
                             </div>
                         </div>
                         <button class="btn-dl G" onclick="window.open('${url}', '_blank')">
