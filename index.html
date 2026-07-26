@@ -7,59 +7,74 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-        
-        /* ─── VARIABLES OPTIMIZADAS PARA ALTO CONTRASTE ─── */
         :root{
-            --o:#F97316;
-            --r:#EF4444;
-            --bg:#0F111A; /* Deep slate en lugar de negro puro */
-            --tx:#F5F3F0;
-            --mu:rgba(245,243,240,.65); /* Mayor legibilidad en textos secundarios */
-            --card-bg:rgba(255,255,255,.04); /* Cristal esmerilado más claro */
-            --card-bd:rgba(255,255,255,.12); /* Bordes definidos para píldoras y tarjetas */
+            --o:#F97316;--r:#EF4444;
+            --bg:#020508;--tx:#F5F3F0;
+            --mu:rgba(245,243,240,.55);
+            --card-bg:rgba(9,13,21,.76);
+            --card-bd:rgba(255,255,255,.07)
         }
         html{scroll-behavior:smooth;background:var(--bg)}
         body{color:var(--tx);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;overflow-x:hidden;position:relative;background:var(--bg)}
         button{cursor:pointer;border:none;font-family:inherit}
 
-        /* ─── GLASS CARDS (Efecto Z-Depth y contornos) ─── */
-        .glass{
-            background:var(--card-bg);
-            border:1px solid var(--card-bd);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            box-shadow: 0 4px 24px -4px rgba(0,0,0,0.3);
-        }
+        /* ─── GLASS CARDS ─── */
+        .glass{background:var(--card-bg);border:1px solid var(--card-bd)}
 
         /* ═══════════════════════════════════════════════
-           NAVBAR — ACRÍLICO CRISTAL MÁS CLARO Y LUMINOSO
+           NAVBAR — ACRÍLICO (COPIADO DE LA PÁGINA DE LICENCIAS)
         ════════════════════════════════════════════════ */
-        .glass-nav {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.01));
-            backdrop-filter: blur(24px) saturate(180%) brightness(1.15);
-            -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.15);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-top: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow:
-                inset 0 1px 1px rgba(255, 255, 255, 0.15),
-                0 8px 32px rgba(0, 0, 0, 0.25);
+        .glass-nav{
+            background: rgba(255,255,255,.058);
+            backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            border: 1px solid rgba(255,255,255,.09);
         }
 
         /* ═══════════════════════════════════════════════
            FONDO — AURORA + GRAIN
         ════════════════════════════════════════════════ */
+
+        /* Capa 1: resplandor de color (aurora) */
         .bg-glow{
             position:fixed;inset:0;z-index:0;pointer-events:none;
             background:
-                radial-gradient(ellipse 70% 60% at 20% -10%, rgba(249,115,22,.18) 0%, transparent 70%),
-                radial-gradient(ellipse 60% 60% at 80% 5%, rgba(239,68,68,.15) 0%, transparent 60%),
-                radial-gradient(ellipse 80% 50% at 50% 110%, rgba(56,189,248,.12) 0%, transparent 60%),
-                radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255,255,255,.02) 0%, transparent 100%);
+                /* Aurora naranja-roja principal — parte alta central */
+                radial-gradient(ellipse 95% 72% at 50% -12%,
+                    rgba(249,115,22,.30) 0%,
+                    rgba(239,68,68,.16) 38%,
+                    transparent 70%
+                ),
+                /* Acento rojo — esquina superior derecha */
+                radial-gradient(ellipse 60% 55% at 90% 6%,
+                    rgba(239,68,68,.14) 0%,
+                    transparent 62%
+                ),
+                /* Toque cálido — izquierda media */
+                radial-gradient(ellipse 46% 44% at 8% 24%,
+                    rgba(249,115,22,.09) 0%,
+                    transparent 64%
+                ),
+                /* Vignette oscuro inferior — da profundidad */
+                radial-gradient(ellipse 100% 52% at 50% 110%,
+                    rgba(0,0,0,.60) 0%,
+                    transparent 65%
+                ),
+                /* Vignettes laterales sutiles */
+                radial-gradient(ellipse 28% 100% at 0% 50%,
+                    rgba(0,0,0,.12) 0%,
+                    transparent 60%
+                ),
+                radial-gradient(ellipse 28% 100% at 100% 50%,
+                    rgba(0,0,0,.12) 0%,
+                    transparent 60%
+                );
         }
 
+        /* Capa 2: grano de película (film grain) */
         .bg-noise{
             position:fixed;inset:0;z-index:0;pointer-events:none;
-            opacity:.035;
+            opacity:.028;
             background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='250' height='250'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.70' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='250' height='250' filter='url(%23n)'/></svg>");
             background-size:175px 175px;
         }
@@ -71,8 +86,9 @@
 
         /* ─── NAV ─── */
         nav.top{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;padding:1.1rem 1.5rem;z-index:200}
-        .np{display:flex;align-items:center;gap:.85rem;padding:.42rem .42rem .42rem .9rem}
-        .nb{display:flex;align-items:center;gap:.42rem;font-weight:800;font-size:.9rem;color:var(--tx)}
+        .np{display:flex;align-items:center;gap:.85rem;padding:.42rem .9rem .42rem .55rem}
+        .nb{display:flex;align-items:center;gap:.35rem;font-weight:800;font-size:.9rem;color:var(--tx)}
+        .nb svg{width:27px;height:27px;flex-shrink:0}
 
         /* ─── HERO ─── */
         .hero{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:8.5rem 1.5rem 4.5rem}
@@ -84,20 +100,20 @@
         .gt{background:linear-gradient(120deg,var(--o) 20%,var(--r) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
         .stats-row{display:flex;align-items:center;gap:.7rem;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:center}
-        .sp{display:flex;align-items:center;gap:.45rem;padding:.45rem .95rem;font-family:'JetBrains Mono',monospace;font-size:.7rem}
+        .sp{display:flex;align-items:center;gap:.45rem;padding:.36rem .85rem;font-family:'JetBrains Mono',monospace;font-size:.7rem}
 
-        .btn-wa{display:inline-flex;align-items:center;gap:.6rem;border-radius:100px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.3);color:var(--tx);font-weight:700;font-size:.9rem;padding:.68rem 1.5rem;text-decoration:none;transition:all .2s;margin-bottom:.75rem}
+        .btn-wa{display:inline-flex;align-items:center;gap:.6rem;border-radius:100px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.3);color:var(--tx);font-weight:700;font-size:.9rem;padding:.68rem 1.5rem;text-decoration:none;transition:all .18s;margin-bottom:.75rem}
         .btn-wa:hover{background:rgba(37,211,102,.2);box-shadow:0 0 28px rgba(37,211,102,.3)}
 
         /* ─── SECTIONS ─── */
         .sec{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:0 1.5rem 4rem;content-visibility:auto;contain-intrinsic-size:1px 600px}
-        .lbl{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:rgba(245,243,240,.4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:1rem;display:block}
+        .lbl{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:rgba(245,243,240,.3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:1rem;display:block}
 
         /* ─── FEATURES ─── */
         .feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
-        .feat{padding:1.5rem 1.35rem;transition:transform .22s,border-color .22s,background .22s}
-        .feat:hover{transform:translateY(-4px);border-color:rgba(249,115,22,.4);background:rgba(255,255,255,.06)}
-        .fi{width:40px;height:40px;border-radius:11px;background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.3);display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:.9rem}
+        .feat{padding:1.5rem 1.35rem;transition:transform .22s,border-color .22s}
+        .feat:hover{transform:translateY(-4px);border-color:rgba(249,115,22,.28)}
+        .fi{width:40px;height:40px;border-radius:11px;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:.9rem}
         .ft{font-weight:700;font-size:.92rem;margin-bottom:.4rem}
         .fd{font-size:.82rem;color:var(--mu);line-height:1.65}
 
@@ -106,51 +122,47 @@
         .zw::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(249,115,22,.055),rgba(239,68,68,.025));pointer-events:none}
         .zbadge{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;color:var(--o);background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);padding:.22rem .7rem;border-radius:100px;display:inline-block;margin-bottom:.9rem}
         .zlist{display:flex;flex-direction:column;gap:.85rem;margin-top:.5rem}
-        
-        .zcard{border-radius:16px;padding:1.1rem 1.25rem;background:var(--card-bg);border:1px solid var(--card-bd);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;transition:border-color .2s,background .2s}
-        .zcard:first-child{border-color:rgba(249,115,22,.35);background:rgba(249,115,22,.06)}
-        
+        .zcard{border-radius:16px;padding:1.1rem 1.25rem;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;transition:border-color .2s,background .2s}
+        .zcard:first-child{border-color:rgba(249,115,22,.25);background:rgba(249,115,22,.04)}
         .zname{font-weight:800;font-size:1rem;margin-bottom:.3rem;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;line-height:1.2}
         .zver{font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.18rem .55rem;border-radius:100px;background:rgba(249,115,22,.14);color:var(--o);border:1px solid rgba(249,115,22,.3);font-weight:700}
         .zlatest{background:rgba(74,222,128,.12);color:#4ade80;font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.18rem .55rem;border-radius:100px;border:1px solid rgba(74,222,128,.28);font-weight:600}
         .zmeta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-top:.45rem}
-        .mb{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:.15rem .5rem;border-radius:100px;border:1px solid transparent}
-        .mb-dl{background:rgba(74,222,128,.1);color:#4ade80; border-color:rgba(74,222,128,.2)}
-        .mb-dt{background:rgba(56,189,248,.1);color:#38BDF8; border-color:rgba(56,189,248,.2)}
-        .mb-sz{background:rgba(249,115,22,.1);color:var(--o); border-color:rgba(249,115,22,.2)}
-        .mb-ex{background:rgba(255,255,255,.08);color:var(--mu); border-color:rgba(255,255,255,.1)}
-        .btn-dl{display:flex;align-items:center;gap:.5rem;color:#fff;font-weight:700;font-size:.84rem;padding:.6rem 1.35rem;border-radius:100px;white-space:nowrap;flex-shrink:0;box-shadow:0 4px 15px rgba(239,68,68,.3);transition:all .2s}
-        .btn-dl:hover{box-shadow:0 6px 25px rgba(239,68,68,.5);transform:translateY(-2px)}
+        .mb{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:.15rem .5rem;border-radius:100px}
+        .mb-dl{background:rgba(74,222,128,.08);color:#4ade80}
+        .mb-dt{background:rgba(56,189,248,.08);color:#38BDF8}
+        .mb-sz{background:rgba(249,115,22,.08);color:var(--o)}
+        .mb-ex{background:rgba(255,255,255,.06);color:var(--mu)}
+        .btn-dl{display:flex;align-items:center;gap:.5rem;color:#fff;font-weight:700;font-size:.84rem;padding:.6rem 1.35rem;border-radius:100px;white-space:nowrap;flex-shrink:0;box-shadow:0 0 20px rgba(239,68,68,.35);transition:all .18s}
+        .btn-dl:hover{box-shadow:0 0 32px rgba(239,68,68,.55);transform:translateY(-1px)}
 
         /* ─── SKELETON ─── */
-        .skel{border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,.06) 25%,rgba(255,255,255,.12) 50%,rgba(255,255,255,.06) 75%);background-size:200% 100%;animation:skel 1.4s ease-in-out infinite;height:20px;margin-bottom:.5rem}
+        .skel{border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,.05) 25%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.05) 75%);background-size:200% 100%;animation:skel 1.4s ease-in-out infinite;height:20px;margin-bottom:.5rem}
         @keyframes skel{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
         /* ─── DEPS ─── */
         .dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.9rem}
-        .dcard{border-radius:16px;padding:1.1rem 1.25rem;transition:border-color .2s,transform .2s,background .2s}
-        .dcard:hover{border-color:rgba(56,189,248,.35);transform:translateY(-2px);background:rgba(255,255,255,.06)}
-        .dico{width:36px;height:36px;border-radius:9px;background:rgba(56,189,248,.15);border:1px solid rgba(56,189,248,.3);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+        .dcard{border-radius:16px;padding:1.1rem 1.25rem;transition:border-color .2s,transform .2s}
+        .dcard:hover{border-color:rgba(56,189,248,.25);transform:translateY(-2px)}
+        .dico{width:36px;height:36px;border-radius:9px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.18);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
         .dname{font-weight:700;font-size:.88rem;margin-bottom:.35rem;word-break:break-word}
-        .btn-dep{display:flex;align-items:center;justify-content:center;gap:.4rem;border-radius:100px;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.3);color:#38BDF8;font-size:.76rem;font-weight:700;padding:.42rem .9rem;width:100%;cursor:pointer;transition:all .2s}
-        .btn-dep:hover{background:rgba(56,189,248,.25);box-shadow:0 2px 10px rgba(56,189,248,.15)}
+        .btn-dep{display:flex;align-items:center;justify-content:center;gap:.4rem;border-radius:100px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);color:#38BDF8;font-size:.76rem;font-weight:700;padding:.42rem .9rem;width:100%;cursor:pointer;transition:background .18s}
+        .btn-dep:hover{background:rgba(56,189,248,.2)}
 
         /* ─── REFRESH ─── */
-        .refresh-btn{display:inline-flex;align-items:center;gap:.4rem;border-radius:100px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:var(--mu);font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:.3rem .8rem;cursor:pointer;transition:all .2s}
-        .refresh-btn:hover{background:rgba(255,255,255,.1);color:var(--tx)}
+        .refresh-btn{display:inline-flex;align-items:center;gap:.4rem;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--mu);font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:.25rem .7rem;cursor:pointer;transition:all .18s}
+        .refresh-btn:hover{background:rgba(255,255,255,.08);color:var(--tx)}
         .refresh-btn.spin svg{animation:spin 1s linear infinite}
         @keyframes spin{to{transform:rotate(360deg)}}
 
         /* ─── PILLS / REQ ─── */
-        .pills{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
-        .pt{font-family:'JetBrains Mono',monospace;font-size:.75rem;padding:.35rem .85rem; transition:transform .2s, border-color .2s}
-        .pt:hover{transform:translateY(-2px); border-color:rgba(255,255,255,.3)}
-        
+        .pills{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center}
+        .pt{font-family:'JetBrains Mono',monospace;font-size:.7rem;padding:.28rem .78rem}
         .rq{padding:1.5rem 2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
-        .rl{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(245,243,240,.4);margin-bottom:.4rem}
-        .rv{font-weight:700;font-size:.9rem}
+        .rl{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(245,243,240,.3);margin-bottom:.3rem}
+        .rv{font-weight:700;font-size:.88rem}
 
-        footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);padding:1.5rem;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:rgba(245,243,240,.3)}
+        footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.06);padding:1.4rem;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:rgba(245,243,240,.2)}
 
         @media(max-width:680px){
             .feats{grid-template-columns:1fr}
@@ -168,10 +180,10 @@
     <nav class="top">
         <div class="np glass-nav pill">
             <span class="nb">
-                <svg width="22" height="22" viewBox="0 0 24 24"><defs><linearGradient id="gN" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gN)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
+                <svg width="27" height="27" viewBox="0 0 24 24"><defs><linearGradient id="gN" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gN)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
                 Zeta
             </span>
-            <span id="navVer" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--o);padding:.2rem .6rem">—</span>
+            <span id="navVer" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--o);padding:.15rem .5rem">—</span>
             <button class="pill G" style="color:#fff;font-weight:700;font-size:.8rem;padding:.44rem 1.05rem" onclick="mainDl()">Descargar</button>
         </div>
     </nav>
@@ -181,9 +193,9 @@
         <div class="hlogo">
             <svg width="100" height="100" viewBox="0 0 24 24"><defs><linearGradient id="gH" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gH)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
         </div>
-        <span class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--o);letter-spacing:.14em;text-transform:uppercase;padding:.3rem .9rem;margin-bottom:1rem;display:inline-block">Convertidor de Video · Windows</span>
+        <span class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--o);letter-spacing:.14em;text-transform:uppercase;padding:.28rem .8rem;margin-bottom:1rem;display:inline-block">Convertidor de Video · Windows</span>
         <h1>Convierte.<br><span class="gt">Rápido. Sin límites.</span></h1>
-        <p style="color:var(--mu);line-height:1.72;max-width:420px;font-size:1.05rem;margin-bottom:1.6rem">Convierte cualquier video al formato que necesitas con aceleración GPU. Sin marcas de agua, sin suscripciones.</p>
+        <p style="color:var(--mu);line-height:1.72;max-width:420px;font-size:1rem;margin-bottom:1.6rem">Convierte cualquier video al formato que necesitas con aceleración GPU. Sin marcas de agua, sin suscripciones.</p>
         <div class="stats-row">
             <div class="sp glass pill">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -218,7 +230,7 @@
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
             <span class="lbl" style="margin-bottom:0">App Principal</span>
             <span style="display:flex;align-items:center;gap:.5rem">
-                <span id="zetaCount" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--mu);padding:.3rem .7rem">—</span>
+                <span id="zetaCount" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--mu);padding:.2rem .6rem">—</span>
                 <button class="refresh-btn" id="refreshBtn" onclick="loadFiles(true)">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
                     Refrescar
@@ -227,7 +239,7 @@
         </div>
         <div class="zw glass card">
             <span class="zbadge">⚡ Zeta — Convertidor de Video para Windows</span>
-            <p style="font-size:.86rem;color:var(--mu);line-height:1.65;margin-bottom:.85rem">Lista actualizada desde el servidor · Se refresca automáticamente</p>
+            <p style="font-size:.84rem;color:var(--mu);line-height:1.65;margin-bottom:.75rem">Lista actualizada desde el servidor · Se refresca automáticamente</p>
             <div id="zetaList" class="zlist">
                 <div class="zcard" style="pointer-events:none">
                     <div style="flex:1"><div class="skel" style="width:50%;height:18px"></div><div class="skel" style="width:80%;height:14px;margin-top:.4rem"></div></div>
@@ -241,9 +253,9 @@
     <div class="sec" style="max-width:780px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem">
             <span class="lbl" style="margin-bottom:0">Componentes adicionales</span>
-            <span id="depCount" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--mu);padding:.3rem .7rem">—</span>
+            <span id="depCount" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--mu);padding:.2rem .6rem">—</span>
         </div>
-        <p style="font-size:.86rem;color:var(--mu);line-height:1.65;margin-bottom:1.1rem;position:relative;z-index:1">Archivos complementarios necesarios para el correcto funcionamiento de Zeta.</p>
+        <p style="font-size:.84rem;color:var(--mu);line-height:1.65;margin-bottom:1rem;position:relative;z-index:1">Archivos complementarios necesarios para el correcto funcionamiento de Zeta.</p>
         <div id="depList" class="dgrid">
             <div class="dcard glass" style="pointer-events:none"><div class="skel" style="height:16px;margin-bottom:.5rem"></div><div class="skel" style="height:14px;width:70%"></div></div>
         </div>
@@ -251,7 +263,7 @@
 
     <!-- ── FORMATS ── -->
     <div class="sec" style="max-width:680px;text-align:center">
-        <span class="lbl" style="text-align:center;margin-bottom:1.2rem">Formatos soportados</span>
+        <span class="lbl" style="text-align:center">Formatos soportados</span>
         <div class="pills">
             <span class="pt glass pill">MP4</span><span class="pt glass pill">MKV</span><span class="pt glass pill">AVI</span><span class="pt glass pill">MOV</span><span class="pt glass pill">WebM</span><span class="pt glass pill">TS</span><span class="pt glass pill">M2TS</span><span class="pt glass pill">M4V</span><span class="pt glass pill">WMV</span><span class="pt glass pill">FLV</span><span class="pt glass pill">3GP</span><span class="pt glass pill">GIF</span>
         </div>
@@ -290,6 +302,7 @@
         async function loadFiles(forceRefresh = false) {
             const cached = ls.get("mf_cache");
 
+            // Mostrar caché inmediatamente si existe
             if (cached && !forceRefresh) {
                 mfFiles = cached.files || [];
                 renderFiles();
@@ -395,6 +408,7 @@
                 mainDlUrl = zF[0].links?.normal_download || "";
             }
 
+            // Lista Zeta
             $("zetaList").innerHTML = !zF.length
                 ? `<div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--mu);padding:1rem">No hay versiones de Zeta todavía.</div>`
                 : zF.map((f, i) => {
@@ -421,6 +435,7 @@
                     </div>`;
                 }).join("");
 
+            // Deps
             $("depList").innerHTML = !dF.length
                 ? `<div class="dcard glass" style="text-align:center;color:var(--mu);font-family:'JetBrains Mono',monospace;font-size:.85rem;padding:2rem 1rem;grid-column:1/-1">Sin componentes adicionales.</div>`
                 : dF.map(f => {
@@ -451,6 +466,7 @@
         }
 
         function init() {
+            // Contador de vistas: localStorage por dispositivo
             const views = (ls.get("views") || 0) + 1;
             ls.set("views", views);
             $("sV").textContent = views.toLocaleString();
