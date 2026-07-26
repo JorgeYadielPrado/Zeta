@@ -11,7 +11,7 @@
             --o:#F97316;--r:#EF4444;
             --bg:#07080D;--tx:#F5F3F0;
             --mu:rgba(245,243,240,.42);
-            --gb:rgba(255,255,255,.058);
+            --gb:rgba(15,18,28,.45);
             --bd:rgba(255,255,255,.09)
         }
         html{scroll-behavior:smooth}
@@ -23,7 +23,7 @@
         .card{border-radius:22px}
         .G{background:linear-gradient(120deg,var(--o),var(--r))}
 
-        /* === FONDO FIJO: LOGO Z + RAYOS === */
+        /* === FONDO FIJO: LOGO Z + RAYOS (sutil) === */
         .bg-stage{
             position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
             will-change:transform;transform:translateZ(0);contain:strict;
@@ -33,25 +33,26 @@
             transform:translateZ(0);will-change:transform,opacity;
         }
         .bg-glow{
-            position:absolute;left:50%;top:50%;width:1400px;height:1400px;
+            position:absolute;left:50%;top:50%;width:900px;height:900px;
             transform:translate(-50%,-50%) translateZ(0);
-            background:radial-gradient(circle,rgba(249,115,22,.45) 0%,rgba(239,68,68,.22) 22%,transparent 60%);
-            filter:blur(30px);pointer-events:none;
+            background:radial-gradient(circle,rgba(249,115,22,.22) 0%,rgba(239,68,68,.12) 22%,transparent 60%);
+            filter:blur(40px);pointer-events:none;
         }
-        .ray-spin-slow{transform-origin:960px 540px;animation:rayspin 90s linear infinite;will-change:transform}
-        .ray-spin-fast{transform-origin:960px 540px;animation:rayspin-r 55s linear infinite;opacity:.55;will-change:transform}
-        .center-logo{transform-origin:960px 540px;animation:float 6s ease-in-out infinite;
-            filter:drop-shadow(0 0 60px rgba(249,115,22,.7)) drop-shadow(0 0 140px rgba(239,68,68,.4));}
+        .ray-spin-slow{transform-origin:960px 540px;animation:rayspin 120s linear infinite;will-change:transform}
+        .ray-spin-fast{transform-origin:960px 540px;animation:rayspin-r 75s linear infinite;opacity:.4;will-change:transform}
+        .center-logo{
+            transform-origin:960px 540px;
+            filter:drop-shadow(0 0 40px rgba(249,115,22,.5)) drop-shadow(0 0 90px rgba(239,68,68,.25));
+        }
         @keyframes rayspin{to{transform:rotate(360deg)}}
         @keyframes rayspin-r{to{transform:rotate(-360deg)}}
-        @keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-14px) scale(1.03)}}
 
         nav.top{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;padding:1.1rem 1.5rem;z-index:200}
         .np{display:flex;align-items:center;gap:.85rem;padding:.42rem .42rem .42rem .9rem}
         .nb{display:flex;align-items:center;gap:.5rem;font-weight:800;font-size:.9rem;color:var(--tx);text-decoration:none}
 
         .hero{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:8rem 1.5rem 4.5rem}
-        .hlogo{animation:float 6s ease-in-out infinite;filter:drop-shadow(0 0 36px rgba(249,115,22,.6)) drop-shadow(0 0 80px rgba(239,68,68,.3));margin-bottom:1.75rem;position:relative;z-index:2}
+        .hlogo{filter:drop-shadow(0 0 24px rgba(249,115,22,.5));margin-bottom:1.75rem;position:relative;z-index:2}
         h1{font-size:clamp(2.8rem,5.5vw,4.2rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:.8rem}
         .gt{background:linear-gradient(120deg,var(--o) 20%,var(--r) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
         .stats-row{display:flex;align-items:center;gap:.7rem;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:center}
@@ -157,12 +158,12 @@
         <svg class="bg-rays" id="bgRays" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
             <defs>
                 <linearGradient id="rayGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#F97316" stop-opacity=".55"/>
-                    <stop offset="60%" stop-color="#F97316" stop-opacity=".12"/>
+                    <stop offset="0%" stop-color="#F97316" stop-opacity=".35"/>
+                    <stop offset="60%" stop-color="#F97316" stop-opacity=".08"/>
                     <stop offset="100%" stop-color="#F97316" stop-opacity="0"/>
                 </linearGradient>
                 <linearGradient id="rayGrad2" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#EF4444" stop-opacity=".4"/>
+                    <stop offset="0%" stop-color="#EF4444" stop-opacity=".25"/>
                     <stop offset="100%" stop-color="#EF4444" stop-opacity="0"/>
                 </linearGradient>
                 <linearGradient id="logoFill" x1="0" y1="0" x2="1" y2="1">
@@ -170,8 +171,8 @@
                     <stop offset="100%" stop-color="#EF4444"/>
                 </linearGradient>
                 <radialGradient id="logoGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#F97316" stop-opacity=".7"/>
-                    <stop offset="50%" stop-color="#EF4444" stop-opacity=".25"/>
+                    <stop offset="0%" stop-color="#F97316" stop-opacity=".45"/>
+                    <stop offset="50%" stop-color="#EF4444" stop-opacity=".15"/>
                     <stop offset="100%" stop-color="#F97316" stop-opacity="0"/>
                 </radialGradient>
             </defs>
@@ -379,14 +380,14 @@
             set: (k,v)=>{try{localStorage.setItem("z:"+k,JSON.stringify(v))}catch{}}
         };
 
-        /* ===== FONDO: generar rayos y logo central ===== */
+        /* ===== FONDO: rayos sutiles + logo central estático ===== */
         (function buildBg(){
             const svg = document.getElementById('bgRays');
             if(!svg) return;
             const NS = 'http://www.w3.org/2000/svg';
             const cx = 960, cy = 540;
 
-            const makeRay = (g, count, step, startAngle, len, sw, op) => {
+            const makeRay = (g, count, step, startAngle, len, sw, op, opStep) => {
                 for(let i=0; i<count; i++){
                     const a = startAngle + i*step;
                     const line = document.createElementNS(NS,'line');
@@ -395,9 +396,9 @@
                     line.setAttribute('x2','0');
                     line.setAttribute('y2', String(-len));
                     line.setAttribute('stroke', i%2===0 ? 'url(#rayGrad)' : 'url(#rayGrad2)');
-                    line.setAttribute('stroke-width', String(sw + (i%3)*0.4));
+                    line.setAttribute('stroke-width', String(sw + (i%3)*0.3));
                     line.setAttribute('stroke-linecap','round');
-                    line.setAttribute('opacity', String(op + (i%4)*0.08));
+                    line.setAttribute('opacity', String(Math.min(op + (i%4)*opStep, 0.35)));
                     line.setAttribute('transform', `rotate(${a})`);
                     g.appendChild(line);
                 }
@@ -406,45 +407,32 @@
             const slow = document.createElementNS(NS,'g');
             slow.setAttribute('class','ray-spin-slow');
             slow.setAttribute('transform',`translate(${cx} ${cy})`);
-            makeRay(slow, 48, 7.5, 0, 2200, 1.4, 0.35);
+            makeRay(slow, 48, 7.5, 0, 2200, 1.2, 0.18, 0.03);
             svg.appendChild(slow);
 
             const fast = document.createElementNS(NS,'g');
             fast.setAttribute('class','ray-spin-fast');
             fast.setAttribute('transform',`translate(${cx} ${cy})`);
-            makeRay(fast, 24, 15, 3.75, 1700, 1.0, 0.25);
+            makeRay(fast, 24, 15, 3.75, 1700, 0.9, 0.12, 0.02);
             svg.appendChild(fast);
 
-            // Partículas/puntos en el perímetro
-            const dots = document.createElementNS(NS,'g');
-            dots.setAttribute('opacity','.55');
-            for(let i=0; i<18; i++){
-                const a = (i/18)*Math.PI*2;
-                const r = 480 + (i%3)*40;
-                const c = document.createElementNS(NS,'circle');
-                c.setAttribute('cx', String(cx + Math.cos(a)*r));
-                c.setAttribute('cy', String(cy + Math.sin(a)*r));
-                c.setAttribute('r', String(1.4 + (i%3)*0.5));
-                c.setAttribute('fill', i%2===0 ? '#F97316' : '#EF4444');
-                dots.appendChild(c);
-            }
-            svg.appendChild(dots);
-
-            // Halo central
+            // Halo central suave
             const halo = document.createElementNS(NS,'circle');
             halo.setAttribute('cx', String(cx));
             halo.setAttribute('cy', String(cy));
-            halo.setAttribute('r','340');
+            halo.setAttribute('r','220');
             halo.setAttribute('fill','url(#logoGlow)');
+            halo.setAttribute('opacity','.7');
             svg.appendChild(halo);
 
-            // Logo Z central gigante
+            // Logo Z central ESTÁTICO (sin animación)
             const logo = document.createElementNS(NS,'g');
             logo.setAttribute('class','center-logo');
+            logo.setAttribute('transform',`translate(${cx} ${cy})`);
             logo.innerHTML = `
-                <g transform="translate(${cx} ${cy}) scale(13) translate(-12 -12)">
-                    <path fill="url(#logoFill)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/>
-                    <path fill="white" fill-opacity=".92" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/>
+                <g transform="scale(13) translate(-12 -12)">
+                    <path fill="url(#logoFill)" fill-opacity=".75" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/>
+                    <path fill="white" fill-opacity=".7" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/>
                 </g>`;
             svg.appendChild(logo);
         })();
@@ -530,7 +518,6 @@
         }
         const isZeta = name => /zeta/i.test(name);
 
-        /* === Parser: separa nombre base y versión del filename === */
         function parseZetaName(name){
             const dotIdx = name.lastIndexOf('.');
             const ext = dotIdx > 0 ? name.slice(dotIdx + 1) : '';
