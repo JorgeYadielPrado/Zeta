@@ -22,17 +22,19 @@
         .glass{background:var(--card-bg);border:1px solid var(--card-bd)}
 
         /* ═══════════════════════════════════════════════
-           NAVBAR — ACRÍLICO CON BRILLO ESPECULAR
+           NAVBAR — ACRÍLICO PERFECCIONADO CON LUZ ENVOLVENTE
         ════════════════════════════════════════════════ */
         .glass-nav{
             background: rgba(255,255,255,.058);
             backdrop-filter: blur(28px) saturate(180%);
             -webkit-backdrop-filter: blur(28px) saturate(180%);
             border: 1px solid rgba(255,255,255,.09);
-            /* Reflejo de luz blanca en el borde superior */
+            /* Efecto de luz alrededor: aura externa + brillo interior uniforme + línea superior */
             box-shadow:
-                inset 0 1px 1.5px rgba(255,255,255,0.35),
-                0 4px 20px rgba(0,0,0,0.25);
+                0 0 20px rgba(255,255,255,0.12),          /* halo externo sutil */
+                inset 0 0 15px rgba(255,255,255,0.08),    /* brillo interior difuso */
+                inset 0 1px 2px rgba(255,255,255,0.45),  /* reflejo especular superior */
+                0 4px 20px rgba(0,0,0,0.25);             /* sombra para profundidad */
             transform: translateZ(0);
             will-change: backdrop-filter;
         }
@@ -482,4 +484,4 @@
         init();
     </script>
 </body>
-</html>
+                                                                                                                                                                 </html>
