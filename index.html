@@ -237,7 +237,6 @@
             .feats{grid-template-columns:1fr}
             .rq{grid-template-columns:1fr 1fr}
             .dgrid{grid-template-columns:1fr}
-            .nav-dl-hide{display:none}
         }
     </style>
 </head>
@@ -255,7 +254,7 @@
                 Zeta
             </span>
             <span id="navVer" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--o);padding:.15rem .5rem">—</span>
-            <button class="pill G nav-dl-hide" style="color:#fff;font-weight:700;font-size:.8rem;padding:.44rem 1.05rem" onclick="mainDl()">Descargar</button>
+            <button class="pill G" style="color:#fff;font-weight:700;font-size:.8rem;padding:.44rem 1.05rem" onclick="mainDl()">Descargar</button>
         </div>
 
         <!-- Píldora de auth (derecha) — separada -->
@@ -603,23 +602,27 @@
         const goToRegisterBtn = document.getElementById('goToRegisterBtn')
         const closeErrorBtn   = document.getElementById('closeErrorBtn')
         const errEmailSpan    = document.getElementById('errEmail')
+        const logoutModal     = document.getElementById('logoutModal')
+        const confirmLogoutBtn= document.getElementById('confirmLogoutBtn')
+        const cancelLogoutBtn = document.getElementById('cancelLogoutBtn')
 
         let isLogin = true
 
         // ── Mostrar modal de auth ──
         window.showAuthModal = () => {
-            modal.classList.remove('hidden')
+            modal.style.display = 'flex'
             isLogin = true
             updateAuthUI()
         }
 
         // ── Cerrar modales al hacer click fuera ──
         window.onclick = (e) => {
-            if (e.target === modal)      modal.classList.add('hidden')
-            if (e.target === errorModal) errorModal.classList.add('hidden')
+            if (e.target === modal)      modal.style.display = 'none'
+            if (e.target === errorModal) errorModal.style.display = 'none'
+            if (e.target === logoutModal)logoutModal.style.display = 'none'
         }
-        closeModal.onclick = () => modal.classList.add('hidden')
-        closeErrorBtn.onclick = () => errorModal.classList.add('hidden')
+        closeModal.onclick = () => modal.style.display = 'none'
+        closeErrorBtn.onclick = () => errorModal.style.display = 'none'
 
         // ── Alternar entre login y registro ──
         toggleAuth.onclick = () => {
@@ -649,15 +652,15 @@
         // ── Diálogo de "cuenta no encontrada" ──
         window.showErrorModal = (email) => {
             if (errEmailSpan) errEmailSpan.textContent = email || ''
-            errorModal.classList.remove('hidden')
+            errorModal.style.display = 'flex'
         }
         goToRegisterBtn.onclick = () => {
             // Pre-llenar el correo en el modal de registro
             if (errEmailSpan && errEmailSpan.textContent) {
                 emailInput.value = errEmailSpan.textContent
             }
-            errorModal.classList.add('hidden')
-            modal.classList.remove('hidden')
+            errorModal.style.display = 'none'
+            modal.style.display = 'flex'
             isLogin = false
             updateAuthUI()
             setTimeout(() => passwordInput.focus(), 100)
@@ -680,8 +683,8 @@
                         const msg = (error.message || '').toLowerCase()
                         if (msg.includes('invalid login') || msg.includes('invalid credentials')) {
                             // ❌ No registrado → diálogo acrílico
-                            modal.classList.add('hidden')
-                            errorModal.classList.add('hidden')
+                            modal.style.display = 'none'
+                            errorModal.style.display = 'none'
                             emailInput.value = ''
                             passwordInput.value = ''
                             showErrorModal(email)
@@ -690,8 +693,8 @@
                         throw error
                     }
                     // ✅ Login exitoso: cerrar modal y limpiar formulario
-                    modal.classList.add('hidden')
-                    errorModal.classList.add('hidden')
+                    modal.style.display = 'none'
+                    errorModal.style.display = 'none'
                     emailInput.value = ''
                     passwordInput.value = ''
                 } else {
@@ -704,7 +707,7 @@
                         ])
                     }
                     alert('✅ Registro exitoso. Ya estás dentro.')
-                    modal.classList.add('hidden')
+                    modal.style.display = 'none'
                     emailInput.value = ''
                     passwordInput.value = ''
                 }
@@ -720,8 +723,8 @@
         function applySession(session) {
             if (session?.user) {
                 // 🛡️ Cierre defensivo: si por cualquier vía hay sesión, fuera modales
-                modal.classList.add('hidden')
-                errorModal.classList.add('hidden')
+                modal.style.display = 'none'
+                errorModal.style.display = 'none'
                 if (emailInput)    emailInput.value = ''
                 if (passwordInput) passwordInput.value = ''
 
@@ -744,10 +747,17 @@
             applySession(session)
         })
 
-        // ── Cerrar sesión ──
-        window.logout = async () => {
+        // ── Cerrar sesión (con confirmación acrílica) ──
+        window.logout = () => {
             userDropdown.classList.remove('show')
+            logoutModal.style.display = 'flex'
+        }
+        confirmLogoutBtn.onclick = async () => {
+            logoutModal.style.display = 'none'
             await supabase.auth.signOut()
+        }
+        cancelLogoutBtn.onclick = () => {
+            logoutModal.style.display = 'none'
         }
 
         // ── Comprobar sesión al cargar ──
@@ -758,7 +768,7 @@
     <!-- ═══════════════════════════════════════════
          MODAL DE AUTH (login / registro)
          ═══════════════════════════════════════════ -->
-    <div id="authModal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:999;padding:1rem">
+    <div id="authModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;z-index:999;padding:1rem">
         <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);color:var(--tx);position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6)">
             <h2 id="authTitle" style="font-weight:800;margin-bottom:1.5rem;font-size:1.4rem">Iniciar sesión</h2>
             <form id="authForm">
@@ -776,7 +786,7 @@
          (se muestra cuando Supabase devuelve
          "Invalid login credentials")
          ═══════════════════════════════════════════ -->
-    <div id="errorModal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:1000;padding:1rem">
+    <div id="errorModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;z-index:1000;padding:1rem">
         <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);text-align:center;color:var(--tx);box-shadow:0 30px 80px rgba(0,0,0,.7)">
             <div style="width:64px;height:64px;border-radius:50%;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.35);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;font-size:1.9rem;box-shadow:0 0 30px rgba(239,68,68,.25)">⚠️</div>
             <h3 style="font-weight:800;font-size:1.25rem;margin-bottom:.6rem;letter-spacing:-.01em">Aún no tienes cuenta</h3>
@@ -787,6 +797,21 @@
             </p>
             <button id="goToRegisterBtn" class="G pill" style="color:#fff;font-weight:700;font-size:.9rem;padding:.75rem 1.5rem;width:100%;margin-bottom:.6rem;box-shadow:0 0 28px rgba(239,68,68,.4);font-family:inherit;letter-spacing:.01em">Crear cuenta ahora</button>
             <button id="closeErrorBtn" class="pill" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--mu);font-weight:600;font-size:.85rem;padding:.6rem 1.5rem;width:100%;font-family:inherit;transition:all .18s" onmouseover="this.style.background='rgba(255,255,255,.08)';this.style.color='var(--tx)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.color='var(--mu)'">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         MODAL DE CONFIRMACIÓN: "CERRAR SESIÓN"
+         (diálogo acrílico, mismo estilo que las
+         píldoras y el modal de error)
+         ═══════════════════════════════════════════ -->
+    <div id="logoutModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;z-index:1001;padding:1rem">
+        <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);text-align:center;color:var(--tx);box-shadow:0 30px 80px rgba(0,0,0,.7)">
+            <div style="width:64px;height:64px;border-radius:50%;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.35);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;font-size:1.9rem;box-shadow:0 0 30px rgba(249,115,22,.25)">🚪</div>
+            <h3 style="font-weight:800;font-size:1.25rem;margin-bottom:.6rem;letter-spacing:-.01em">¿Cerrar sesión?</h3>
+            <p style="color:var(--mu);font-size:.88rem;line-height:1.6;margin-bottom:1.5rem">Tendrás que volver a iniciar sesión para acceder a las descargas.</p>
+            <button id="confirmLogoutBtn" class="G pill" style="color:#fff;font-weight:700;font-size:.9rem;padding:.75rem 1.5rem;width:100%;margin-bottom:.6rem;box-shadow:0 0 28px rgba(239,68,68,.4);font-family:inherit;letter-spacing:.01em">Sí, cerrar sesión</button>
+            <button id="cancelLogoutBtn" class="pill" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--mu);font-weight:600;font-size:.85rem;padding:.6rem 1.5rem;width:100%;font-family:inherit;transition:all .18s" onmouseover="this.style.background='rgba(255,255,255,.08)';this.style.color='var(--tx)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.color='var(--mu)'">Cancelar</button>
         </div>
     </div>
 </body>
