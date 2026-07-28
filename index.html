@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zeta — Convertidor de Video para Windows</title>
+    <!-- Favicon SVG inline con el logo de Zeta -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='0'><stop offset='0%' stop-color='%23F97316'/><stop offset='100%' stop-color='%23EF4444'/></linearGradient></defs><path fill='url(%23g)' d='m13.666 1.429l6.75 3.98.096.063.093.078.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015'/><path fill='white' d='M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7'/></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -640,7 +642,6 @@
             toggleAuth.textContent = isLogin
                 ? '¿No tienes cuenta? Regístrate'
                 : '¿Ya tienes cuenta? Inicia sesión'
-            // Mostrar/ocultar botón de Google según el modo
             if (googleBtn) googleBtn.style.display = isLogin ? 'flex' : 'none'
         }
 
@@ -765,7 +766,6 @@
                 loginBtn.classList.remove('hidden')
                 userMenu.classList.add('hidden')
                 userDropdown.classList.remove('show')
-                // Restaurar avatar por defecto
                 avatarBtn.innerHTML = '<span id="userInitial">U</span>'
                 udMini.innerHTML = '<span>U</span>'
             }
@@ -832,10 +832,10 @@
     </div>
 
     <!-- ═══════════════════════════════════════════
-         MODAL DE CONFIRMACIÓN: "CERRAR SESIÓN"
+         MODAL DE CONFIRMACIÓN: "CERRAR SESIÓN" — ahora con efecto acrílico intenso
          ═══════════════════════════════════════════ -->
     <div id="logoutModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;z-index:1001;padding:1rem">
-        <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);text-align:center;color:var(--tx);box-shadow:0 30px 80px rgba(0,0,0,.7)">
+        <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);text-align:center;color:var(--tx);box-shadow:0 30px 80px rgba(0,0,0,.7);background:rgba(9,13,21,0.76);backdrop-filter:blur(40px) saturate(200%);-webkit-backdrop-filter:blur(40px) saturate(200%);border:1px solid rgba(255,255,255,0.12)">
             <div style="width:64px;height:64px;border-radius:50%;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.35);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;font-size:1.9rem;box-shadow:0 0 30px rgba(249,115,22,.25)">🚪</div>
             <h3 style="font-weight:800;font-size:1.25rem;margin-bottom:.6rem;letter-spacing:-.01em">¿Cerrar sesión?</h3>
             <p style="color:var(--mu);font-size:.88rem;line-height:1.6;margin-bottom:1.5rem">Tendrás que volver a iniciar sesión para acceder a las descargas.</p>
