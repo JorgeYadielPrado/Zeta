@@ -4,14 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zeta — Convertidor de Video para Windows</title>
-
-    <!-- ═══════════════════════════════════════════
-         FAVICON — Logo Z sin cortes (viewBox ampliado)
-    ═══════════════════════════════════════════ -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='2 2 20 20'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%23F97316'/><stop offset='100%25' stop-color='%23EF4444'/></linearGradient></defs><path fill='url(%23g)' d='m13.666 1.429l6.75 3.98.096.063.093.078.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015'/><path fill='white' d='M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7'/></svg>">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='2 2 20 20'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%23F97316'/><stop offset='100%25' stop-color='%23EF4444'/></linearGradient></defs><path fill='url(%23g)' d='m13.666 1.429l6.75 3.98.096.063.093.078.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015'/><path fill='white' d='M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7'/></svg>">
-    <meta name="theme-color" content="#F97316">
-
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -25,22 +17,51 @@
         html{scroll-behavior:smooth;background:var(--bg)}
         body{color:var(--tx);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;overflow-x:hidden;position:relative;background:var(--bg)}
         button{cursor:pointer;border:none;font-family:inherit}
+
+        /* ─── GLASS CARDS ─── */
         .glass{background:var(--card-bg);border:1px solid var(--card-bd)}
+
+        /* ═══════════════════════════════════════════════
+           NAVBAR — ACRÍLICO
+        ════════════════════════════════════════════════ */
         .glass-nav{
             background: rgba(255,255,255,.058);
             backdrop-filter: blur(28px) saturate(180%);
             -webkit-backdrop-filter: blur(28px) saturate(180%);
             border: 1px solid rgba(255,255,255,.09);
         }
+
+        /* ═══════════════════════════════════════════════
+           FONDO — AURORA + GRAIN
+        ════════════════════════════════════════════════ */
         .bg-glow{
             position:fixed;inset:0;z-index:0;pointer-events:none;
             background:
-                radial-gradient(ellipse 95% 72% at 50% -12%, rgba(249,115,22,.30) 0%, rgba(239,68,68,.16) 38%, transparent 70%),
-                radial-gradient(ellipse 60% 55% at 90% 6%, rgba(239,68,68,.14) 0%, transparent 62%),
-                radial-gradient(ellipse 46% 44% at 8% 24%, rgba(249,115,22,.09) 0%, transparent 64%),
-                radial-gradient(ellipse 100% 52% at 50% 110%, rgba(0,0,0,.60) 0%, transparent 65%),
-                radial-gradient(ellipse 28% 100% at 0% 50%, rgba(0,0,0,.12) 0%, transparent 60%),
-                radial-gradient(ellipse 28% 100% at 100% 50%, rgba(0,0,0,.12) 0%, transparent 60%);
+                radial-gradient(ellipse 95% 72% at 50% -12%,
+                    rgba(249,115,22,.30) 0%,
+                    rgba(239,68,68,.16) 38%,
+                    transparent 70%
+                ),
+                radial-gradient(ellipse 60% 55% at 90% 6%,
+                    rgba(239,68,68,.14) 0%,
+                    transparent 62%
+                ),
+                radial-gradient(ellipse 46% 44% at 8% 24%,
+                    rgba(249,115,22,.09) 0%,
+                    transparent 64%
+                ),
+                radial-gradient(ellipse 100% 52% at 50% 110%,
+                    rgba(0,0,0,.60) 0%,
+                    transparent 65%
+                ),
+                radial-gradient(ellipse 28% 100% at 0% 50%,
+                    rgba(0,0,0,.12) 0%,
+                    transparent 60%
+                ),
+                radial-gradient(ellipse 28% 100% at 100% 50%,
+                    rgba(0,0,0,.12) 0%,
+                    transparent 60%
+                );
         }
         .bg-noise{
             position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -48,11 +69,14 @@
             background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='250' height='250'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.70' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='250' height='250' filter='url(%23n)'/></svg>");
             background-size:175px 175px;
         }
+
+        /* ─── UTILS ─── */
         .pill{border-radius:100px}
         .card{border-radius:22px}
         .G{background:linear-gradient(120deg,var(--o),var(--r))}
         .hidden{display:none!important}
 
+        /* ─── NAV ─── */
         nav.top{
             position:fixed;top:0;left:0;right:0;z-index:200;
             display:flex;justify-content:space-between;align-items:center;
@@ -62,6 +86,7 @@
         .nb{display:flex;align-items:center;gap:.35rem;font-weight:800;font-size:.9rem;color:var(--tx)}
         .nb svg{width:27px;height:27px;flex-shrink:0}
 
+        /* ─── AUTH (píldora separada a la derecha) ─── */
         .auth-area{position:relative;display:flex;align-items:center;flex-shrink:0}
         .login-btn{
             display:flex;align-items:center;gap:.5rem;
@@ -81,11 +106,15 @@
             display:flex;align-items:center;justify-content:center;
             cursor:pointer;transition:all .18s;
             box-shadow:0 4px 16px rgba(249,115,22,.35),inset 0 1px 0 rgba(255,255,255,.2);
-            position:relative;font-family:inherit;overflow:hidden;
+            position:relative;font-family:inherit;
         }
-        /* Punto verde ELIMINADO: ya no hay ::after */
+        .avatar-btn::after{
+            content:'';position:absolute;bottom:1px;right:1px;
+            width:10px;height:10px;border-radius:50%;
+            background:#4ade80;border:2px solid #020508;
+            box-shadow:0 0 6px rgba(74,222,128,.6);
+        }
         .avatar-btn:hover{transform:scale(1.06);box-shadow:0 6px 22px rgba(249,115,22,.5),inset 0 1px 0 rgba(255,255,255,.2)}
-        .avatar-btn img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 
         .user-dropdown{
             position:absolute;top:calc(100% + 12px);right:0;
@@ -99,6 +128,7 @@
         }
         .user-dropdown.show{display:flex;animation:ddIn .18s ease-out}
         @keyframes ddIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
         .ud-head{
             display:flex;align-items:center;gap:.6rem;
             padding:.5rem .65rem .65rem;border-bottom:1px solid rgba(255,255,255,.06);
@@ -109,9 +139,7 @@
             display:flex;align-items:center;justify-content:center;
             color:#fff;font-weight:800;font-size:.82rem;flex-shrink:0;
             border:1.5px solid rgba(255,255,255,.2);
-            overflow:hidden;
         }
-        .ud-mini img{width:100%;height:100%;object-fit:cover;border-radius:50%}
         .ud-info{flex:1;min-width:0}
         .ud-label{
             font-family:'JetBrains Mono',monospace;font-size:.58rem;
@@ -131,6 +159,7 @@
         }
         .ud-logout:hover{background:rgba(239,68,68,.2);color:#fff;border-color:rgba(239,68,68,.4)}
 
+        /* ─── HERO ─── */
         .hero{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:8.5rem 1.5rem 4.5rem}
         .hlogo{
             filter:drop-shadow(0 0 38px rgba(249,115,22,.60)) drop-shadow(0 0 80px rgba(249,115,22,.22));
@@ -138,18 +167,26 @@
         }
         h1{font-size:clamp(2.8rem,5.5vw,4.2rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:.8rem}
         .gt{background:linear-gradient(120deg,var(--o) 20%,var(--r) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
         .stats-row{display:flex;align-items:center;gap:.7rem;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:center}
         .sp{display:flex;align-items:center;gap:.45rem;padding:.36rem .85rem;font-family:'JetBrains Mono',monospace;font-size:.7rem}
+
         .btn-wa{display:inline-flex;align-items:center;gap:.6rem;border-radius:100px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.3);color:var(--tx);font-weight:700;font-size:.9rem;padding:.68rem 1.5rem;text-decoration:none;transition:all .18s;margin-bottom:.75rem}
         .btn-wa:hover{background:rgba(37,211,102,.2);box-shadow:0 0 28px rgba(37,211,102,.3)}
+
+        /* ─── SECTIONS ─── */
         .sec{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:0 1.5rem 4rem;content-visibility:auto;contain-intrinsic-size:1px 600px}
         .lbl{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:rgba(245,243,240,.3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:1rem;display:block}
+
+        /* ─── FEATURES ─── */
         .feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
         .feat{padding:1.5rem 1.35rem;transition:transform .22s,border-color .22s}
         .feat:hover{transform:translateY(-4px);border-color:rgba(249,115,22,.28)}
         .fi{width:40px;height:40px;border-radius:11px;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:.9rem}
         .ft{font-weight:700;font-size:.92rem;margin-bottom:.4rem}
         .fd{font-size:.82rem;color:var(--mu);line-height:1.65}
+
+        /* ─── ZETA LIST ─── */
         .zw{position:relative;overflow:hidden;padding:1.75rem}
         .zw::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(249,115,22,.055),rgba(239,68,68,.025));pointer-events:none}
         .zbadge{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;color:var(--o);background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);padding:.22rem .7rem;border-radius:100px;display:inline-block;margin-bottom:.9rem}
@@ -167,24 +204,33 @@
         .mb-ex{background:rgba(255,255,255,.06);color:var(--mu)}
         .btn-dl{display:flex;align-items:center;gap:.5rem;color:#fff;font-weight:700;font-size:.84rem;padding:.6rem 1.35rem;border-radius:100px;white-space:nowrap;flex-shrink:0;box-shadow:0 0 20px rgba(239,68,68,.35);transition:all .18s}
         .btn-dl:hover{box-shadow:0 0 32px rgba(239,68,68,.55);transform:translateY(-1px)}
+
+        /* ─── SKELETON ─── */
         .skel{border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,.05) 25%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.05) 75%);background-size:200% 100%;animation:skel 1.4s ease-in-out infinite;height:20px;margin-bottom:.5rem}
         @keyframes skel{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+        /* ─── DEPS ─── */
         .dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.9rem}
         .dcard{border-radius:16px;padding:1.1rem 1.25rem;transition:border-color .2s,transform .2s}
         .dcard:hover{border-color:rgba(56,189,248,.25);transform:translateY(-2px)}
         .dico{width:36px;height:36px;border-radius:9px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.18);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
         .dname{font-weight:700;font-size:.88rem;margin-bottom:.35rem;word-break:break-word}
-        .btn-dep{display:flex;align-items:center;justify-content:center;gap:.4rem;border-radius:100px;background:rgba(56,189,212,.1);border:1px solid rgba(56,189,248,.25);color:#38BDF8;font-size:.76rem;font-weight:700;padding:.42rem .9rem;width:100%;cursor:pointer;transition:background .18s}
+        .btn-dep{display:flex;align-items:center;justify-content:center;gap:.4rem;border-radius:100px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);color:#38BDF8;font-size:.76rem;font-weight:700;padding:.42rem .9rem;width:100%;cursor:pointer;transition:background .18s}
         .btn-dep:hover{background:rgba(56,189,248,.2)}
+
+        /* ─── REFRESH ─── */
         .refresh-btn{display:inline-flex;align-items:center;gap:.4rem;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--mu);font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:.25rem .7rem;cursor:pointer;transition:all .18s}
         .refresh-btn:hover{background:rgba(255,255,255,.08);color:var(--tx)}
         .refresh-btn.spin svg{animation:spin 1s linear infinite}
         @keyframes spin{to{transform:rotate(360deg)}}
+
+        /* ─── PILLS / REQ ─── */
         .pills{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center}
         .pt{font-family:'JetBrains Mono',monospace;font-size:.7rem;padding:.28rem .78rem}
         .rq{padding:1.5rem 2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
         .rl{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(245,243,240,.3);margin-bottom:.3rem}
         .rv{font-weight:700;font-size:.88rem}
+
         footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.06);padding:1.4rem;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:rgba(245,243,240,.2)}
 
         @media(max-width:680px){
@@ -195,20 +241,25 @@
     </style>
 </head>
 <body>
+    <!-- ── FONDO: aurora de color + grano de película ── -->
     <div class="bg-glow"  aria-hidden="true"></div>
     <div class="bg-noise" aria-hidden="true"></div>
 
+    <!-- ── NAVBAR ── -->
     <nav class="top">
+        <!-- Píldora de marca (izquierda) -->
         <div class="np glass-nav pill">
             <span class="nb">
-                <svg width="27" height="27" viewBox="0 0 24 24"><defs><linearGradient id="gN" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gN)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
+                <svg width="27" height="27" viewBox="0 0 24 24"><defs><linearGradient id="gN" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gN)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
                 Zeta
             </span>
             <span id="navVer" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--o);padding:.15rem .5rem">—</span>
             <button class="pill G" style="color:#fff;font-weight:700;font-size:.8rem;padding:.44rem 1.05rem" onclick="mainDl()">Descargar</button>
         </div>
 
+        <!-- Píldora de auth (derecha) — separada -->
         <div class="auth-area">
+            <!-- Botón de login (cuando NO hay sesión) -->
             <button id="loginBtn" class="login-btn glass-nav pill" onclick="showAuthModal()">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
@@ -217,6 +268,7 @@
                 Iniciar sesión
             </button>
 
+            <!-- Avatar circular (cuando SÍ hay sesión) -->
             <div id="userMenu" class="user-menu hidden">
                 <button id="avatarBtn" class="avatar-btn" onclick="toggleUserMenu(event)" title="Mi cuenta">
                     <span id="userInitial">U</span>
@@ -242,9 +294,10 @@
         </div>
     </nav>
 
+    <!-- ── HERO ── -->
     <section class="hero">
         <div class="hlogo">
-            <svg width="100" height="100" viewBox="0 0 24 24"><defs><linearGradient id="gH" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gH)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
+            <svg width="100" height="100" viewBox="0 0 24 24"><defs><linearGradient id="gH" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gH)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
         </div>
         <span class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--o);letter-spacing:.14em;text-transform:uppercase;padding:.28rem .8rem;margin-bottom:1rem;display:inline-block">Convertidor de Video · Windows</span>
         <h1>Convierte.<br><span class="gt">Rápido. Sin límites.</span></h1>
@@ -269,6 +322,7 @@
         </a>
     </section>
 
+    <!-- ── FEATURES ── -->
     <div class="sec">
         <div class="feats">
             <div class="feat glass card"><div class="fi">⚡</div><div class="ft">Aceleración GPU</div><p class="fd">Usa tu tarjeta gráfica para conversiones hasta 10× más rápidas que por software.</p></div>
@@ -277,6 +331,7 @@
         </div>
     </div>
 
+    <!-- ── ZETA FILES ── -->
     <div class="sec" style="max-width:780px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
             <span class="lbl" style="margin-bottom:0">App Principal</span>
@@ -300,6 +355,7 @@
         </div>
     </div>
 
+    <!-- ── DEPS ── -->
     <div class="sec" style="max-width:780px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem">
             <span class="lbl" style="margin-bottom:0">Componentes adicionales</span>
@@ -311,6 +367,7 @@
         </div>
     </div>
 
+    <!-- ── FORMATS ── -->
     <div class="sec" style="max-width:680px;text-align:center">
         <span class="lbl" style="text-align:center">Formatos soportados</span>
         <div class="pills">
@@ -318,6 +375,7 @@
         </div>
     </div>
 
+    <!-- ── REQUIREMENTS ── -->
     <div class="sec" style="max-width:700px">
         <div class="rq glass card">
             <div><div class="rl">Sistema</div><div class="rv">Win 10/11 x64</div></div>
@@ -329,6 +387,9 @@
 
     <footer>© 2026 YadSoft · Zeta — Convertidor de Video · Hecho con ♥ para Windows</footer>
 
+    <!-- ────────────────────────────────────────────────
+         SCRIPT DE MEDIAFIRE
+         ──────────────────────────────────────────────── -->
     <script>
         const MF_KEY     = "94cnujdlx4umf";
         const MF_API     = `https://www.mediafire.com/api/1.5/folder/get_content.php?folder_key=${MF_KEY}&chunk_size=200&response_format=json&version=1.5&content_type=files`;
@@ -346,6 +407,7 @@
 
         async function loadFiles(forceRefresh = false) {
             const cached = ls.get("mf_cache");
+
             if (cached && !forceRefresh) {
                 mfFiles = cached.files || [];
                 renderFiles();
@@ -355,13 +417,16 @@
                     return;
                 }
             }
+
             const btn = $("refreshBtn");
             if (btn) btn.classList.add("spin");
+
             try {
                 const resp = await fetch(CORS_PROXY + encodeURIComponent(MF_API));
                 if (!resp.ok) throw new Error("HTTP " + resp.status);
                 const data = await resp.json();
                 if (data.response?.result !== "Success") throw new Error(data.response?.message || "Error del servidor");
+
                 mfFiles = (data.response.folder_content?.files || []).sort(
                     (a, b) => new Date(b.created || 0) - new Date(a.created || 0)
                 );
@@ -372,17 +437,21 @@
             } catch (e) {
                 console.warn("Error:", e);
                 if (mfFiles.length === 0) {
-                    $("zetaList").innerHTML = `<div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--mu);padding:1rem;line-height:1.7"><strong style="color:var(--o)">⚠️ No se pudo conectar con el servidor</strong><br><br>${e.message}<br><br>Verifica tu conexión a internet.</div>`;
+                    $("zetaList").innerHTML = `<div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--mu);padding:1rem;line-height:1.7">
+                        <strong style="color:var(--o)">⚠️ No se pudo conectar con el servidor</strong><br><br>${e.message}<br><br>Verifica tu conexión a internet.
+                    </div>`;
                 }
                 scheduleNextRefresh(60 * 1000);
             } finally {
                 if (btn) btn.classList.remove("spin");
             }
         }
+
         function scheduleNextRefresh(ms) {
             if (_mfInterval) clearTimeout(_mfInterval);
             _mfInterval = setTimeout(() => loadFiles(false), ms);
         }
+
         const mfFmt = bytes => {
             const n = parseInt(bytes) || 0;
             if (n < 1048576)    return (n / 1024).toFixed(0)    + ' KB';
@@ -404,6 +473,7 @@
             return "📦";
         };
         const isZeta = name => /zeta/i.test(name);
+
         function parseZetaName(name) {
             const dotIdx = name.lastIndexOf('.');
             const ext    = dotIdx > 0 ? name.slice(dotIdx + 1) : '';
@@ -418,20 +488,25 @@
             }
             return { baseName: base, version: null, ext: ext.toUpperCase() };
         }
+
         function renderFiles() {
             const zF = mfFiles.filter(f =>  isZeta(f.filename));
             const dF = mfFiles.filter(f => !isZeta(f.filename));
+
             let totalDl = 0;
             mfFiles.forEach(f => totalDl += parseInt(f.downloads || 0));
+
             $("sD").textContent = totalDl.toLocaleString();
             $("sU").textContent = zF.length;
             $("zetaCount").textContent = `${zF.length} versión${zF.length !== 1 ? "es" : ""}`;
             $("depCount").textContent  = `${dF.length} archivo${dF.length !== 1 ? "s" : ""}`;
+
             if (zF.length) {
                 const { version } = parseZetaName(zF[0].filename);
                 $("navVer").textContent = version || "live";
                 mainDlUrl = zF[0].links?.normal_download || "";
             }
+
             $("zetaList").innerHTML = !zF.length
                 ? `<div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--mu);padding:1rem">No hay versiones de Zeta todavía.</div>`
                 : zF.map((f, i) => {
@@ -457,6 +532,7 @@
                         </button>
                     </div>`;
                 }).join("");
+
             $("depList").innerHTML = !dF.length
                 ? `<div class="dcard glass" style="text-align:center;color:var(--mu);font-family:'JetBrains Mono',monospace;font-size:.85rem;padding:2rem 1rem;grid-column:1/-1">Sin componentes adicionales.</div>`
                 : dF.map(f => {
@@ -480,19 +556,25 @@
                     </div>`;
                 }).join("");
         }
+
         function mainDl() {
             if (mainDlUrl) window.open(mainDlUrl, '_blank');
             else if (mfFiles.length) window.open(mfFiles[0].links?.normal_download, '_blank');
         }
+
         function init() {
             const views = (ls.get("views") || 0) + 1;
             ls.set("views", views);
             $("sV").textContent = views.toLocaleString();
             loadFiles(false);
         }
+
         init();
     </script>
 
+    <!-- ═══════════════════════════════════════════
+         SUPABASE AUTH + MODALES
+         ═══════════════════════════════════════════ -->
     <script type="module">
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
@@ -501,69 +583,62 @@
 
         const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-        const modal         = document.getElementById('authModal')
-        const authTitle     = document.getElementById('authTitle')
-        const toggleAuth    = document.getElementById('toggleAuth')
-        const emailInput    = document.getElementById('emailInput')
-        const passwordInput = document.getElementById('passwordInput')
-        const submitAuth    = document.getElementById('submitAuth')
-        const closeModal    = document.getElementById('closeModal')
-        const googleBtn     = document.getElementById('googleBtn')
-        const loginBtn      = document.getElementById('loginBtn')
-        const userMenu      = document.getElementById('userMenu')
-        const avatarBtn     = document.getElementById('avatarBtn')
-        const userInitial   = document.getElementById('userInitial')
-        const udMini        = document.getElementById('udMini')
-        const userEmailEl   = document.getElementById('userEmail')
-        const userDropdown  = document.getElementById('userDropdown')
-        const errorModal    = document.getElementById('errorModal')
+        // ── Referencias ──
+        const modal        = document.getElementById('authModal')
+        const authTitle    = document.getElementById('authTitle')
+        const toggleAuth   = document.getElementById('toggleAuth')
+        const emailInput   = document.getElementById('emailInput')
+        const passwordInput= document.getElementById('passwordInput')
+        const submitAuth   = document.getElementById('submitAuth')
+        const closeModal   = document.getElementById('closeModal')
+        const loginBtn     = document.getElementById('loginBtn')
+        const userMenu     = document.getElementById('userMenu')
+        const avatarBtn    = document.getElementById('avatarBtn')
+        const userInitial  = document.getElementById('userInitial')
+        const udMini       = document.getElementById('udMini')
+        const userEmailEl  = document.getElementById('userEmail')
+        const userDropdown = document.getElementById('userDropdown')
+        const errorModal   = document.getElementById('errorModal')
         const goToRegisterBtn = document.getElementById('goToRegisterBtn')
         const closeErrorBtn   = document.getElementById('closeErrorBtn')
         const errEmailSpan    = document.getElementById('errEmail')
         const logoutModal     = document.getElementById('logoutModal')
-        const confirmLogoutBtn = document.getElementById('confirmLogoutBtn')
-        const cancelLogoutBtn  = document.getElementById('cancelLogoutBtn')
+        const confirmLogoutBtn= document.getElementById('confirmLogoutBtn')
+        const cancelLogoutBtn = document.getElementById('cancelLogoutBtn')
 
         let isLogin = true
 
+        // ── Mostrar modal de auth ──
         window.showAuthModal = () => {
             modal.style.display = 'flex'
             isLogin = true
             updateAuthUI()
         }
 
+        // ── Cerrar modales al hacer click fuera ──
         window.onclick = (e) => {
-            if (e.target === modal)       modal.style.display = 'none'
-            if (e.target === errorModal)  errorModal.style.display = 'none'
-            if (e.target === logoutModal) logoutModal.style.display = 'none'
+            if (e.target === modal)      modal.style.display = 'none'
+            if (e.target === errorModal) errorModal.style.display = 'none'
+            if (e.target === logoutModal)logoutModal.style.display = 'none'
         }
         closeModal.onclick = () => modal.style.display = 'none'
         closeErrorBtn.onclick = () => errorModal.style.display = 'none'
 
+        // ── Alternar entre login y registro ──
         toggleAuth.onclick = () => {
             isLogin = !isLogin
             updateAuthUI()
         }
 
         function updateAuthUI() {
-            authTitle.textContent  = isLogin ? 'Iniciar sesión' : 'Crear cuenta'
-            submitAuth.textContent = isLogin ? 'Entrar'         : 'Crear cuenta'
-            toggleAuth.textContent = isLogin
+            authTitle.textContent     = isLogin ? 'Iniciar sesión' : 'Crear cuenta'
+            submitAuth.textContent    = isLogin ? 'Entrar'         : 'Crear cuenta'
+            toggleAuth.textContent    = isLogin
                 ? '¿No tienes cuenta? Regístrate'
                 : '¿Ya tienes cuenta? Inicia sesión'
-            if (googleBtn) googleBtn.style.display = isLogin ? 'flex' : 'none'
         }
 
-        if (googleBtn) {
-            googleBtn.onclick = async () => {
-                const { error } = await supabase.auth.signInWithOAuth({
-                    provider: 'google',
-                    options: { redirectTo: window.location.origin + '/Zeta/' }
-                })
-                if (error) alert('Error al iniciar con Google: ' + error.message)
-            }
-        }
-
+        // ── Menú de usuario (dropdown) ──
         window.toggleUserMenu = (e) => {
             if (e) e.stopPropagation()
             userDropdown.classList.toggle('show')
@@ -574,11 +649,13 @@
             }
         })
 
+        // ── Diálogo de "cuenta no encontrada" ──
         window.showErrorModal = (email) => {
             if (errEmailSpan) errEmailSpan.textContent = email || ''
             errorModal.style.display = 'flex'
         }
         goToRegisterBtn.onclick = () => {
+            // Pre-llenar el correo en el modal de registro
             if (errEmailSpan && errEmailSpan.textContent) {
                 emailInput.value = errEmailSpan.textContent
             }
@@ -589,6 +666,7 @@
             setTimeout(() => passwordInput.focus(), 100)
         }
 
+        // ── Envío del formulario de auth ──
         document.getElementById('authForm').onsubmit = async (e) => {
             e.preventDefault()
             const email = emailInput.value.trim()
@@ -604,6 +682,7 @@
                     if (error) {
                         const msg = (error.message || '').toLowerCase()
                         if (msg.includes('invalid login') || msg.includes('invalid credentials')) {
+                            // ❌ No registrado → diálogo acrílico
                             modal.style.display = 'none'
                             errorModal.style.display = 'none'
                             emailInput.value = ''
@@ -613,6 +692,7 @@
                         }
                         throw error
                     }
+                    // ✅ Login exitoso: cerrar modal y limpiar formulario
                     modal.style.display = 'none'
                     errorModal.style.display = 'none'
                     emailInput.value = ''
@@ -639,21 +719,10 @@
             }
         }
 
-        function updateAvatar(user) {
-            const avatarUrl = user?.user_metadata?.avatar_url
-            const initial = (user?.email?.charAt(0) || 'U').toUpperCase()
-            if (avatarUrl) {
-                avatarBtn.innerHTML = `<img src="${avatarUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="avatar">`
-                udMini.innerHTML = `<img src="${avatarUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="avatar">`
-            } else {
-                avatarBtn.innerHTML = `<span id="userInitial">${initial}</span>`
-                udMini.innerHTML = `<span>${initial}</span>`
-                if (userInitial) userInitial.textContent = initial
-            }
-        }
-
+        // ── Reflejar sesión en la UI ──
         function applySession(session) {
             if (session?.user) {
+                // 🛡️ Cierre defensivo: si por cualquier vía hay sesión, fuera modales
                 modal.style.display = 'none'
                 errorModal.style.display = 'none'
                 if (emailInput)    emailInput.value = ''
@@ -663,14 +732,14 @@
                 userMenu.classList.remove('hidden')
 
                 const email = session.user.email || ''
+                const initial = (email.charAt(0) || 'U').toUpperCase()
+                userInitial.textContent = initial
+                udMini.textContent      = initial
                 userEmailEl.textContent = email
-                updateAvatar(session.user)
             } else {
                 loginBtn.classList.remove('hidden')
                 userMenu.classList.add('hidden')
                 userDropdown.classList.remove('show')
-                avatarBtn.innerHTML = '<span id="userInitial">U</span>'
-                udMini.innerHTML = '<span>U</span>'
             }
         }
 
@@ -678,6 +747,7 @@
             applySession(session)
         })
 
+        // ── Cerrar sesión (con confirmación acrílica) ──
         window.logout = () => {
             userDropdown.classList.remove('show')
             logoutModal.style.display = 'flex'
@@ -690,23 +760,17 @@
             logoutModal.style.display = 'none'
         }
 
+        // ── Comprobar sesión al cargar ──
         const { data: { session } } = await supabase.auth.getSession()
         applySession(session)
     </script>
 
     <!-- ═══════════════════════════════════════════
-         MODAL DE AUTH — con logo Z + botón Google
-    ═══════════════════════════════════════════ -->
+         MODAL DE AUTH (login / registro)
+         ═══════════════════════════════════════════ -->
     <div id="authModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;z-index:999;padding:1rem">
         <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);color:var(--tx);position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6)">
-            <div style="display:flex;justify-content:center;margin-bottom:1.2rem">
-                <svg width="56" height="56" viewBox="0 0 24 24" style="filter:drop-shadow(0 0 20px rgba(249,115,22,.5))"><defs><linearGradient id="gAM" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gAM)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
-            </div>
-            <h2 id="authTitle" style="font-weight:800;margin-bottom:1.5rem;font-size:1.4rem;text-align:center">Iniciar sesión</h2>
-            <button id="googleBtn" type="button" style="width:100%;padding:0.8rem;margin-bottom:1.2rem;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);color:var(--tx);display:flex;align-items:center;justify-content:center;gap:0.5rem;font-family:inherit;font-size:.9rem;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
-                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-                Continuar con Google
-            </button>
+            <h2 id="authTitle" style="font-weight:800;margin-bottom:1.5rem;font-size:1.4rem">Iniciar sesión</h2>
             <form id="authForm">
                 <input id="emailInput" type="email" placeholder="Correo electrónico" required style="width:100%;padding:0.8rem;margin-bottom:0.8rem;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--tx);outline:none;font-family:inherit;font-size:.9rem">
                 <input id="passwordInput" type="password" placeholder="Contraseña" required style="width:100%;padding:0.8rem;margin-bottom:1.2rem;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--tx);outline:none;font-family:inherit;font-size:.9rem">
@@ -718,13 +782,13 @@
     </div>
 
     <!-- ═══════════════════════════════════════════
-         MODAL DE ERROR — también con logo Z
-    ═══════════════════════════════════════════ -->
+         MODAL DE ERROR: "CUENTA NO ENCONTRADA"
+         (se muestra cuando Supabase devuelve
+         "Invalid login credentials")
+         ═══════════════════════════════════════════ -->
     <div id="errorModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;z-index:1000;padding:1rem">
         <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);text-align:center;color:var(--tx);box-shadow:0 30px 80px rgba(0,0,0,.7)">
-            <div style="display:flex;justify-content:center;margin-bottom:1.1rem">
-                <div style="width:64px;height:64px;border-radius:50%;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.35);display:flex;align-items:center;justify-content:center;font-size:1.9rem;box-shadow:0 0 30px rgba(239,68,68,.25)">⚠️</div>
-            </div>
+            <div style="width:64px;height:64px;border-radius:50%;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.35);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;font-size:1.9rem;box-shadow:0 0 30px rgba(239,68,68,.25)">⚠️</div>
             <h3 style="font-weight:800;font-size:1.25rem;margin-bottom:.6rem;letter-spacing:-.01em">Aún no tienes cuenta</h3>
             <p style="color:var(--mu);font-size:.88rem;line-height:1.6;margin-bottom:1.5rem">
                 No existe una cuenta registrada con<br>
@@ -737,13 +801,13 @@
     </div>
 
     <!-- ═══════════════════════════════════════════
-         MODAL DE LOGOUT — con logo Z (estilo consistente)
-    ═══════════════════════════════════════════ -->
+         MODAL DE CONFIRMACIÓN: "CERRAR SESIÓN"
+         (diálogo acrílico, mismo estilo que las
+         píldoras y el modal de error)
+         ═══════════════════════════════════════════ -->
     <div id="logoutModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;z-index:1001;padding:1rem">
         <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);text-align:center;color:var(--tx);box-shadow:0 30px 80px rgba(0,0,0,.7)">
-            <div style="display:flex;justify-content:center;margin-bottom:1.1rem">
-                <svg width="48" height="48" viewBox="0 0 24 24" style="filter:drop-shadow(0 0 16px rgba(249,115,22,.45))"><defs><linearGradient id="gLO" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gLO)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
-            </div>
+            <div style="width:64px;height:64px;border-radius:50%;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.35);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;font-size:1.9rem;box-shadow:0 0 30px rgba(249,115,22,.25)">🚪</div>
             <h3 style="font-weight:800;font-size:1.25rem;margin-bottom:.6rem;letter-spacing:-.01em">¿Cerrar sesión?</h3>
             <p style="color:var(--mu);font-size:.88rem;line-height:1.6;margin-bottom:1.5rem">Tendrás que volver a iniciar sesión para acceder a las descargas.</p>
             <button id="confirmLogoutBtn" class="G pill" style="color:#fff;font-weight:700;font-size:.9rem;padding:.75rem 1.5rem;width:100%;margin-bottom:.6rem;box-shadow:0 0 28px rgba(239,68,68,.4);font-family:inherit;letter-spacing:.01em">Sí, cerrar sesión</button>
