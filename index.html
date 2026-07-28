@@ -22,7 +22,7 @@
         .glass{background:var(--card-bg);border:1px solid var(--card-bd)}
 
         /* ═══════════════════════════════════════════════
-           NAVBAR — ACRÍLICO (COPIADO DE LA PÁGINA DE LICENCIAS)
+           NAVBAR — ACRÍLICO
         ════════════════════════════════════════════════ */
         .glass-nav{
             background: rgba(255,255,255,.058);
@@ -34,33 +34,26 @@
         /* ═══════════════════════════════════════════════
            FONDO — AURORA + GRAIN
         ════════════════════════════════════════════════ */
-
-        /* Capa 1: resplandor de color (aurora) */
         .bg-glow{
             position:fixed;inset:0;z-index:0;pointer-events:none;
             background:
-                /* Aurora naranja-roja principal — parte alta central */
                 radial-gradient(ellipse 95% 72% at 50% -12%,
                     rgba(249,115,22,.30) 0%,
                     rgba(239,68,68,.16) 38%,
                     transparent 70%
                 ),
-                /* Acento rojo — esquina superior derecha */
                 radial-gradient(ellipse 60% 55% at 90% 6%,
                     rgba(239,68,68,.14) 0%,
                     transparent 62%
                 ),
-                /* Toque cálido — izquierda media */
                 radial-gradient(ellipse 46% 44% at 8% 24%,
                     rgba(249,115,22,.09) 0%,
                     transparent 64%
                 ),
-                /* Vignette oscuro inferior — da profundidad */
                 radial-gradient(ellipse 100% 52% at 50% 110%,
                     rgba(0,0,0,.60) 0%,
                     transparent 65%
                 ),
-                /* Vignettes laterales sutiles */
                 radial-gradient(ellipse 28% 100% at 0% 50%,
                     rgba(0,0,0,.12) 0%,
                     transparent 60%
@@ -70,8 +63,6 @@
                     transparent 60%
                 );
         }
-
-        /* Capa 2: grano de película (film grain) */
         .bg-noise{
             position:fixed;inset:0;z-index:0;pointer-events:none;
             opacity:.028;
@@ -83,12 +74,90 @@
         .pill{border-radius:100px}
         .card{border-radius:22px}
         .G{background:linear-gradient(120deg,var(--o),var(--r))}
+        .hidden{display:none!important}
 
         /* ─── NAV ─── */
-        nav.top{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;padding:1.1rem 1.5rem;z-index:200}
+        nav.top{
+            position:fixed;top:0;left:0;right:0;z-index:200;
+            display:flex;justify-content:space-between;align-items:center;
+            padding:1.1rem 1.5rem;gap:1rem;
+        }
         .np{display:flex;align-items:center;gap:.85rem;padding:.42rem .9rem .42rem .55rem}
         .nb{display:flex;align-items:center;gap:.35rem;font-weight:800;font-size:.9rem;color:var(--tx)}
         .nb svg{width:27px;height:27px;flex-shrink:0}
+
+        /* ─── AUTH (píldora separada a la derecha) ─── */
+        .auth-area{position:relative;display:flex;align-items:center;flex-shrink:0}
+        .login-btn{
+            display:flex;align-items:center;gap:.5rem;
+            color:var(--tx);font-weight:700;font-size:.82rem;
+            padding:.55rem 1.1rem;border-radius:100px;
+            cursor:pointer;transition:all .18s;
+        }
+        .login-btn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.18)}
+        .login-btn svg{opacity:.85;flex-shrink:0}
+
+        .user-menu{position:relative}
+        .avatar-btn{
+            width:42px;height:42px;border-radius:50%;
+            background:linear-gradient(135deg,var(--o),var(--r));
+            border:2px solid rgba(255,255,255,.22);
+            color:#fff;font-weight:800;font-size:.95rem;
+            display:flex;align-items:center;justify-content:center;
+            cursor:pointer;transition:all .18s;
+            box-shadow:0 4px 16px rgba(249,115,22,.35),inset 0 1px 0 rgba(255,255,255,.2);
+            position:relative;font-family:inherit;
+        }
+        .avatar-btn::after{
+            content:'';position:absolute;bottom:1px;right:1px;
+            width:10px;height:10px;border-radius:50%;
+            background:#4ade80;border:2px solid #020508;
+            box-shadow:0 0 6px rgba(74,222,128,.6);
+        }
+        .avatar-btn:hover{transform:scale(1.06);box-shadow:0 6px 22px rgba(249,115,22,.5),inset 0 1px 0 rgba(255,255,255,.2)}
+
+        .user-dropdown{
+            position:absolute;top:calc(100% + 12px);right:0;
+            min-width:240px;border-radius:18px;padding:.6rem;
+            display:none;flex-direction:column;gap:.3rem;z-index:300;
+            background:rgba(9,13,21,.92);
+            backdrop-filter:blur(28px) saturate(180%);
+            -webkit-backdrop-filter:blur(28px) saturate(180%);
+            border:1px solid rgba(255,255,255,.12);
+            box-shadow:0 20px 50px rgba(0,0,0,.5);
+        }
+        .user-dropdown.show{display:flex;animation:ddIn .18s ease-out}
+        @keyframes ddIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+        .ud-head{
+            display:flex;align-items:center;gap:.6rem;
+            padding:.5rem .65rem .65rem;border-bottom:1px solid rgba(255,255,255,.06);
+        }
+        .ud-mini{
+            width:34px;height:34px;border-radius:50%;
+            background:linear-gradient(135deg,var(--o),var(--r));
+            display:flex;align-items:center;justify-content:center;
+            color:#fff;font-weight:800;font-size:.82rem;flex-shrink:0;
+            border:1.5px solid rgba(255,255,255,.2);
+        }
+        .ud-info{flex:1;min-width:0}
+        .ud-label{
+            font-family:'JetBrains Mono',monospace;font-size:.58rem;
+            color:rgba(74,222,128,.9);text-transform:uppercase;
+            letter-spacing:.12em;margin-bottom:.15rem;
+            display:flex;align-items:center;gap:.3rem;
+        }
+        .ud-label::before{content:'';width:5px;height:5px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px #4ade80}
+        .ud-email{font-size:.76rem;color:var(--tx);font-weight:600;word-break:break-all;line-height:1.3}
+        .ud-logout{
+            display:flex;align-items:center;justify-content:center;gap:.45rem;
+            background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.22);
+            color:#fca5a5;font-size:.78rem;font-weight:700;
+            padding:.55rem 1rem;border-radius:100px;
+            cursor:pointer;transition:all .18s;margin-top:.4rem;
+            font-family:inherit;
+        }
+        .ud-logout:hover{background:rgba(239,68,68,.2);color:#fff;border-color:rgba(239,68,68,.4)}
 
         /* ─── HERO ─── */
         .hero{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:8.5rem 1.5rem 4.5rem}
@@ -168,6 +237,7 @@
             .feats{grid-template-columns:1fr}
             .rq{grid-template-columns:1fr 1fr}
             .dgrid{grid-template-columns:1fr}
+            .nav-dl-hide{display:none}
         }
     </style>
 </head>
@@ -178,13 +248,50 @@
 
     <!-- ── NAVBAR ── -->
     <nav class="top">
+        <!-- Píldora de marca (izquierda) -->
         <div class="np glass-nav pill">
             <span class="nb">
                 <svg width="27" height="27" viewBox="0 0 24 24"><defs><linearGradient id="gN" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gN)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
                 Zeta
             </span>
             <span id="navVer" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--o);padding:.15rem .5rem">—</span>
-            <button class="pill G" style="color:#fff;font-weight:700;font-size:.8rem;padding:.44rem 1.05rem" onclick="mainDl()">Descargar</button>
+            <button class="pill G nav-dl-hide" style="color:#fff;font-weight:700;font-size:.8rem;padding:.44rem 1.05rem" onclick="mainDl()">Descargar</button>
+        </div>
+
+        <!-- Píldora de auth (derecha) — separada -->
+        <div class="auth-area">
+            <!-- Botón de login (cuando NO hay sesión) -->
+            <button id="loginBtn" class="login-btn glass-nav pill" onclick="showAuthModal()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                Iniciar sesión
+            </button>
+
+            <!-- Avatar circular (cuando SÍ hay sesión) -->
+            <div id="userMenu" class="user-menu hidden">
+                <button id="avatarBtn" class="avatar-btn" onclick="toggleUserMenu(event)" title="Mi cuenta">
+                    <span id="userInitial">U</span>
+                </button>
+                <div id="userDropdown" class="user-dropdown">
+                    <div class="ud-head">
+                        <div class="ud-mini" id="udMini">U</div>
+                        <div class="ud-info">
+                            <div class="ud-label">Sesión activa</div>
+                            <div id="userEmail" class="ud-email">—</div>
+                        </div>
+                    </div>
+                    <button class="ud-logout" onclick="logout()">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                            <polyline points="16 17 21 12 16 7"/>
+                            <line x1="21" y1="12" x2="9" y2="12"/>
+                        </svg>
+                        Cerrar sesión
+                    </button>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -281,6 +388,9 @@
 
     <footer>© 2026 YadSoft · Zeta — Convertidor de Video · Hecho con ♥ para Windows</footer>
 
+    <!-- ────────────────────────────────────────────────
+         SCRIPT DE MEDIAFIRE
+         ──────────────────────────────────────────────── -->
     <script>
         const MF_KEY     = "94cnujdlx4umf";
         const MF_API     = `https://www.mediafire.com/api/1.5/folder/get_content.php?folder_key=${MF_KEY}&chunk_size=200&response_format=json&version=1.5&content_type=files`;
@@ -296,13 +406,9 @@
             set: (k, v) => { try { localStorage.setItem("z:" + k, JSON.stringify(v)) } catch {} }
         };
 
-        /* ────────────────────────────────────────────
-           CARGA DE ARCHIVOS
-        ──────────────────────────────────────────── */
         async function loadFiles(forceRefresh = false) {
             const cached = ls.get("mf_cache");
 
-            // Mostrar caché inmediatamente si existe
             if (cached && !forceRefresh) {
                 mfFiles = cached.files || [];
                 renderFiles();
@@ -347,9 +453,6 @@
             _mfInterval = setTimeout(() => loadFiles(false), ms);
         }
 
-        /* ────────────────────────────────────────────
-           HELPERS
-        ──────────────────────────────────────────── */
         const mfFmt = bytes => {
             const n = parseInt(bytes) || 0;
             if (n < 1048576)    return (n / 1024).toFixed(0)    + ' KB';
@@ -387,9 +490,6 @@
             return { baseName: base, version: null, ext: ext.toUpperCase() };
         }
 
-        /* ────────────────────────────────────────────
-           RENDER
-        ──────────────────────────────────────────── */
         function renderFiles() {
             const zF = mfFiles.filter(f =>  isZeta(f.filename));
             const dF = mfFiles.filter(f => !isZeta(f.filename));
@@ -408,7 +508,6 @@
                 mainDlUrl = zF[0].links?.normal_download || "";
             }
 
-            // Lista Zeta
             $("zetaList").innerHTML = !zF.length
                 ? `<div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--mu);padding:1rem">No hay versiones de Zeta todavía.</div>`
                 : zF.map((f, i) => {
@@ -435,7 +534,6 @@
                     </div>`;
                 }).join("");
 
-            // Deps
             $("depList").innerHTML = !dF.length
                 ? `<div class="dcard glass" style="text-align:center;color:var(--mu);font-family:'JetBrains Mono',monospace;font-size:.85rem;padding:2rem 1rem;grid-column:1/-1">Sin componentes adicionales.</div>`
                 : dF.map(f => {
@@ -466,7 +564,6 @@
         }
 
         function init() {
-            // Contador de vistas: localStorage por dispositivo
             const views = (ls.get("views") || 0) + 1;
             ls.set("views", views);
             $("sV").textContent = views.toLocaleString();
@@ -475,5 +572,210 @@
 
         init();
     </script>
+
+    <!-- ═══════════════════════════════════════════
+         SUPABASE AUTH + MODALES
+         ═══════════════════════════════════════════ -->
+    <script type="module">
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+        const SUPABASE_URL = 'https://woqzyrvuvtmqdkrgolvi.supabase.co'
+        const SUPABASE_ANON_KEY = 'sb_publishable_FtzJbU5SOfuuHiOCeixBwQ_x1L2B7sn'
+
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+        // ── Referencias ──
+        const modal        = document.getElementById('authModal')
+        const authTitle    = document.getElementById('authTitle')
+        const toggleAuth   = document.getElementById('toggleAuth')
+        const emailInput   = document.getElementById('emailInput')
+        const passwordInput= document.getElementById('passwordInput')
+        const submitAuth   = document.getElementById('submitAuth')
+        const closeModal   = document.getElementById('closeModal')
+        const loginBtn     = document.getElementById('loginBtn')
+        const userMenu     = document.getElementById('userMenu')
+        const avatarBtn    = document.getElementById('avatarBtn')
+        const userInitial  = document.getElementById('userInitial')
+        const udMini       = document.getElementById('udMini')
+        const userEmailEl  = document.getElementById('userEmail')
+        const userDropdown = document.getElementById('userDropdown')
+        const errorModal   = document.getElementById('errorModal')
+        const goToRegisterBtn = document.getElementById('goToRegisterBtn')
+        const closeErrorBtn   = document.getElementById('closeErrorBtn')
+        const errEmailSpan    = document.getElementById('errEmail')
+
+        let isLogin = true
+
+        // ── Mostrar modal de auth ──
+        window.showAuthModal = () => {
+            modal.classList.remove('hidden')
+            isLogin = true
+            updateAuthUI()
+        }
+
+        // ── Cerrar modales al hacer click fuera ──
+        window.onclick = (e) => {
+            if (e.target === modal)      modal.classList.add('hidden')
+            if (e.target === errorModal) errorModal.classList.add('hidden')
+        }
+        closeModal.onclick = () => modal.classList.add('hidden')
+        closeErrorBtn.onclick = () => errorModal.classList.add('hidden')
+
+        // ── Alternar entre login y registro ──
+        toggleAuth.onclick = () => {
+            isLogin = !isLogin
+            updateAuthUI()
+        }
+
+        function updateAuthUI() {
+            authTitle.textContent     = isLogin ? 'Iniciar sesión' : 'Crear cuenta'
+            submitAuth.textContent    = isLogin ? 'Entrar'         : 'Crear cuenta'
+            toggleAuth.textContent    = isLogin
+                ? '¿No tienes cuenta? Regístrate'
+                : '¿Ya tienes cuenta? Inicia sesión'
+        }
+
+        // ── Menú de usuario (dropdown) ──
+        window.toggleUserMenu = (e) => {
+            if (e) e.stopPropagation()
+            userDropdown.classList.toggle('show')
+        }
+        document.addEventListener('click', (e) => {
+            if (userMenu && !userMenu.contains(e.target)) {
+                userDropdown.classList.remove('show')
+            }
+        })
+
+        // ── Diálogo de "cuenta no encontrada" ──
+        window.showErrorModal = (email) => {
+            if (errEmailSpan) errEmailSpan.textContent = email || ''
+            errorModal.classList.remove('hidden')
+        }
+        goToRegisterBtn.onclick = () => {
+            // Pre-llenar el correo en el modal de registro
+            if (errEmailSpan && errEmailSpan.textContent) {
+                emailInput.value = errEmailSpan.textContent
+            }
+            errorModal.classList.add('hidden')
+            modal.classList.remove('hidden')
+            isLogin = false
+            updateAuthUI()
+            setTimeout(() => passwordInput.focus(), 100)
+        }
+
+        // ── Envío del formulario de auth ──
+        document.getElementById('authForm').onsubmit = async (e) => {
+            e.preventDefault()
+            const email = emailInput.value.trim()
+            const password = passwordInput.value.trim()
+            if (!email || !password) return alert('Completa todos los campos.')
+
+            submitAuth.disabled = true
+            submitAuth.textContent = isLogin ? 'Entrando...' : 'Creando cuenta...'
+
+            try {
+                if (isLogin) {
+                    const { error } = await supabase.auth.signInWithPassword({ email, password })
+                    if (error) {
+                        const msg = (error.message || '').toLowerCase()
+                        if (msg.includes('invalid login') || msg.includes('invalid credentials')) {
+                            // ❌ No registrado → diálogo acrílico
+                            modal.classList.add('hidden')
+                            emailInput.value = ''
+                            passwordInput.value = ''
+                            showErrorModal(email)
+                            return
+                        }
+                        throw error
+                    }
+                } else {
+                    const { data, error } = await supabase.auth.signUp({ email, password })
+                    if (error) throw error
+                    const user = data.user
+                    if (user) {
+                        await supabase.from('subscribers').insert([
+                            { id: user.id, email: user.email, name: user.user_metadata?.full_name || '', created_at: new Date().toISOString() }
+                        ])
+                    }
+                    alert('✅ Registro exitoso. Ya estás dentro.')
+                    modal.classList.add('hidden')
+                    emailInput.value = ''
+                    passwordInput.value = ''
+                }
+            } catch (error) {
+                alert('Error: ' + error.message)
+            } finally {
+                submitAuth.disabled = false
+                updateAuthUI()
+            }
+        }
+
+        // ── Reflejar sesión en la UI ──
+        function applySession(session) {
+            if (session?.user) {
+                loginBtn.classList.add('hidden')
+                userMenu.classList.remove('hidden')
+
+                const email = session.user.email || ''
+                const initial = (email.charAt(0) || 'U').toUpperCase()
+                userInitial.textContent = initial
+                udMini.textContent      = initial
+                userEmailEl.textContent = email
+            } else {
+                loginBtn.classList.remove('hidden')
+                userMenu.classList.add('hidden')
+                userDropdown.classList.remove('show')
+            }
+        }
+
+        supabase.auth.onAuthStateChange((event, session) => {
+            applySession(session)
+        })
+
+        // ── Cerrar sesión ──
+        window.logout = async () => {
+            userDropdown.classList.remove('show')
+            await supabase.auth.signOut()
+        }
+
+        // ── Comprobar sesión al cargar ──
+        const { data: { session } } = await supabase.auth.getSession()
+        applySession(session)
+    </script>
+
+    <!-- ═══════════════════════════════════════════
+         MODAL DE AUTH (login / registro)
+         ═══════════════════════════════════════════ -->
+    <div id="authModal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:999;padding:1rem">
+        <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);color:var(--tx);position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6)">
+            <h2 id="authTitle" style="font-weight:800;margin-bottom:1.5rem;font-size:1.4rem">Iniciar sesión</h2>
+            <form id="authForm">
+                <input id="emailInput" type="email" placeholder="Correo electrónico" required style="width:100%;padding:0.8rem;margin-bottom:0.8rem;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--tx);outline:none;font-family:inherit;font-size:.9rem">
+                <input id="passwordInput" type="password" placeholder="Contraseña" required style="width:100%;padding:0.8rem;margin-bottom:1.2rem;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--tx);outline:none;font-family:inherit;font-size:.9rem">
+                <button id="submitAuth" type="submit" style="width:100%;padding:0.8rem;border-radius:12px;border:none;background:linear-gradient(120deg,var(--o),var(--r));color:#fff;font-weight:700;cursor:pointer;font-family:inherit;font-size:.9rem;box-shadow:0 0 24px rgba(239,68,68,.3)">Entrar</button>
+            </form>
+            <p style="text-align:center;margin-top:1rem;font-size:0.82rem;color:var(--mu);cursor:pointer;transition:color .15s" id="toggleAuth" onmouseover="this.style.color='var(--tx)'" onmouseout="this.style.color='var(--mu)'">¿No tienes cuenta? Regístrate</p>
+            <button id="closeModal" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--mu);font-size:1.5rem;cursor:pointer;line-height:1;padding:.25rem .5rem;border-radius:8px;transition:all .15s" onmouseover="this.style.color='var(--tx)';this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.color='var(--mu)';this.style.background='none'">&times;</button>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         MODAL DE ERROR: "CUENTA NO ENCONTRADA"
+         (se muestra cuando Supabase devuelve
+         "Invalid login credentials")
+         ═══════════════════════════════════════════ -->
+    <div id="errorModal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:1000;padding:1rem">
+        <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);text-align:center;color:var(--tx);box-shadow:0 30px 80px rgba(0,0,0,.7)">
+            <div style="width:64px;height:64px;border-radius:50%;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.35);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;font-size:1.9rem;box-shadow:0 0 30px rgba(239,68,68,.25)">⚠️</div>
+            <h3 style="font-weight:800;font-size:1.25rem;margin-bottom:.6rem;letter-spacing:-.01em">Aún no tienes cuenta</h3>
+            <p style="color:var(--mu);font-size:.88rem;line-height:1.6;margin-bottom:1.5rem">
+                No existe una cuenta registrada con<br>
+                <strong id="errEmail" style="color:var(--tx);font-family:'JetBrains Mono',monospace;font-size:.82rem;word-break:break-all">—</strong><br>
+                Crea una cuenta para poder iniciar sesión.
+            </p>
+            <button id="goToRegisterBtn" class="G pill" style="color:#fff;font-weight:700;font-size:.9rem;padding:.75rem 1.5rem;width:100%;margin-bottom:.6rem;box-shadow:0 0 28px rgba(239,68,68,.4);font-family:inherit;letter-spacing:.01em">Crear cuenta ahora</button>
+            <button id="closeErrorBtn" class="pill" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--mu);font-weight:600;font-size:.85rem;padding:.6rem 1.5rem;width:100%;font-family:inherit;transition:all .18s" onmouseover="this.style.background='rgba(255,255,255,.08)';this.style.color='var(--tx)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.color='var(--mu)'">Cancelar</button>
+        </div>
+    </div>
 </body>
 </html>
