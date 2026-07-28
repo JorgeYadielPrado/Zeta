@@ -681,6 +681,7 @@
                         if (msg.includes('invalid login') || msg.includes('invalid credentials')) {
                             // ❌ No registrado → diálogo acrílico
                             modal.classList.add('hidden')
+                            errorModal.classList.add('hidden')
                             emailInput.value = ''
                             passwordInput.value = ''
                             showErrorModal(email)
@@ -688,6 +689,11 @@
                         }
                         throw error
                     }
+                    // ✅ Login exitoso: cerrar modal y limpiar formulario
+                    modal.classList.add('hidden')
+                    errorModal.classList.add('hidden')
+                    emailInput.value = ''
+                    passwordInput.value = ''
                 } else {
                     const { data, error } = await supabase.auth.signUp({ email, password })
                     if (error) throw error
@@ -713,6 +719,12 @@
         // ── Reflejar sesión en la UI ──
         function applySession(session) {
             if (session?.user) {
+                // 🛡️ Cierre defensivo: si por cualquier vía hay sesión, fuera modales
+                modal.classList.add('hidden')
+                errorModal.classList.add('hidden')
+                if (emailInput)    emailInput.value = ''
+                if (passwordInput) passwordInput.value = ''
+
                 loginBtn.classList.add('hidden')
                 userMenu.classList.remove('hidden')
 
