@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zeta — Convertidor de Video para Windows</title>
 
+    <!-- ═══════════════════════════════════════════
+         FAVICON — Logo Z en SVG (mismo gradiente naranja/rojo)
+         Se muestra en la pestaña, marcador y PWA
+    ═══════════════════════════════════════════ -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%23F97316'/><stop offset='100%25' stop-color='%23EF4444'/></linearGradient></defs><path fill='url(%23g)' d='m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015'/><path fill='white' d='M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7'/></svg>">
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%23F97316'/><stop offset='100%25' stop-color='%23EF4444'/></linearGradient></defs><path fill='url(%23g)' d='m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015'/><path fill='white' d='M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7'/></svg>">
     <meta name="theme-color" content="#F97316">
@@ -29,19 +33,6 @@
             -webkit-backdrop-filter: blur(28px) saturate(180%);
             border: 1px solid rgba(255,255,255,.09);
         }
-
-        /* === MODAL ACRÍLICO REFORZADO === */
-        .modal-card{
-            background:rgba(20,28,42,.45);
-            backdrop-filter:blur(40px) saturate(200%);
-            -webkit-backdrop-filter:blur(40px) saturate(200%);
-            border:1px solid rgba(255,255,255,.14);
-            box-shadow:
-                0 30px 80px rgba(0,0,0,.7),
-                inset 0 1px 0 rgba(255,255,255,.08),
-                inset 0 -1px 0 rgba(0,0,0,.2);
-        }
-
         .bg-glow{
             position:fixed;inset:0;z-index:0;pointer-events:none;
             background:
@@ -93,15 +84,11 @@
             box-shadow:0 4px 16px rgba(249,115,22,.35),inset 0 1px 0 rgba(255,255,255,.2);
             position:relative;font-family:inherit;overflow:hidden;
         }
-        /* === PUNTO VERDE FUERA DEL AVATAR (no tapa la foto) === */
         .avatar-btn::after{
-            content:'';position:absolute;
-            bottom:-3px;right:-3px;            /* sobresale del avatar */
-            width:12px;height:12px;border-radius:50%;
-            background:#4ade80;
-            border:2.5px solid #020508;       /* borde del color de fondo */
-            box-shadow:0 0 10px rgba(74,222,128,.8);
-            z-index:2;
+            content:'';position:absolute;bottom:1px;right:1px;
+            width:10px;height:10px;border-radius:50%;
+            background:#4ade80;border:2px solid #020508;
+            box-shadow:0 0 6px rgba(74,222,128,.6);
         }
         .avatar-btn:hover{transform:scale(1.06);box-shadow:0 6px 22px rgba(249,115,22,.5),inset 0 1px 0 rgba(255,255,255,.2)}
         .avatar-btn img{width:100%;height:100%;object-fit:cover;border-radius:50%}
@@ -193,7 +180,7 @@
         .dcard:hover{border-color:rgba(56,189,248,.25);transform:translateY(-2px)}
         .dico{width:36px;height:36px;border-radius:9px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.18);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
         .dname{font-weight:700;font-size:.88rem;margin-bottom:.35rem;word-break:break-word}
-        .btn-dep{display:flex;align-items:center;justify-content:center;gap:.4rem;border-radius:100px;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);color:#38BDF8;font-size:.76rem;font-weight:700;padding:.42rem .9rem;width:100%;cursor:pointer;transition:background .18s}
+        .btn-dep{display:flex;align-items:center;justify-content:center;gap:.4rem;border-radius:100px;background:rgba(56,189,212,.1);border:1px solid rgba(56,189,248,.25);color:#38BDF8;font-size:.76rem;font-weight:700;padding:.42rem .9rem;width:100%;cursor:pointer;transition:background .18s}
         .btn-dep:hover{background:rgba(56,189,248,.2)}
         .refresh-btn{display:inline-flex;align-items:center;gap:.4rem;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--mu);font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:.25rem .7rem;cursor:pointer;transition:all .18s}
         .refresh-btn:hover{background:rgba(255,255,255,.08);color:var(--tx)}
@@ -714,10 +701,11 @@
     </script>
 
     <!-- ═══════════════════════════════════════════
-         MODAL DE AUTH (acrilico reforzado)
+         MODAL DE AUTH — con logo Z + botón Google
     ═══════════════════════════════════════════ -->
     <div id="authModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;z-index:999;padding:1rem">
-        <div class="modal-card card" style="padding:2rem;width:min(90%,400px);color:var(--tx);position:relative">
+        <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);color:var(--tx);position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6)">
+            <!-- Logo Z -->
             <div style="display:flex;justify-content:center;margin-bottom:1.2rem">
                 <svg width="56" height="56" viewBox="0 0 24 24" style="filter:drop-shadow(0 0 20px rgba(249,115,22,.5))"><defs><linearGradient id="gAM" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gAM)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
             </div>
@@ -736,8 +724,11 @@
         </div>
     </div>
 
+    <!-- ═══════════════════════════════════════════
+         MODAL DE ERROR — también con logo Z
+    ═══════════════════════════════════════════ -->
     <div id="errorModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;z-index:1000;padding:1rem">
-        <div class="modal-card card" style="padding:2rem;width:min(90%,400px);text-align:center;color:var(--tx)">
+        <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);text-align:center;color:var(--tx);box-shadow:0 30px 80px rgba(0,0,0,.7)">
             <div style="display:flex;justify-content:center;margin-bottom:1.1rem">
                 <div style="width:64px;height:64px;border-radius:50%;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.35);display:flex;align-items:center;justify-content:center;font-size:1.9rem;box-shadow:0 0 30px rgba(239,68,68,.25)">⚠️</div>
             </div>
@@ -753,10 +744,11 @@
     </div>
 
     <!-- ═══════════════════════════════════════════
-         MODAL DE LOGOUT (acrilico reforzado + logo Z)
+         MODAL DE LOGOUT — con logo Z (estilo consistente)
     ═══════════════════════════════════════════ -->
     <div id="logoutModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;z-index:1001;padding:1rem">
-        <div class="modal-card card" style="padding:2rem;width:min(90%,400px);text-align:center;color:var(--tx)">
+        <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);text-align:center;color:var(--tx);box-shadow:0 30px 80px rgba(0,0,0,.7)">
+            <!-- Logo Z arriba (consistente con los otros modales) -->
             <div style="display:flex;justify-content:center;margin-bottom:1.1rem">
                 <svg width="48" height="48" viewBox="0 0 24 24" style="filter:drop-shadow(0 0 16px rgba(249,115,22,.45))"><defs><linearGradient id="gLO" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gLO)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
             </div>
