@@ -83,7 +83,6 @@
         .pill{border-radius:100px}
         .card{border-radius:22px}
         .G{background:linear-gradient(120deg,var(--o),var(--r))}
-        .hidden{display:none!important} /* Para ocultar elementos */
 
         /* ─── NAV ─── */
         nav.top{position:fixed;top:0;left:0;right:0;display:flex;justify-content:center;padding:1.1rem 1.5rem;z-index:200}
@@ -185,12 +184,6 @@
                 Zeta
             </span>
             <span id="navVer" class="glass pill" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--o);padding:.15rem .5rem">—</span>
-
-            <!-- 🔐 Botones de login / logout -->
-            <button class="pill" style="background:white;color:#333;font-weight:700;font-size:.8rem;padding:.44rem 1.05rem;display:flex;align-items:center;gap:.35rem" id="loginBtn" onclick="showAuthModal()">🔐 Iniciar sesión</button>
-            <button class="pill hidden" style="background:white;color:#333;font-weight:700;font-size:.8rem;padding:.44rem 1.05rem;display:flex;align-items:center;gap:.35rem" id="logoutBtn" onclick="logout()">Salir</button>
-            <span id="userEmail" style="font-size:.7rem;color:var(--tx);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
-
             <button class="pill G" style="color:#fff;font-weight:700;font-size:.8rem;padding:.44rem 1.05rem" onclick="mainDl()">Descargar</button>
         </div>
     </nav>
@@ -288,9 +281,6 @@
 
     <footer>© 2026 YadSoft · Zeta — Convertidor de Video · Hecho con ♥ para Windows</footer>
 
-    <!-- ────────────────────────────────────────────────
-         SCRIPT DE MEDIAFIRE (sin cambios)
-         ──────────────────────────────────────────────── -->
     <script>
         const MF_KEY     = "94cnujdlx4umf";
         const MF_API     = `https://www.mediafire.com/api/1.5/folder/get_content.php?folder_key=${MF_KEY}&chunk_size=200&response_format=json&version=1.5&content_type=files`;
@@ -312,6 +302,7 @@
         async function loadFiles(forceRefresh = false) {
             const cached = ls.get("mf_cache");
 
+            // Mostrar caché inmediatamente si existe
             if (cached && !forceRefresh) {
                 mfFiles = cached.files || [];
                 renderFiles();
@@ -356,6 +347,9 @@
             _mfInterval = setTimeout(() => loadFiles(false), ms);
         }
 
+        /* ────────────────────────────────────────────
+           HELPERS
+        ──────────────────────────────────────────── */
         const mfFmt = bytes => {
             const n = parseInt(bytes) || 0;
             if (n < 1048576)    return (n / 1024).toFixed(0)    + ' KB';
@@ -393,6 +387,9 @@
             return { baseName: base, version: null, ext: ext.toUpperCase() };
         }
 
+        /* ────────────────────────────────────────────
+           RENDER
+        ──────────────────────────────────────────── */
         function renderFiles() {
             const zF = mfFiles.filter(f =>  isZeta(f.filename));
             const dF = mfFiles.filter(f => !isZeta(f.filename));
@@ -411,6 +408,7 @@
                 mainDlUrl = zF[0].links?.normal_download || "";
             }
 
+            // Lista Zeta
             $("zetaList").innerHTML = !zF.length
                 ? `<div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--mu);padding:1rem">No hay versiones de Zeta todavía.</div>`
                 : zF.map((f, i) => {
@@ -437,6 +435,7 @@
                     </div>`;
                 }).join("");
 
+            // Deps
             $("depList").innerHTML = !dF.length
                 ? `<div class="dcard glass" style="text-align:center;color:var(--mu);font-family:'JetBrains Mono',monospace;font-size:.85rem;padding:2rem 1rem;grid-column:1/-1">Sin componentes adicionales.</div>`
                 : dF.map(f => {
@@ -467,6 +466,7 @@
         }
 
         function init() {
+            // Contador de vistas: localStorage por dispositivo
             const views = (ls.get("views") || 0) + 1;
             ls.set("views", views);
             $("sV").textContent = views.toLocaleString();
@@ -475,124 +475,5 @@
 
         init();
     </script>
-
-    <!-- ═══════════════════════════════════════════
-         SUPABASE AUTH + MODAL
-         ═══════════════════════════════════════════ -->
-    <script type="module">
-        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
-
-        const SUPABASE_URL = 'https://woqzyrvuvtmqdkrgolvi.supabase.co'
-        const SUPABASE_ANON_KEY = 'sb_publishable_FtzJbU5SOfuuHiOCeixBwQ_x1L2B7sn'
-
-        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-
-        // Referencias al DOM
-        const modal = document.getElementById('authModal')
-        const authTitle = document.getElementById('authTitle')
-        const toggleAuth = document.getElementById('toggleAuth')
-        const emailInput = document.getElementById('emailInput')
-        const passwordInput = document.getElementById('passwordInput')
-        const submitAuth = document.getElementById('submitAuth')
-        const closeModal = document.getElementById('closeModal')
-        const loginBtn = document.getElementById('loginBtn')
-        const logoutBtn = document.getElementById('logoutBtn')
-        const userEmailSpan = document.getElementById('userEmail')
-
-        let isLogin = true
-
-        // Mostrar modal
-        window.showAuthModal = () => {
-            modal.classList.remove('hidden')
-            isLogin = true
-            updateAuthUI()
-        }
-
-        // Cerrar modal
-        closeModal.onclick = () => modal.classList.add('hidden')
-        window.onclick = (e) => { if (e.target === modal) modal.classList.add('hidden') }
-
-        // Alternar login/registro
-        toggleAuth.onclick = () => {
-            isLogin = !isLogin
-            updateAuthUI()
-        }
-
-        function updateAuthUI() {
-            authTitle.textContent = isLogin ? 'Iniciar sesión' : 'Registrarse'
-            submitAuth.textContent = isLogin ? 'Entrar' : 'Crear cuenta'
-            toggleAuth.textContent = isLogin ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión'
-        }
-
-        // Manejar envío del formulario
-        document.getElementById('authForm').onsubmit = async (e) => {
-            e.preventDefault()
-            const email = emailInput.value.trim()
-            const password = passwordInput.value.trim()
-            if (!email || !password) return alert('Completa todos los campos.')
-
-            try {
-                if (isLogin) {
-                    const { error } = await supabase.auth.signInWithPassword({ email, password })
-                    if (error) throw error
-                } else {
-                    const { data, error } = await supabase.auth.signUp({ email, password })
-                    if (error) throw error
-                    const user = data.user
-                    if (user) {
-                        await supabase.from('subscribers').insert([
-                            { id: user.id, email: user.email, name: user.user_metadata?.full_name || '', created_at: new Date().toISOString() }
-                        ])
-                    }
-                    alert('Registro exitoso. Ya puedes iniciar sesión.')
-                }
-                modal.classList.add('hidden')
-                emailInput.value = ''
-                passwordInput.value = ''
-            } catch (error) {
-                alert('Error: ' + error.message)
-            }
-        }
-
-        // Estado de autenticación
-        supabase.auth.onAuthStateChange((event, session) => {
-            if (session?.user) {
-                loginBtn.classList.add('hidden')
-                logoutBtn.classList.remove('hidden')
-                userEmailSpan.textContent = session.user.email
-            } else {
-                loginBtn.classList.remove('hidden')
-                logoutBtn.classList.add('hidden')
-                userEmailSpan.textContent = ''
-            }
-        })
-
-        // Cerrar sesión
-        window.logout = async () => {
-            await supabase.auth.signOut()
-        }
-
-        // Verificar sesión al cargar
-        const { data: { session } } = await supabase.auth.getSession()
-        if (session?.user) {
-            loginBtn.classList.add('hidden')
-            logoutBtn.classList.remove('hidden')
-            userEmailSpan.textContent = session.user.email
-        }
-    </script>
-
-    <!-- Modal de autenticación -->
-    <div id="authModal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;z-index:999;">
-        <div style="background:var(--card-bg);border:1px solid var(--card-bd);border-radius:22px;padding:2rem;width:min(90%,400px);color:var(--tx);position:relative;">
-            <h2 id="authTitle" style="font-weight:800;margin-bottom:1.5rem;">Iniciar sesión</h2>
-            <form id="authForm">
-                <input id="emailInput" type="email" placeholder="Correo electrónico" required style="width:100%;padding:0.8rem;margin-bottom:0.8rem;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--tx);outline:none;">
-                <input id="passwordInput" type="password" placeholder="Contraseña" required style="width:100%;padding:0.8rem;margin-bottom:1.2rem;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--tx);outline:none;">
-                <button id="submitAuth" type="submit" style="width:100%;padding:0.8rem;border-radius:12px;border:none;background:linear-gradient(120deg,var(--o),var(--r));color:#fff;font-weight:700;cursor:pointer;">Entrar</button>
-            </form>
-            <p style="text-align:center;margin-top:1rem;font-size:0.8rem;color:var(--mu);cursor:pointer;" id="toggleAuth">¿No tienes cuenta? Regístrate</p>
-            <button id="closeModal" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--mu);font-size:1.5rem;cursor:pointer;">&times;</button>
-        </div>
-    </div>
 </body>
 </html>
