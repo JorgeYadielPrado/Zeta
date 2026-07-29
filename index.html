@@ -107,6 +107,7 @@
             cursor:pointer;transition:all .18s;
             box-shadow:0 4px 16px rgba(249,115,22,.35),inset 0 1px 0 rgba(255,255,255,.2);
             position:relative;font-family:inherit;
+            overflow:hidden; /* importante para la imagen de perfil */
         }
         .avatar-btn::after{
             content:'';position:absolute;bottom:1px;right:1px;
@@ -139,6 +140,7 @@
             display:flex;align-items:center;justify-content:center;
             color:#fff;font-weight:800;font-size:.82rem;flex-shrink:0;
             border:1.5px solid rgba(255,255,255,.2);
+            overflow:hidden; /* imagen de perfil */
         }
         .ud-info{flex:1;min-width:0}
         .ud-label{
@@ -605,6 +607,7 @@
         const logoutModal     = document.getElementById('logoutModal')
         const confirmLogoutBtn= document.getElementById('confirmLogoutBtn')
         const cancelLogoutBtn = document.getElementById('cancelLogoutBtn')
+        const googleLoginBtn  = document.getElementById('googleLoginBtn') // NUEVO
 
         let isLogin = true
 
@@ -655,7 +658,6 @@
             errorModal.style.display = 'flex'
         }
         goToRegisterBtn.onclick = () => {
-            // Pre-llenar el correo en el modal de registro
             if (errEmailSpan && errEmailSpan.textContent) {
                 emailInput.value = errEmailSpan.textContent
             }
@@ -682,7 +684,6 @@
                     if (error) {
                         const msg = (error.message || '').toLowerCase()
                         if (msg.includes('invalid login') || msg.includes('invalid credentials')) {
-                            // ❌ No registrado → diálogo acrílico
                             modal.style.display = 'none'
                             errorModal.style.display = 'none'
                             emailInput.value = ''
@@ -692,7 +693,6 @@
                         }
                         throw error
                     }
-                    // ✅ Login exitoso: cerrar modal y limpiar formulario
                     modal.style.display = 'none'
                     errorModal.style.display = 'none'
                     emailInput.value = ''
@@ -719,10 +719,20 @@
             }
         }
 
+        // ── INICIO DE SESIÓN CON GOOGLE ──
+        googleLoginBtn.addEventListener('click', async () => {
+            const { data, error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: window.location.origin // o la URL de tu sitio en producción
+                }
+            })
+            if (error) alert('Error al iniciar con Google: ' + error.message)
+        })
+
         // ── Reflejar sesión en la UI ──
         function applySession(session) {
             if (session?.user) {
-                // 🛡️ Cierre defensivo: si por cualquier vía hay sesión, fuera modales
                 modal.style.display = 'none'
                 errorModal.style.display = 'none'
                 if (emailInput)    emailInput.value = ''
@@ -731,15 +741,28 @@
                 loginBtn.classList.add('hidden')
                 userMenu.classList.remove('hidden')
 
-                const email = session.user.email || ''
+                const user = session.user
+                const email = user.email || ''
+                const avatarUrl = user.user_metadata?.avatar_url || user.user_metadata?.picture || null
                 const initial = (email.charAt(0) || 'U').toUpperCase()
-                userInitial.textContent = initial
-                udMini.textContent      = initial
+
+                // Mostrar foto de perfil si existe
+                if (avatarUrl) {
+                    avatarBtn.innerHTML = `<img src="${avatarUrl}" alt="Avatar" style="width:100%;height:100%;border-radius:50%;object-fit:cover;position:absolute;inset:0">`
+                    udMini.innerHTML = `<img src="${avatarUrl}" alt="Avatar" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`
+                } else {
+                    avatarBtn.innerHTML = `<span id="userInitial">${initial}</span>`
+                    udMini.textContent = initial
+                }
+
                 userEmailEl.textContent = email
             } else {
                 loginBtn.classList.remove('hidden')
                 userMenu.classList.add('hidden')
                 userDropdown.classList.remove('show')
+                // Restaurar avatar por defecto
+                avatarBtn.innerHTML = `<span id="userInitial">U</span>`
+                udMini.textContent = 'U'
             }
         }
 
@@ -776,6 +799,25 @@
                 <input id="passwordInput" type="password" placeholder="Contraseña" required style="width:100%;padding:0.8rem;margin-bottom:1.2rem;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--tx);outline:none;font-family:inherit;font-size:.9rem">
                 <button id="submitAuth" type="submit" style="width:100%;padding:0.8rem;border-radius:12px;border:none;background:linear-gradient(120deg,var(--o),var(--r));color:#fff;font-weight:700;cursor:pointer;font-family:inherit;font-size:.9rem;box-shadow:0 0 24px rgba(239,68,68,.3)">Entrar</button>
             </form>
+
+            <!-- Separador "o continúa con" -->
+            <div style="display:flex;align-items:center;gap:.6rem;margin:1.2rem 0;color:var(--mu);font-size:.75rem">
+                <span style="flex:1;height:1px;background:rgba(255,255,255,.08)"></span>
+                <span>o continúa con</span>
+                <span style="flex:1;height:1px;background:rgba(255,255,255,.08)"></span>
+            </div>
+
+            <!-- Botón de Google -->
+            <button id="googleLoginBtn" type="button" style="width:100%;padding:0.75rem;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:var(--tx);font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;font-family:inherit;font-size:.88rem;transition:all .18s" onmouseover="this.style.background='rgba(255,255,255,.08)'" onmouseout="this.style.background='rgba(255,255,255,.04)'">
+                <svg width="18" height="18" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Google
+            </button>
+
             <p style="text-align:center;margin-top:1rem;font-size:0.82rem;color:var(--mu);cursor:pointer;transition:color .15s" id="toggleAuth" onmouseover="this.style.color='var(--tx)'" onmouseout="this.style.color='var(--mu)'">¿No tienes cuenta? Regístrate</p>
             <button id="closeModal" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--mu);font-size:1.5rem;cursor:pointer;line-height:1;padding:.25rem .5rem;border-radius:8px;transition:all .15s" onmouseover="this.style.color='var(--tx)';this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.color='var(--mu)';this.style.background='none'">&times;</button>
         </div>
@@ -783,8 +825,6 @@
 
     <!-- ═══════════════════════════════════════════
          MODAL DE ERROR: "CUENTA NO ENCONTRADA"
-         (se muestra cuando Supabase devuelve
-         "Invalid login credentials")
          ═══════════════════════════════════════════ -->
     <div id="errorModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;z-index:1000;padding:1rem">
         <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);text-align:center;color:var(--tx);box-shadow:0 30px 80px rgba(0,0,0,.7)">
@@ -802,8 +842,6 @@
 
     <!-- ═══════════════════════════════════════════
          MODAL DE CONFIRMACIÓN: "CERRAR SESIÓN"
-         (diálogo acrílico, mismo estilo que las
-         píldoras y el modal de error)
          ═══════════════════════════════════════════ -->
     <div id="logoutModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;z-index:1001;padding:1rem">
         <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);text-align:center;color:var(--tx);box-shadow:0 30px 80px rgba(0,0,0,.7)">
