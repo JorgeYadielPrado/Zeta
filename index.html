@@ -107,12 +107,14 @@
             cursor:pointer;transition:all .18s;
             box-shadow:0 4px 16px rgba(249,115,22,.35),inset 0 1px 0 rgba(255,255,255,.2);
             position:relative;font-family:inherit;
-            overflow:hidden; /* importante para la imagen de perfil */
+            overflow:hidden; /* para la imagen de perfil */
         }
+        /* Punto verde sin borde */
         .avatar-btn::after{
             content:'';position:absolute;bottom:1px;right:1px;
             width:10px;height:10px;border-radius:50%;
-            background:#4ade80;border:2px solid #020508;
+            background:#4ade80;
+            /* border eliminado para que no tenga borde blanco */
             box-shadow:0 0 6px rgba(74,222,128,.6);
         }
         .avatar-btn:hover{transform:scale(1.06);box-shadow:0 6px 22px rgba(249,115,22,.5),inset 0 1px 0 rgba(255,255,255,.2)}
@@ -243,13 +245,10 @@
     </style>
 </head>
 <body>
-    <!-- ── FONDO: aurora de color + grano de película ── -->
-    <div class="bg-glow"  aria-hidden="true"></div>
+    <div class="bg-glow" aria-hidden="true"></div>
     <div class="bg-noise" aria-hidden="true"></div>
 
-    <!-- ── NAVBAR ── -->
     <nav class="top">
-        <!-- Píldora de marca (izquierda) -->
         <div class="np glass-nav pill">
             <span class="nb">
                 <svg width="27" height="27" viewBox="0 0 24 24"><defs><linearGradient id="gN" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gN)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
@@ -259,9 +258,7 @@
             <button class="pill G" style="color:#fff;font-weight:700;font-size:.8rem;padding:.44rem 1.05rem" onclick="mainDl()">Descargar</button>
         </div>
 
-        <!-- Píldora de auth (derecha) — separada -->
         <div class="auth-area">
-            <!-- Botón de login (cuando NO hay sesión) -->
             <button id="loginBtn" class="login-btn glass-nav pill" onclick="showAuthModal()">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
@@ -270,7 +267,6 @@
                 Iniciar sesión
             </button>
 
-            <!-- Avatar circular (cuando SÍ hay sesión) -->
             <div id="userMenu" class="user-menu hidden">
                 <button id="avatarBtn" class="avatar-btn" onclick="toggleUserMenu(event)" title="Mi cuenta">
                     <span id="userInitial">U</span>
@@ -296,7 +292,6 @@
         </div>
     </nav>
 
-    <!-- ── HERO ── -->
     <section class="hero">
         <div class="hlogo">
             <svg width="100" height="100" viewBox="0 0 24 24"><defs><linearGradient id="gH" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#F97316"/><stop offset="100%" stop-color="#EF4444"/></linearGradient></defs><path fill="url(#gH)" d="m13.666 1.429l6.75 3.98l.096.063l.093.078l.106.074a3.22 3.22 0 0 1 1.284 2.39l.005.204v7.284c0 1.175-.643 2.256-1.623 2.793l-6.804 4.302c-.98.538-2.166.538-3.2-.032l-6.695-4.237A3.23 3.23 0 0 1 2 15.502V8.217c0-1.106.57-2.128 1.476-2.705l6.95-4.098c1-.552 2.214-.552 3.24.015"/><path fill="white" d="M14 7h-4a1 1 0 0 0-1 1l.007.117A1 1 0 0 0 10 9h2.382l-3.276 6.553A1 1 0 0 0 10 17h4a1 1 0 0 0 1-1l-.007-.117A1 1 0 0 0 14 15h-2.382l3.276-6.553A1 1 0 0 0 14 7"/></svg>
@@ -324,7 +319,6 @@
         </a>
     </section>
 
-    <!-- ── FEATURES ── -->
     <div class="sec">
         <div class="feats">
             <div class="feat glass card"><div class="fi">⚡</div><div class="ft">Aceleración GPU</div><p class="fd">Usa tu tarjeta gráfica para conversiones hasta 10× más rápidas que por software.</p></div>
@@ -333,7 +327,6 @@
         </div>
     </div>
 
-    <!-- ── ZETA FILES ── -->
     <div class="sec" style="max-width:780px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem">
             <span class="lbl" style="margin-bottom:0">App Principal</span>
@@ -357,7 +350,6 @@
         </div>
     </div>
 
-    <!-- ── DEPS ── -->
     <div class="sec" style="max-width:780px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem">
             <span class="lbl" style="margin-bottom:0">Componentes adicionales</span>
@@ -369,7 +361,6 @@
         </div>
     </div>
 
-    <!-- ── FORMATS ── -->
     <div class="sec" style="max-width:680px;text-align:center">
         <span class="lbl" style="text-align:center">Formatos soportados</span>
         <div class="pills">
@@ -377,7 +368,6 @@
         </div>
     </div>
 
-    <!-- ── REQUIREMENTS ── -->
     <div class="sec" style="max-width:700px">
         <div class="rq glass card">
             <div><div class="rl">Sistema</div><div class="rv">Win 10/11 x64</div></div>
@@ -389,9 +379,6 @@
 
     <footer>© 2026 YadSoft · Zeta — Convertidor de Video · Hecho con ♥ para Windows</footer>
 
-    <!-- ────────────────────────────────────────────────
-         SCRIPT DE MEDIAFIRE
-         ──────────────────────────────────────────────── -->
     <script>
         const MF_KEY     = "94cnujdlx4umf";
         const MF_API     = `https://www.mediafire.com/api/1.5/folder/get_content.php?folder_key=${MF_KEY}&chunk_size=200&response_format=json&version=1.5&content_type=files`;
@@ -409,7 +396,6 @@
 
         async function loadFiles(forceRefresh = false) {
             const cached = ls.get("mf_cache");
-
             if (cached && !forceRefresh) {
                 mfFiles = cached.files || [];
                 renderFiles();
@@ -419,19 +405,14 @@
                     return;
                 }
             }
-
             const btn = $("refreshBtn");
             if (btn) btn.classList.add("spin");
-
             try {
                 const resp = await fetch(CORS_PROXY + encodeURIComponent(MF_API));
                 if (!resp.ok) throw new Error("HTTP " + resp.status);
                 const data = await resp.json();
                 if (data.response?.result !== "Success") throw new Error(data.response?.message || "Error del servidor");
-
-                mfFiles = (data.response.folder_content?.files || []).sort(
-                    (a, b) => new Date(b.created || 0) - new Date(a.created || 0)
-                );
+                mfFiles = (data.response.folder_content?.files || []).sort((a, b) => new Date(b.created || 0) - new Date(a.created || 0));
                 mfFolders = data.response.folder_content?.folders || [];
                 ls.set("mf_cache", { files: mfFiles, folders: mfFolders, ts: Date.now() });
                 renderFiles();
@@ -439,358 +420,173 @@
             } catch (e) {
                 console.warn("Error:", e);
                 if (mfFiles.length === 0) {
-                    $("zetaList").innerHTML = `<div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--mu);padding:1rem;line-height:1.7">
-                        <strong style="color:var(--o)">⚠️ No se pudo conectar con el servidor</strong><br><br>${e.message}<br><br>Verifica tu conexión a internet.
-                    </div>`;
+                    $("zetaList").innerHTML = `<div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--mu);padding:1rem;line-height:1.7"><strong style="color:var(--o)">⚠️ No se pudo conectar con el servidor</strong><br><br>${e.message}<br><br>Verifica tu conexión a internet.</div>`;
                 }
                 scheduleNextRefresh(60 * 1000);
             } finally {
                 if (btn) btn.classList.remove("spin");
             }
         }
-
-        function scheduleNextRefresh(ms) {
-            if (_mfInterval) clearTimeout(_mfInterval);
-            _mfInterval = setTimeout(() => loadFiles(false), ms);
-        }
-
-        const mfFmt = bytes => {
-            const n = parseInt(bytes) || 0;
-            if (n < 1048576)    return (n / 1024).toFixed(0)    + ' KB';
-            if (n < 1073741824) return (n / 1048576).toFixed(1) + ' MB';
-            return (n / 1073741824).toFixed(2) + ' GB';
-        };
-        const mfDate = d => {
-            if (!d) return "—";
-            const dt = new Date(d);
-            return isNaN(dt) ? d : dt.toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" });
-        };
-        const mfIcon = name => {
-            const e = (name || "").split(".").pop().toLowerCase();
-            if (["rar","zip","7z"].includes(e))              return "🗜️";
-            if (["exe","msi"].includes(e))                   return "⚙️";
-            if (["dll"].includes(e))                         return "🔧";
-            if (["mp4","mkv","avi","mov","webm"].includes(e))return "🎬";
-            if (["pdf"].includes(e))                         return "📄";
-            return "📦";
-        };
+        function scheduleNextRefresh(ms) { if (_mfInterval) clearTimeout(_mfInterval); _mfInterval = setTimeout(() => loadFiles(false), ms); }
+        const mfFmt = bytes => { const n = parseInt(bytes)||0; if(n<1048576) return (n/1024).toFixed(0)+' KB'; if(n<1073741824) return (n/1048576).toFixed(1)+' MB'; return (n/1073741824).toFixed(2)+' GB'; };
+        const mfDate = d => { if(!d) return "—"; const dt=new Date(d); return isNaN(dt)?d:dt.toLocaleDateString("es-ES",{day:"numeric",month:"short",year:"numeric"}); };
+        const mfIcon = name => { const e=(name||"").split(".").pop().toLowerCase(); if(["rar","zip","7z"].includes(e)) return "🗜️"; if(["exe","msi"].includes(e)) return "⚙️"; if(["dll"].includes(e)) return "🔧"; if(["mp4","mkv","avi","mov","webm"].includes(e)) return "🎬"; if(["pdf"].includes(e)) return "📄"; return "📦"; };
         const isZeta = name => /zeta/i.test(name);
-
         function parseZetaName(name) {
-            const dotIdx = name.lastIndexOf('.');
-            const ext    = dotIdx > 0 ? name.slice(dotIdx + 1) : '';
-            const base   = dotIdx > 0 ? name.slice(0, dotIdx) : name;
+            const dotIdx = name.lastIndexOf('.'), ext = dotIdx>0? name.slice(dotIdx+1) : '', base = dotIdx>0? name.slice(0,dotIdx) : name;
             const m = base.match(/[vV]?(\d+(?:[._-]\d+)+(?:[-_][\w]+)*)/);
-            if (m) {
-                return {
-                    baseName: base.replace(m[0], '').replace(/[-_\s]+$/, '').trim() || 'Zeta',
-                    version:  'v' + m[1].replace(/_/g, '.'),
-                    ext:      ext.toUpperCase()
-                };
-            }
-            return { baseName: base, version: null, ext: ext.toUpperCase() };
+            if(m) return { baseName: base.replace(m[0],'').replace(/[-_\s]+$/,'').trim()||'Zeta', version:'v'+m[1].replace(/_/g,'.'), ext:ext.toUpperCase() };
+            return { baseName:base, version:null, ext:ext.toUpperCase() };
         }
-
         function renderFiles() {
-            const zF = mfFiles.filter(f =>  isZeta(f.filename));
-            const dF = mfFiles.filter(f => !isZeta(f.filename));
-
-            let totalDl = 0;
-            mfFiles.forEach(f => totalDl += parseInt(f.downloads || 0));
-
-            $("sD").textContent = totalDl.toLocaleString();
-            $("sU").textContent = zF.length;
-            $("zetaCount").textContent = `${zF.length} versión${zF.length !== 1 ? "es" : ""}`;
-            $("depCount").textContent  = `${dF.length} archivo${dF.length !== 1 ? "s" : ""}`;
-
-            if (zF.length) {
-                const { version } = parseZetaName(zF[0].filename);
-                $("navVer").textContent = version || "live";
-                mainDlUrl = zF[0].links?.normal_download || "";
-            }
-
+            const zF = mfFiles.filter(f=>isZeta(f.filename)), dF = mfFiles.filter(f=>!isZeta(f.filename));
+            let totalDl=0; mfFiles.forEach(f=>totalDl+=parseInt(f.downloads||0));
+            $("sD").textContent = totalDl.toLocaleString(); $("sU").textContent = zF.length;
+            $("zetaCount").textContent = `${zF.length} versión${zF.length!==1?"es":""}`;
+            $("depCount").textContent = `${dF.length} archivo${dF.length!==1?"s":""}`;
+            if(zF.length) { const {version}=parseZetaName(zF[0].filename); $("navVer").textContent=version||"live"; mainDlUrl=zF[0].links?.normal_download||""; }
             $("zetaList").innerHTML = !zF.length
                 ? `<div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--mu);padding:1rem">No hay versiones de Zeta todavía.</div>`
-                : zF.map((f, i) => {
-                    const { baseName, version, ext } = parseZetaName(f.filename);
-                    const url = f.links?.normal_download || "#";
-                    return `<div class="zcard">
-                        <div style="flex:1;min-width:200px">
-                            <div class="zname">
-                                <span>${baseName}</span>
-                                ${version ? `<span class="zver">${version}</span>` : ''}
-                                ${i === 0 ? `<span class="zlatest">ÚLTIMA</span>` : ''}
-                            </div>
-                            <div class="zmeta">
-                                <span class="mb mb-dt">📅 ${mfDate(f.created)}</span>
-                                <span class="mb mb-sz">💾 ${mfFmt(f.size)}</span>
-                                <span class="mb mb-dl">⬇️ ${parseInt(f.downloads || 0).toLocaleString()} descargas</span>
-                                <span class="mb mb-ex">.${ext}</span>
-                            </div>
-                        </div>
-                        <button class="btn-dl G" onclick="window.open('${url}','_blank')">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                            Descargar
-                        </button>
-                    </div>`;
+                : zF.map((f,i)=>{
+                    const {baseName,version,ext}=parseZetaName(f.filename), url=f.links?.normal_download||"#";
+                    return `<div class="zcard"><div style="flex:1;min-width:200px"><div class="zname"><span>${baseName}</span>${version?`<span class="zver">${version}</span>`:''}${i===0?`<span class="zlatest">ÚLTIMA</span>`:''}</div><div class="zmeta"><span class="mb mb-dt">📅 ${mfDate(f.created)}</span><span class="mb mb-sz">💾 ${mfFmt(f.size)}</span><span class="mb mb-dl">⬇️ ${parseInt(f.downloads||0).toLocaleString()} descargas</span><span class="mb mb-ex">.${ext}</span></div></div><button class="btn-dl G" onclick="window.open('${url}','_blank')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar</button></div>`;
                 }).join("");
-
             $("depList").innerHTML = !dF.length
                 ? `<div class="dcard glass" style="text-align:center;color:var(--mu);font-family:'JetBrains Mono',monospace;font-size:.85rem;padding:2rem 1rem;grid-column:1/-1">Sin componentes adicionales.</div>`
-                : dF.map(f => {
-                    const url = f.links?.normal_download || "#";
-                    return `<div class="dcard glass">
-                        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem">
-                            <div class="dico">${mfIcon(f.filename)}</div>
-                            <div style="flex:1;min-width:0">
-                                <div class="dname">${f.filename}</div>
-                                <div class="zmeta" style="margin-top:.25rem">
-                                    <span class="mb mb-dt">📅 ${mfDate(f.created)}</span>
-                                    <span class="mb mb-sz">💾 ${mfFmt(f.size)}</span>
-                                    <span class="mb mb-dl">⬇️ ${parseInt(f.downloads || 0).toLocaleString()}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn-dep" onclick="window.open('${url}','_blank')">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                            Descargar
-                        </button>
-                    </div>`;
+                : dF.map(f=>{
+                    const url=f.links?.normal_download||"#";
+                    return `<div class="dcard glass"><div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem"><div class="dico">${mfIcon(f.filename)}</div><div style="flex:1;min-width:0"><div class="dname">${f.filename}</div><div class="zmeta" style="margin-top:.25rem"><span class="mb mb-dt">📅 ${mfDate(f.created)}</span><span class="mb mb-sz">💾 ${mfFmt(f.size)}</span><span class="mb mb-dl">⬇️ ${parseInt(f.downloads||0).toLocaleString()}</span></div></div></div><button class="btn-dep" onclick="window.open('${url}','_blank')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar</button></div>`;
                 }).join("");
         }
-
-        function mainDl() {
-            if (mainDlUrl) window.open(mainDlUrl, '_blank');
-            else if (mfFiles.length) window.open(mfFiles[0].links?.normal_download, '_blank');
-        }
-
-        function init() {
-            const views = (ls.get("views") || 0) + 1;
-            ls.set("views", views);
-            $("sV").textContent = views.toLocaleString();
-            loadFiles(false);
-        }
-
+        function mainDl() { if(mainDlUrl) window.open(mainDlUrl,'_blank'); else if(mfFiles.length) window.open(mfFiles[0].links?.normal_download,'_blank'); }
+        function init() { const views=(ls.get("views")||0)+1; ls.set("views",views); $("sV").textContent=views.toLocaleString(); loadFiles(false); }
         init();
     </script>
 
-    <!-- ═══════════════════════════════════════════
-         SUPABASE AUTH + MODALES
-         ═══════════════════════════════════════════ -->
     <script type="module">
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
-
         const SUPABASE_URL = 'https://woqzyrvuvtmqdkrgolvi.supabase.co'
         const SUPABASE_ANON_KEY = 'sb_publishable_FtzJbU5SOfuuHiOCeixBwQ_x1L2B7sn'
-
         const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-        // ── Referencias ──
-        const modal        = document.getElementById('authModal')
-        const authTitle    = document.getElementById('authTitle')
-        const toggleAuth   = document.getElementById('toggleAuth')
-        const emailInput   = document.getElementById('emailInput')
-        const passwordInput= document.getElementById('passwordInput')
-        const submitAuth   = document.getElementById('submitAuth')
-        const closeModal   = document.getElementById('closeModal')
-        const loginBtn     = document.getElementById('loginBtn')
-        const userMenu     = document.getElementById('userMenu')
-        const avatarBtn    = document.getElementById('avatarBtn')
-        const userInitial  = document.getElementById('userInitial')
-        const udMini       = document.getElementById('udMini')
-        const userEmailEl  = document.getElementById('userEmail')
+        const modal = document.getElementById('authModal')
+        const authTitle = document.getElementById('authTitle')
+        const toggleAuth = document.getElementById('toggleAuth')
+        const emailInput = document.getElementById('emailInput')
+        const passwordInput = document.getElementById('passwordInput')
+        const submitAuth = document.getElementById('submitAuth')
+        const closeModal = document.getElementById('closeModal')
+        const loginBtn = document.getElementById('loginBtn')
+        const userMenu = document.getElementById('userMenu')
+        const avatarBtn = document.getElementById('avatarBtn')
+        const userInitial = document.getElementById('userInitial')
+        const udMini = document.getElementById('udMini')
+        const userEmailEl = document.getElementById('userEmail')
         const userDropdown = document.getElementById('userDropdown')
-        const errorModal   = document.getElementById('errorModal')
+        const errorModal = document.getElementById('errorModal')
         const goToRegisterBtn = document.getElementById('goToRegisterBtn')
-        const closeErrorBtn   = document.getElementById('closeErrorBtn')
-        const errEmailSpan    = document.getElementById('errEmail')
-        const logoutModal     = document.getElementById('logoutModal')
-        const confirmLogoutBtn= document.getElementById('confirmLogoutBtn')
+        const closeErrorBtn = document.getElementById('closeErrorBtn')
+        const errEmailSpan = document.getElementById('errEmail')
+        const logoutModal = document.getElementById('logoutModal')
+        const confirmLogoutBtn = document.getElementById('confirmLogoutBtn')
         const cancelLogoutBtn = document.getElementById('cancelLogoutBtn')
-        const googleLoginBtn  = document.getElementById('googleLoginBtn') // NUEVO
+        const googleLoginBtn = document.getElementById('googleLoginBtn')
 
         let isLogin = true
 
-        // ── Mostrar modal de auth ──
-        window.showAuthModal = () => {
-            modal.style.display = 'flex'
-            isLogin = true
-            updateAuthUI()
-        }
-
-        // ── Cerrar modales al hacer click fuera ──
-        window.onclick = (e) => {
-            if (e.target === modal)      modal.style.display = 'none'
-            if (e.target === errorModal) errorModal.style.display = 'none'
-            if (e.target === logoutModal)logoutModal.style.display = 'none'
-        }
+        window.showAuthModal = () => { modal.style.display = 'flex'; isLogin = true; updateAuthUI() }
+        window.onclick = (e) => { if(e.target===modal) modal.style.display='none'; if(e.target===errorModal) errorModal.style.display='none'; if(e.target===logoutModal) logoutModal.style.display='none' }
         closeModal.onclick = () => modal.style.display = 'none'
         closeErrorBtn.onclick = () => errorModal.style.display = 'none'
-
-        // ── Alternar entre login y registro ──
-        toggleAuth.onclick = () => {
-            isLogin = !isLogin
-            updateAuthUI()
-        }
-
+        toggleAuth.onclick = () => { isLogin = !isLogin; updateAuthUI() }
         function updateAuthUI() {
-            authTitle.textContent     = isLogin ? 'Iniciar sesión' : 'Crear cuenta'
-            submitAuth.textContent    = isLogin ? 'Entrar'         : 'Crear cuenta'
-            toggleAuth.textContent    = isLogin
-                ? '¿No tienes cuenta? Regístrate'
-                : '¿Ya tienes cuenta? Inicia sesión'
+            authTitle.textContent = isLogin ? 'Iniciar sesión' : 'Crear cuenta'
+            submitAuth.textContent = isLogin ? 'Entrar' : 'Crear cuenta'
+            toggleAuth.textContent = isLogin ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión'
         }
-
-        // ── Menú de usuario (dropdown) ──
-        window.toggleUserMenu = (e) => {
-            if (e) e.stopPropagation()
-            userDropdown.classList.toggle('show')
-        }
-        document.addEventListener('click', (e) => {
-            if (userMenu && !userMenu.contains(e.target)) {
-                userDropdown.classList.remove('show')
-            }
-        })
-
-        // ── Diálogo de "cuenta no encontrada" ──
-        window.showErrorModal = (email) => {
-            if (errEmailSpan) errEmailSpan.textContent = email || ''
-            errorModal.style.display = 'flex'
-        }
+        window.toggleUserMenu = (e) => { if(e) e.stopPropagation(); userDropdown.classList.toggle('show') }
+        document.addEventListener('click', (e) => { if(userMenu && !userMenu.contains(e.target)) userDropdown.classList.remove('show') })
+        window.showErrorModal = (email) => { if(errEmailSpan) errEmailSpan.textContent = email||''; errorModal.style.display = 'flex' }
         goToRegisterBtn.onclick = () => {
-            if (errEmailSpan && errEmailSpan.textContent) {
-                emailInput.value = errEmailSpan.textContent
-            }
-            errorModal.style.display = 'none'
-            modal.style.display = 'flex'
-            isLogin = false
-            updateAuthUI()
+            if(errEmailSpan && errEmailSpan.textContent) emailInput.value = errEmailSpan.textContent
+            errorModal.style.display = 'none'; modal.style.display = 'flex'; isLogin = false; updateAuthUI()
             setTimeout(() => passwordInput.focus(), 100)
         }
-
-        // ── Envío del formulario de auth ──
         document.getElementById('authForm').onsubmit = async (e) => {
             e.preventDefault()
-            const email = emailInput.value.trim()
-            const password = passwordInput.value.trim()
-            if (!email || !password) return alert('Completa todos los campos.')
-
-            submitAuth.disabled = true
-            submitAuth.textContent = isLogin ? 'Entrando...' : 'Creando cuenta...'
-
+            const email = emailInput.value.trim(), password = passwordInput.value.trim()
+            if(!email||!password) return alert('Completa todos los campos.')
+            submitAuth.disabled = true; submitAuth.textContent = isLogin ? 'Entrando...' : 'Creando cuenta...'
             try {
-                if (isLogin) {
+                if(isLogin) {
                     const { error } = await supabase.auth.signInWithPassword({ email, password })
-                    if (error) {
-                        const msg = (error.message || '').toLowerCase()
-                        if (msg.includes('invalid login') || msg.includes('invalid credentials')) {
-                            modal.style.display = 'none'
-                            errorModal.style.display = 'none'
-                            emailInput.value = ''
-                            passwordInput.value = ''
-                            showErrorModal(email)
-                            return
+                    if(error) {
+                        const msg = (error.message||'').toLowerCase()
+                        if(msg.includes('invalid login')||msg.includes('invalid credentials')) {
+                            modal.style.display='none'; errorModal.style.display='none'
+                            emailInput.value=''; passwordInput.value=''; showErrorModal(email); return
                         }
                         throw error
                     }
-                    modal.style.display = 'none'
-                    errorModal.style.display = 'none'
-                    emailInput.value = ''
-                    passwordInput.value = ''
+                    modal.style.display='none'; errorModal.style.display='none'
+                    emailInput.value=''; passwordInput.value=''
                 } else {
                     const { data, error } = await supabase.auth.signUp({ email, password })
-                    if (error) throw error
+                    if(error) throw error
                     const user = data.user
-                    if (user) {
+                    if(user) {
                         await supabase.from('subscribers').insert([
-                            { id: user.id, email: user.email, name: user.user_metadata?.full_name || '', created_at: new Date().toISOString() }
+                            { id: user.id, email: user.email, name: user.user_metadata?.full_name||'', created_at: new Date().toISOString() }
                         ])
                     }
                     alert('✅ Registro exitoso. Ya estás dentro.')
-                    modal.style.display = 'none'
-                    emailInput.value = ''
-                    passwordInput.value = ''
+                    modal.style.display='none'; emailInput.value=''; passwordInput.value=''
                 }
-            } catch (error) {
-                alert('Error: ' + error.message)
-            } finally {
-                submitAuth.disabled = false
-                updateAuthUI()
-            }
+            } catch(error) { alert('Error: ' + error.message) }
+            finally { submitAuth.disabled = false; updateAuthUI() }
         }
 
-        // ── INICIO DE SESIÓN CON GOOGLE ──
+        // 🔁 Google OAuth con ruta exacta
         googleLoginBtn.addEventListener('click', async () => {
             const { data, error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: window.location.origin // o la URL de tu sitio en producción
+                    redirectTo: window.location.origin + window.location.pathname // misma página sin query params
                 }
             })
-            if (error) alert('Error al iniciar con Google: ' + error.message)
+            if(error) alert('Error al iniciar con Google: ' + error.message)
         })
 
-        // ── Reflejar sesión en la UI ──
         function applySession(session) {
-            if (session?.user) {
-                modal.style.display = 'none'
-                errorModal.style.display = 'none'
-                if (emailInput)    emailInput.value = ''
-                if (passwordInput) passwordInput.value = ''
-
-                loginBtn.classList.add('hidden')
-                userMenu.classList.remove('hidden')
-
-                const user = session.user
-                const email = user.email || ''
+            if(session?.user) {
+                modal.style.display='none'; errorModal.style.display='none'
+                if(emailInput) emailInput.value=''; if(passwordInput) passwordInput.value=''
+                loginBtn.classList.add('hidden'); userMenu.classList.remove('hidden')
+                const user = session.user, email = user.email||''
                 const avatarUrl = user.user_metadata?.avatar_url || user.user_metadata?.picture || null
-                const initial = (email.charAt(0) || 'U').toUpperCase()
-
-                // Mostrar foto de perfil si existe
-                if (avatarUrl) {
+                const initial = (email.charAt(0)||'U').toUpperCase()
+                if(avatarUrl) {
                     avatarBtn.innerHTML = `<img src="${avatarUrl}" alt="Avatar" style="width:100%;height:100%;border-radius:50%;object-fit:cover;position:absolute;inset:0">`
                     udMini.innerHTML = `<img src="${avatarUrl}" alt="Avatar" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`
                 } else {
                     avatarBtn.innerHTML = `<span id="userInitial">${initial}</span>`
                     udMini.textContent = initial
                 }
-
                 userEmailEl.textContent = email
             } else {
-                loginBtn.classList.remove('hidden')
-                userMenu.classList.add('hidden')
-                userDropdown.classList.remove('show')
-                // Restaurar avatar por defecto
-                avatarBtn.innerHTML = `<span id="userInitial">U</span>`
-                udMini.textContent = 'U'
+                loginBtn.classList.remove('hidden'); userMenu.classList.add('hidden'); userDropdown.classList.remove('show')
+                avatarBtn.innerHTML = `<span id="userInitial">U</span>`; udMini.textContent = 'U'
             }
         }
-
-        supabase.auth.onAuthStateChange((event, session) => {
-            applySession(session)
-        })
-
-        // ── Cerrar sesión (con confirmación acrílica) ──
-        window.logout = () => {
-            userDropdown.classList.remove('show')
-            logoutModal.style.display = 'flex'
-        }
-        confirmLogoutBtn.onclick = async () => {
-            logoutModal.style.display = 'none'
-            await supabase.auth.signOut()
-        }
-        cancelLogoutBtn.onclick = () => {
-            logoutModal.style.display = 'none'
-        }
-
-        // ── Comprobar sesión al cargar ──
+        supabase.auth.onAuthStateChange((event, session) => { applySession(session) })
+        window.logout = () => { userDropdown.classList.remove('show'); logoutModal.style.display = 'flex' }
+        confirmLogoutBtn.onclick = async () => { logoutModal.style.display = 'none'; await supabase.auth.signOut() }
+        cancelLogoutBtn.onclick = () => { logoutModal.style.display = 'none' }
         const { data: { session } } = await supabase.auth.getSession()
         applySession(session)
     </script>
 
-    <!-- ═══════════════════════════════════════════
-         MODAL DE AUTH (login / registro)
-         ═══════════════════════════════════════════ -->
+    <!-- Modales (sin cambios en estructura) -->
     <div id="authModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;z-index:999;padding:1rem">
         <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);color:var(--tx);position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6)">
             <h2 id="authTitle" style="font-weight:800;margin-bottom:1.5rem;font-size:1.4rem">Iniciar sesión</h2>
@@ -799,50 +595,28 @@
                 <input id="passwordInput" type="password" placeholder="Contraseña" required style="width:100%;padding:0.8rem;margin-bottom:1.2rem;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--tx);outline:none;font-family:inherit;font-size:.9rem">
                 <button id="submitAuth" type="submit" style="width:100%;padding:0.8rem;border-radius:12px;border:none;background:linear-gradient(120deg,var(--o),var(--r));color:#fff;font-weight:700;cursor:pointer;font-family:inherit;font-size:.9rem;box-shadow:0 0 24px rgba(239,68,68,.3)">Entrar</button>
             </form>
-
-            <!-- Separador "o continúa con" -->
             <div style="display:flex;align-items:center;gap:.6rem;margin:1.2rem 0;color:var(--mu);font-size:.75rem">
                 <span style="flex:1;height:1px;background:rgba(255,255,255,.08)"></span>
                 <span>o continúa con</span>
                 <span style="flex:1;height:1px;background:rgba(255,255,255,.08)"></span>
             </div>
-
-            <!-- Botón de Google -->
             <button id="googleLoginBtn" type="button" style="width:100%;padding:0.75rem;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:var(--tx);font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;font-family:inherit;font-size:.88rem;transition:all .18s" onmouseover="this.style.background='rgba(255,255,255,.08)'" onmouseout="this.style.background='rgba(255,255,255,.04)'">
-                <svg width="18" height="18" viewBox="0 0 24 24">
-                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
-                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                </svg>
+                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
                 Google
             </button>
-
             <p style="text-align:center;margin-top:1rem;font-size:0.82rem;color:var(--mu);cursor:pointer;transition:color .15s" id="toggleAuth" onmouseover="this.style.color='var(--tx)'" onmouseout="this.style.color='var(--mu)'">¿No tienes cuenta? Regístrate</p>
             <button id="closeModal" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--mu);font-size:1.5rem;cursor:pointer;line-height:1;padding:.25rem .5rem;border-radius:8px;transition:all .15s" onmouseover="this.style.color='var(--tx)';this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.color='var(--mu)';this.style.background='none'">&times;</button>
         </div>
     </div>
-
-    <!-- ═══════════════════════════════════════════
-         MODAL DE ERROR: "CUENTA NO ENCONTRADA"
-         ═══════════════════════════════════════════ -->
     <div id="errorModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;z-index:1000;padding:1rem">
         <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);text-align:center;color:var(--tx);box-shadow:0 30px 80px rgba(0,0,0,.7)">
             <div style="width:64px;height:64px;border-radius:50%;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.35);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;font-size:1.9rem;box-shadow:0 0 30px rgba(239,68,68,.25)">⚠️</div>
             <h3 style="font-weight:800;font-size:1.25rem;margin-bottom:.6rem;letter-spacing:-.01em">Aún no tienes cuenta</h3>
-            <p style="color:var(--mu);font-size:.88rem;line-height:1.6;margin-bottom:1.5rem">
-                No existe una cuenta registrada con<br>
-                <strong id="errEmail" style="color:var(--tx);font-family:'JetBrains Mono',monospace;font-size:.82rem;word-break:break-all">—</strong><br>
-                Crea una cuenta para poder iniciar sesión.
-            </p>
+            <p style="color:var(--mu);font-size:.88rem;line-height:1.6;margin-bottom:1.5rem">No existe una cuenta registrada con<br><strong id="errEmail" style="color:var(--tx);font-family:'JetBrains Mono',monospace;font-size:.82rem;word-break:break-all">—</strong><br>Crea una cuenta para poder iniciar sesión.</p>
             <button id="goToRegisterBtn" class="G pill" style="color:#fff;font-weight:700;font-size:.9rem;padding:.75rem 1.5rem;width:100%;margin-bottom:.6rem;box-shadow:0 0 28px rgba(239,68,68,.4);font-family:inherit;letter-spacing:.01em">Crear cuenta ahora</button>
             <button id="closeErrorBtn" class="pill" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--mu);font-weight:600;font-size:.85rem;padding:.6rem 1.5rem;width:100%;font-family:inherit;transition:all .18s" onmouseover="this.style.background='rgba(255,255,255,.08)';this.style.color='var(--tx)'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.color='var(--mu)'">Cancelar</button>
         </div>
     </div>
-
-    <!-- ═══════════════════════════════════════════
-         MODAL DE CONFIRMACIÓN: "CERRAR SESIÓN"
-         ═══════════════════════════════════════════ -->
     <div id="logoutModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;z-index:1001;padding:1rem">
         <div class="glass-nav card" style="padding:2rem;width:min(90%,400px);text-align:center;color:var(--tx);box-shadow:0 30px 80px rgba(0,0,0,.7)">
             <div style="width:64px;height:64px;border-radius:50%;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.35);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;font-size:1.9rem;box-shadow:0 0 30px rgba(249,115,22,.25)">🚪</div>
