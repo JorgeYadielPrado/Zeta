@@ -57,21 +57,15 @@
         }
         .avatar-btn img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 
-        .user-dropdown{position:absolute;top:calc(100% + 14px);right:0;min-width:240px;border-radius:18px;padding:.6rem;display:none;flex-direction:column;gap:.3rem;z-index:300;background:rgba(9,13,21,.92);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border:1px solid rgba(255,255,255,.12);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+        .user-dropdown{position:absolute;top:calc(100% + 14px);right:0;min-width:240px;border-radius:18px;padding:.6rem;display:none;flex-direction:column;gap:.3rem;z-index:300;background:rgba(255,255,255,.06);backdrop-filter:blur(32px) saturate(200%);-webkit-backdrop-filter:blur(32px) saturate(200%);border:1px solid rgba(255,255,255,.13);box-shadow:0 20px 60px rgba(0,0,0,.45)}
         .user-dropdown.show{display:flex;animation:ddIn .18s ease-out}
         @keyframes ddIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
         .ud-head{display:flex;align-items:center;gap:.6rem;padding:.5rem .65rem .65rem;border-bottom:1px solid rgba(255,255,255,.06)}
         .ud-mini{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--o),var(--r));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.82rem;flex-shrink:0;border:1.5px solid rgba(255,255,255,.2);overflow:hidden}
         .ud-mini img{width:100%;height:100%;object-fit:cover;border-radius:50%}
         .ud-info{flex:1;min-width:0}
-        .ud-label{
-            font-family:'JetBrains Mono',monospace;font-size:.58rem;
-            color:rgba(74,222,128,.9);text-transform:uppercase;
-            letter-spacing:.12em;margin-bottom:.15rem;
-            display:flex;align-items:center;gap:.3rem;
-        }
-        /* FIX 2: sin punto verde — removido el ::before */
-        .ud-label::before{display:none}
+        .ud-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:rgba(245,243,240,.38);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.15rem;display:flex;align-items:center}
+        .ud-label::before{display:none!important;content:none!important}
         .ud-email{font-size:.76rem;color:var(--tx);font-weight:600;word-break:break-all;line-height:1.3}
         .ud-logout{display:flex;align-items:center;justify-content:center;gap:.45rem;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.22);color:#fca5a5;font-size:.78rem;font-weight:700;padding:.55rem 1rem;border-radius:100px;cursor:pointer;transition:all .18s;margin-top:.4rem;font-family:inherit}
         .ud-logout:hover{background:rgba(239,68,68,.2);color:#fff;border-color:rgba(239,68,68,.4)}
@@ -345,10 +339,13 @@
             $("depCount").textContent  = `${dF.length} archivo${dF.length !== 1 ? "s" : ""}`;
 
             if (zF.length) {
-                const { version, baseName } = parseZetaName(zF[0].filename);
-                // FIX 3b: si no se detecta versión semántica, usa el nombre del archivo sin extensión
-                const nameNoExt = zF[0].filename.replace(/\.[^.]+$/, '');
-                $("navVer").textContent = version || nameNoExt || "live";
+                const { version } = parseZetaName(zF[0].filename);
+                // Si no hay versión semántica, mostrar la fecha de subida como referencia
+                let verLabel = version;
+                if (!verLabel && zF[0].created) {
+                    verLabel = new Date(zF[0].created).toLocaleDateString('es-ES', {day:'2-digit',month:'short',year:'2-digit'}).replace(/ /g,'\u00a0');
+                }
+                $("navVer").textContent = verLabel || "latest";
                 mainDlUrl = zF[0].links?.normal_download || "";
             }
 
