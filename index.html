@@ -38,14 +38,14 @@
 
         /* FIX 1: borde naranja SEPARADO de la foto — outline con gap visible */
         .avatar-btn{
-            width:36px;height:36px;border-radius:50%;
+            width:32px;height:32px;border-radius:50%;
             background:linear-gradient(135deg,var(--o),var(--r));
             border:none;
             color:#fff;font-weight:800;font-size:.95rem;
             display:flex;align-items:center;justify-content:center;
             cursor:pointer;transition:all .22s;
             /* Anillo naranja separado: gap oscuro + anillo naranja + brillo */
-            outline:2.5px solid var(--o);
+            outline:2px solid var(--o);
             outline-offset:2px;
             box-shadow:0 4px 18px rgba(249,115,22,.40),inset 0 1px 0 rgba(255,255,255,.18);
             position:relative;font-family:inherit;overflow:hidden;
@@ -61,7 +61,7 @@
         .user-dropdown.show{display:flex;animation:ddIn .18s ease-out}
         @keyframes ddIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
         .ud-head{display:flex;align-items:center;gap:.6rem;padding:.5rem .65rem .65rem;border-bottom:1px solid rgba(255,255,255,.06)}
-        .ud-mini{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--o),var(--r));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.82rem;flex-shrink:0;border:1.5px solid rgba(255,255,255,.2);overflow:hidden}
+        .ud-mini{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--o),var(--r));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.82rem;flex-shrink:0;border:1.5px solid rgba(255,255,255,.2);overflow:hidden}
         .ud-mini img{width:100%;height:100%;object-fit:cover;border-radius:50%}
         .ud-info{flex:1;min-width:0}
         .ud-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:rgba(245,243,240,.38);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.15rem;display:flex;align-items:center}
@@ -339,10 +339,9 @@
             $("depCount").textContent  = `${dF.length} archivo${dF.length !== 1 ? "s" : ""}`;
 
             if (zF.length) {
-                const { version } = parseZetaName(zF[0].filename);
-                // Fallback: nombre del archivo sin extensión (ej: "Zeta 1.2" si no hay versión semántica)
-                const rawName = zF[0].filename.replace(/\.[^\.]+$/, '');
-                $("navVer").textContent = version || rawName || "—";
+                const fname    = zF[0].filename;
+                const nameNoExt = fname.lastIndexOf('.') > 0 ? fname.slice(0, fname.lastIndexOf('.')) : fname;
+                $("navVer").textContent = nameNoExt || "—";
                 mainDlUrl = zF[0].links?.normal_download || "";
             }
 
